@@ -12,7 +12,1205 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
 :root{
-  --bg:#080C14;--bg2:#0D1420;--bg3:#121A2B;--panel:#0F1729;
+  --bg:#080C14;--bg2:#0D1420;--bg3:#121A2B;--panel:#0F1729;<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080C14" />
+  <link rel="icon" type="image/png" href="assets/mytst-kangaroo-logo.png" />
+  <link rel="apple-touch-icon" href="assets/mytst-kangaroo-logo.png" />
+  <title>myTST — CBSE Question Paper Generator</title>
+  <style>
+    :root {
+      --bg: #080C14;
+      --bg2: #0D1420;
+      --bg3: #121A2B;
+      --panel: #0F1729;
+      --border: rgba(255,255,255,.075);
+      --border-strong: rgba(255,255,255,.15);
+      --amber: #F5A623;
+      --amber-light: #FFBF58;
+      --amber-dim: rgba(245,166,35,.12);
+      --green: #10B981;
+      --green-dim: rgba(16,185,129,.11);
+      --blue: #60A5FA;
+      --blue-dim: rgba(59,130,246,.12);
+      --red: #F87171;
+      --text: #E8EDF5;
+      --text2: #96A2B8;
+      --text3: #5D6A80;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--font);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(96,165,250,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96,165,250,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.35) 58%, transparent 100%);
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(650px 400px at 15% 8%, rgba(245,166,35,.07), transparent 68%),
+        radial-gradient(620px 450px at 88% 86%, rgba(59,130,246,.08), transparent 72%);
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(18px, 4vw, 48px);
+      background: rgba(8,12,20,.88);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.5px; }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 9px rgba(245,166,35,.24));
+    }
+    .nav-meta { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 1px; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px var(--green); }
+    .nav-badge { border: 1px solid rgba(245,166,35,.25); background: var(--amber-dim); padding: 4px 9px; border-radius: 4px; }
+
+    .hero { max-width: 1050px; margin: 0 auto; padding: 84px 28px 42px; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 19px;
+      padding: 6px 12px;
+      color: var(--amber);
+      background: var(--amber-dim);
+      border: 1px solid rgba(245,166,35,.25);
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 900px;
+      margin: 0 auto 17px;
+      color: var(--text);
+      font-size: clamp(36px, 5.6vw, 66px);
+      line-height: 1.05;
+      letter-spacing: -2.5px;
+    }
+    h1 .highlight { color: var(--amber); }
+    .hero p { max-width: 640px; margin: 0 auto; color: var(--text2); font-size: 16px; font-weight: 400; line-height: 1.75; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 540px;
+      margin: 32px auto 0;
+      overflow: hidden;
+      background: rgba(15,23,41,.87);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+    }
+    .stat { padding: 15px 16px; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: 0; }
+    .stat strong { display: block; color: var(--amber); font-family: var(--mono); font-size: 18px; font-weight: 700; }
+    .stat span { display: block; margin-top: 4px; color: var(--text3); font-size: 11px; }
+
+    .workspace { max-width: 1160px; margin: 0 auto; padding: 0 28px 76px; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 18px;
+      overflow: hidden;
+      background: rgba(15,23,41,.88);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+    }
+    .step { display: flex; align-items: center; gap: 11px; min-width: 0; padding: 15px 18px; border-right: 1px solid var(--border); }
+    .step:last-child { border-right: 0; }
+    .step.active { background: rgba(245,166,35,.055); }
+    .step-number { width: 27px; height: 27px; display: grid; place-items: center; flex: 0 0 auto; border: 1px solid var(--border-strong); border-radius: 50%; color: var(--text3); font-family: var(--mono); font-size: 11px; }
+    .step.active .step-number { color: var(--amber); border-color: var(--amber); background: var(--amber-dim); }
+    .step-copy { min-width: 0; }
+    .step-copy b { display: block; color: var(--text2); font-size: 12px; }
+    .step.active .step-copy b { color: var(--amber); }
+    .step-copy span { display: block; overflow: hidden; color: var(--text3); font-size: 10.5px; white-space: nowrap; text-overflow: ellipsis; }
+
+    .card { overflow: visible; background: rgba(15,23,41,.94); border: 1px solid var(--border); border-radius: 17px; box-shadow: 0 16px 50px rgba(0,0,0,.15); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 20px 24px; border-bottom: 1px solid var(--border); }
+    .card-title { font-size: 16px; font-weight: 800; letter-spacing: -.3px; }
+    .card-subtitle { margin-top: 3px; color: var(--text3); font-size: 12px; }
+    .mode-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; color: var(--blue); background: var(--blue-dim); border: 1px solid rgba(96,165,250,.24); border-radius: 5px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .8px; white-space: nowrap; }
+    .mode-badge.offline { color: var(--amber); background: var(--amber-dim); border-color: rgba(245,166,35,.28); }
+    .card-body { padding: 24px; }
+
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+    .field { min-width: 0; }
+    .full { grid-column: 1 / -1; }
+    .label { display: block; margin: 0 0 8px; color: var(--text3); font-size: 10px; font-weight: 800; letter-spacing: 1.65px; text-transform: uppercase; }
+    .label .required { color: var(--amber); }
+    .hint { margin: 7px 0 0; color: var(--text3); font-size: 11.5px; line-height: 1.5; }
+    .input, select.input {
+      width: 100%;
+      min-height: 43px;
+      appearance: none;
+      outline: none;
+      padding: 10px 13px;
+      color: var(--text);
+      background: var(--bg2);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 13px;
+      transition: border-color .16s, box-shadow .16s, opacity .16s;
+    }
+    select.input {
+      padding-right: 36px;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1.1 6 6l5-4.9' fill='none' stroke='%235D6A80' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+    }
+    select.input option { color: var(--text); background: var(--bg2); }
+    .input::placeholder { color: var(--text3); }
+    .input:focus, select.input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,166,35,.10); }
+    .input:disabled, select.input:disabled { cursor: not-allowed; opacity: .45; }
+
+    .test-type { display: flex; flex-wrap: wrap; gap: 8px; }
+    .segmented {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 38px;
+      padding: 8px 13px;
+      color: var(--text2);
+      background: var(--bg2);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12.5px;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .segmented:hover { border-color: rgba(255,255,255,.28); color: var(--text); }
+    .segmented.online.selected { color: var(--blue); background: var(--blue-dim); border-color: rgba(96,165,250,.4); }
+    .segmented.offline.selected { color: var(--amber); background: var(--amber-dim); border-color: rgba(245,166,35,.42); }
+    .segmented.difficulty.selected.easy { color: #34D399; background: var(--green-dim); border-color: rgba(16,185,129,.4); }
+    .segmented.difficulty.selected.moderate { color: var(--amber); background: var(--amber-dim); border-color: rgba(245,166,35,.42); }
+    .segmented.difficulty.selected.hard { color: var(--red); background: rgba(248,113,113,.1); border-color: rgba(248,113,113,.4); }
+    .segmented.difficulty.selected.mixed { color: var(--blue); background: var(--blue-dim); border-color: rgba(96,165,250,.4); }
+
+    .divider { height: 1px; margin: 22px 0; background: var(--border); }
+    .hidden { display: none !important; }
+
+    /* Custom multi-select menus use real checkboxes. The chapter menu specifically
+       receives disabled inputs when a marks-rule maximum is reached. */
+    .multi-select { position: relative; }
+    .multi-trigger {
+      width: 100%;
+      min-height: 43px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 12px;
+      color: var(--text);
+      background: var(--bg2);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+      transition: border-color .15s, box-shadow .15s, opacity .15s;
+    }
+    .multi-trigger:hover:not(:disabled) { border-color: rgba(255,255,255,.26); }
+    .multi-trigger.open { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,166,35,.10); }
+    .multi-trigger:disabled { cursor: not-allowed; opacity: .43; }
+    .selection-text { display: flex; flex: 1; flex-wrap: wrap; gap: 5px; min-width: 0; }
+    .placeholder { align-self: center; color: var(--text3); font-size: 13px; }
+    .selection-pill { max-width: 225px; overflow: hidden; padding: 3px 8px; color: var(--amber); background: rgba(245,166,35,.13); border: 1px solid rgba(245,166,35,.22); border-radius: 5px; font-size: 11.5px; font-weight: 650; white-space: nowrap; text-overflow: ellipsis; }
+    .multi-chevron { flex: 0 0 auto; color: var(--text3); font-size: 14px; transform: translateY(-1px); }
+    .select-menu {
+      position: absolute;
+      z-index: 50;
+      top: calc(100% + 5px);
+      right: 0;
+      left: 0;
+      display: none;
+      max-height: 245px;
+      overflow-y: auto;
+      padding: 5px;
+      background: var(--bg3);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.5);
+    }
+    .select-menu.open { display: block; }
+    .select-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 37px;
+      padding: 8px 10px;
+      color: var(--text2);
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 12.5px;
+      line-height: 1.35;
+      transition: background .12s, color .12s, opacity .12s;
+    }
+    .select-option:hover { color: var(--text); background: rgba(255,255,255,.04); }
+    .select-option.selected { color: var(--amber); background: rgba(245,166,35,.075); }
+    .select-option.disabled { cursor: not-allowed; opacity: .35; }
+    .select-option.disabled:hover { color: var(--text2); background: transparent; }
+    .select-option input[type="checkbox"] { width: 15px; height: 15px; flex: 0 0 auto; margin: 0; accent-color: var(--amber); cursor: pointer; }
+    .select-option input[type="checkbox"]:disabled { cursor: not-allowed; }
+    .unit-count { margin-left: auto; color: var(--text3); font-family: var(--mono); font-size: 9.5px; white-space: nowrap; }
+
+    .marks-order-note { display: flex; align-items: flex-start; gap: 7px; margin: 7px 0 0; color: var(--amber-light); font-size: 11px; line-height: 1.45; }
+    .rule-helper {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 9px;
+      padding: 10px 12px;
+      color: var(--text2);
+      background: rgba(245,166,35,.055);
+      border: 1px solid rgba(245,166,35,.17);
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .rule-helper strong { display: block; color: var(--amber); font-size: 12px; }
+    .rule-helper span { display: block; margin-top: 2px; color: var(--text3); font-size: 11px; }
+    .rule-helper.valid { border-color: rgba(16,185,129,.24); background: rgba(16,185,129,.055); }
+    .rule-helper.valid strong { color: #34D399; }
+    .rule-icon { flex: 0 0 auto; font-size: 15px; line-height: 1.3; }
+
+    .inline-status { min-height: 22px; margin: 13px 0 0; color: var(--text3); font-size: 11.5px; line-height: 1.5; }
+    .inline-status.warn { color: #FCD38A; }
+    .inline-status.success { color: #6EE7B7; }
+    .button-row { margin-top: 18px; }
+    .generate {
+      width: 100%;
+      min-height: 49px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 20px;
+      color: #fff;
+      background: linear-gradient(135deg, #F5A623, #DB7907);
+      border: 0;
+      border-radius: 10px;
+      box-shadow: 0 5px 22px rgba(245,166,35,.24);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -.2px;
+      transition: transform .15s, box-shadow .15s, opacity .15s;
+    }
+    .generate:hover:not(:disabled) { box-shadow: 0 8px 29px rgba(245,166,35,.35); transform: translateY(-1px); }
+    .generate:disabled { cursor: not-allowed; opacity: .42; box-shadow: none; }
+    .loading-copy { display: none; margin-top: 10px; color: var(--amber); font-family: var(--mono); font-size: 10px; letter-spacing: .85px; text-align: center; }
+    .loading .loading-copy { display: block; }
+    .error { display: none; margin-top: 13px; padding: 11px 13px; color: #FECACA; background: rgba(239,68,68,.075); border: 1px solid rgba(248,113,113,.23); border-radius: 8px; font-size: 12px; line-height: 1.45; }
+    .error.show { display: block; }
+
+    .results { margin-top: 22px; overflow: hidden; }
+    .results-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 11px; padding: 19px 23px; border-bottom: 1px solid var(--border); }
+    .result-title { display: flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 800; }
+    .result-ok { padding: 4px 8px; color: var(--green); background: var(--green-dim); border: 1px solid rgba(16,185,129,.26); border-radius: 4px; font-family: var(--mono); font-size: 10px; letter-spacing: .7px; }
+    .result-meta { display: flex; flex-wrap: wrap; gap: 6px; padding: 13px 23px; border-bottom: 1px solid var(--border); }
+    .meta-chip { padding: 4px 8px; color: var(--text3); background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; font-family: var(--mono); font-size: 10px; }
+    .result-panel { padding: 24px; }
+    .result-panel p { margin: 0; color: var(--text2); line-height: 1.65; }
+    .document-actions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .document-card { padding: 18px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; }
+    .document-card h3 { margin: 0 0 6px; color: var(--text); font-size: 14px; }
+    .document-card p { margin: 0 0 14px; color: var(--text3); font-size: 12px; }
+    .doc-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+    .doc-button { display: inline-flex; align-items: center; gap: 6px; min-height: 35px; padding: 8px 11px; color: var(--amber); background: var(--amber-dim); border: 1px solid rgba(245,166,35,.25); border-radius: 7px; text-decoration: none; font-size: 12px; font-weight: 700; }
+    .doc-button.secondary { color: var(--text2); background: transparent; border-color: var(--border-strong); }
+    .answer-preview { max-height: 400px; overflow: auto; white-space: pre-wrap; color: var(--text2); font: 12.5px/1.7 var(--mono); }
+
+    .how { max-width: 1160px; margin: 0 auto; padding: 0 28px 62px; }
+    .how-kicker { margin: 0 0 8px; color: var(--amber); font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+    .how h2 { margin: 0 0 26px; color: var(--text); font-size: clamp(23px,3vw,34px); letter-spacing: -1px; text-align: center; }
+    .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 15px; }
+    .how-card { padding: 22px; background: rgba(15,23,41,.76); border: 1px solid var(--border); border-radius: 13px; }
+    .how-number { color: var(--amber); font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+    .how-card h3 { margin: 15px 0 7px; font-size: 15px; }
+    .how-card p { margin: 0; color: var(--text3); font-size: 12.5px; line-height: 1.65; }
+    footer { display: flex; justify-content: space-between; gap: 12px; padding: 22px 28px; color: var(--text3); border-top: 1px solid var(--border); font-size: 12px; }
+
+    @media (max-width: 730px) {
+      .nav-meta .nav-badge { display: none; }
+      .hero { padding: 57px 20px 36px; }
+      .hero p { font-size: 14px; }
+      .workspace, .how { padding-right: 18px; padding-left: 18px; }
+      .card-header, .card-body { padding-right: 17px; padding-left: 17px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .full { grid-column: auto; }
+      .steps { grid-template-columns: 1fr; }
+      .step { border-right: 0; border-bottom: 1px solid var(--border); }
+      .step:last-child { border-bottom: 0; }
+      .stats { margin-top: 24px; }
+      .stat { padding: 13px 8px; }
+      .stat strong { font-size: 15px; }
+      .document-actions, .how-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; padding: 20px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="brand"><span class="brand-mark"><img src="assets/mytst-kangaroo-logo.png" alt="myTST kangaroo logo" /></span><span>myTST</span></div>
+    <div class="nav-meta"><span class="live-dot" aria-hidden="true"></span><span>LIVE</span><span class="nav-badge">CBSE · CLASS 10–12</span></div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="eyebrow">⚡ AI-powered test generation</div>
+      <h1 id="page-title">Your tool to generate <span class="highlight">CBSE Question Paper</span> in minutes</h1>
+      <p>Configure syllabus-aligned online quizzes or print-ready offline papers for Class 10–12 in a few thoughtful clicks.</p>
+      <div class="stats" aria-label="Product capabilities">
+        <div class="stat"><strong>1 min</strong><span>Fast generation</span></div>
+        <div class="stat"><strong>10–12</strong><span>CBSE classes</span></div>
+        <div class="stat"><strong>20+</strong><span>Subjects</span></div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Question paper configuration">
+      <div class="steps" aria-label="Generation progress">
+        <div class="step active"><span class="step-number">1</span><div class="step-copy"><b>Configure</b><span>Class, marks and chapters</span></div></div>
+        <div class="step"><span class="step-number">2</span><div class="step-copy"><b>Generate</b><span>AI creates the paper</span></div></div>
+        <div class="step"><span class="step-number">3</span><div class="step-copy"><b>Deliver</b><span>Form or Word document</span></div></div>
+      </div>
+
+      <section class="card" aria-labelledby="config-title">
+        <div class="card-header">
+          <div><div id="config-title" class="card-title">Test Configuration</div><div class="card-subtitle">Choose curriculum, scope and delivery preferences</div></div>
+          <span id="modeBadge" class="mode-badge">🌐 ONLINE TEST</span>
+        </div>
+
+        <div class="card-body">
+          <form id="testForm" novalidate>
+            <div class="field full">
+              <label class="label">Test Type <span class="required">*</span></label>
+              <div class="test-type" role="group" aria-label="Test type">
+                <button type="button" class="segmented online selected" id="onlineMode">🌐 Online Test</button>
+                <button type="button" class="segmented offline" id="offlineMode">📝 Offline Test</button>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label class="label" for="classSelect">Class <span class="required">*</span></label>
+                <select id="classSelect" class="input"><option value="">Select class</option></select>
+              </div>
+              <div class="field">
+                <label class="label" for="subjectSelect">Subject <span class="required">*</span></label>
+                <select id="subjectSelect" class="input" disabled><option value="">Select subject</option></select>
+              </div>
+
+              <!-- Offline-only: intentionally placed BEFORE Chapters / Units. -->
+              <div id="marksField" class="field full hidden">
+                <label class="label" for="marksSelect">Maximum Marks <span class="required">*</span></label>
+                <select id="marksSelect" class="input">
+                  <option value="">Select maximum marks</option>
+                  <option value="20">20 Marks</option>
+                  <option value="30">30 Marks</option>
+                  <option value="40">40 Marks</option>
+                  <option value="50">50 Marks</option>
+                  <option value="70">70 Marks</option>
+                  <option value="80">80 Marks</option>
+                </select>
+                <div class="marks-order-note">↳ Select marks first — the unit / chapter selectors unlock with the correct CBSE chapter rule.</div>
+              </div>
+
+              <!-- Class 11–12: the first level is Units; the next level is actual Chapters. -->
+              <div class="field full hidden" id="unitsField">
+                <label class="label">Units <span class="required">*</span></label>
+                <div class="multi-select" id="unitsSelect">
+                  <button type="button" class="multi-trigger" id="unitsTrigger" aria-haspopup="listbox" aria-expanded="false" disabled>
+                    <span class="selection-text"><span class="placeholder">Select units…</span></span><span class="multi-chevron">⌄</span>
+                  </button>
+                  <div class="select-menu" id="unitsMenu" role="listbox" aria-label="Units"></div>
+                </div>
+                <div class="hint">For Class 11 and Class 12, select units first to reveal their chapter names. Marks rules apply to the chapters selected next.</div>
+              </div>
+
+              <div class="field full" id="chaptersField">
+                <label class="label" id="chaptersLabel">Chapters <span class="required">*</span></label>
+                <div class="multi-select" id="chaptersSelect">
+                  <button type="button" class="multi-trigger" id="chaptersTrigger" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="selection-text"><span class="placeholder">Select chapters…</span></span><span class="multi-chevron">⌄</span>
+                  </button>
+                  <div class="select-menu" id="chaptersMenu" role="listbox" aria-label="Chapters"></div>
+                </div>
+                <div id="chapterRule" class="hint">Choose a subject to see available chapters.</div>
+              </div>
+
+              <div class="field full" id="topicsField">
+                <label class="label">Topics <span class="required">*</span></label>
+                <div class="multi-select" id="topicsSelect">
+                  <button type="button" class="multi-trigger" id="topicsTrigger" aria-haspopup="listbox" aria-expanded="false" disabled>
+                    <span class="selection-text"><span class="placeholder">Select topics to include…</span></span><span class="multi-chevron">⌄</span>
+                  </button>
+                  <div class="select-menu" id="topicsMenu" role="listbox" aria-label="Topics"></div>
+                </div>
+                <div class="hint">Topics are filtered from your selected chapters / units.</div>
+              </div>
+
+              <div class="field full">
+                <label class="label">Question Type <span class="required">*</span></label>
+                <div class="multi-select" id="questionTypesSelect">
+                  <button type="button" class="multi-trigger" id="questionTypesTrigger" aria-haspopup="listbox" aria-expanded="false" disabled>
+                    <span class="selection-text"><span class="placeholder">Select question type(s)…</span></span><span class="multi-chevron">⌄</span>
+                  </button>
+                  <div class="select-menu" id="questionTypesMenu" role="listbox" aria-label="Question types"></div>
+                </div>
+                <div class="hint">“Mixed (All Types)” is exclusive and creates a varied paper.</div>
+              </div>
+
+              <div class="field full">
+                <label class="label" for="teacherEmail">Teacher Email <span class="required">*</span></label>
+                <input id="teacherEmail" class="input" type="email" placeholder="teacher@school.com" autocomplete="email" style="max-width:390px" />
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div id="onlineFields" class="field-grid">
+              <div class="field full">
+                <label class="label">Difficulty <span class="required">*</span></label>
+                <div id="onlineDifficulty" class="test-type" role="group" aria-label="Online difficulty"></div>
+              </div>
+              <div class="field">
+                <label class="label" for="numberQuestions">No. of Questions <span class="required">*</span></label>
+                <input id="numberQuestions" class="input" type="number" inputmode="numeric" min="1" max="30" placeholder="e.g. 10" />
+              </div>
+              <div class="field">
+                <label class="label" for="timeLimit">Time Limit (minutes)</label>
+                <input id="timeLimit" class="input" type="number" inputmode="numeric" min="1" placeholder="Auto-recommended" />
+                <div id="timeHint" class="hint"></div>
+              </div>
+            </div>
+
+            <div id="offlineFields" class="hidden">
+              <div class="field">
+                <label class="label">Difficulty <span class="required">*</span></label>
+                <div id="offlineDifficulty" class="test-type" role="group" aria-label="Offline difficulty"></div>
+                <div class="hint">The paper will be generated with the selected CBSE marks pattern.</div>
+              </div>
+            </div>
+
+            <div class="button-row">
+              <button id="generateButton" class="generate" type="submit" disabled>⚡ Generate Test Paper</button>
+              <div id="formStatus" class="inline-status" aria-live="polite"></div>
+              <div id="loadingCopy" class="loading-copy">▋ AI IS WRITING YOUR QUESTIONS</div>
+              <div id="formError" class="error" role="alert"></div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="results" class="card results hidden" aria-live="polite"></section>
+    </section>
+
+    <section class="how" aria-labelledby="how-title">
+      <div class="how-kicker">HOW IT WORKS</div>
+      <h2 id="how-title">Three steps to a complete question paper</h2>
+      <div class="how-grid">
+        <article class="how-card"><div class="how-number">01</div><h3>Configure</h3><p>Choose class, subject, marks and difficulty. Class 10 uses Chapters → Topics; Class 11–12 uses Units → Chapters.</p></article>
+        <article class="how-card"><div class="how-number">02</div><h3>Generate</h3><p>AI produces a syllabus-aligned paper, based on your chosen question formats and classroom requirements.</p></article>
+        <article class="how-card"><div class="how-number">03</div><h3>Deliver</h3><p>Use an auto-graded online test or open and download the print-ready Word question paper and answer key.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>myTST — CBSE School Question Paper Generator</span><span>● SYSTEM ONLINE</span></footer>
+
+  <script>
+    /*
+      Offline chapter rules
+      ----------------------
+      20 → exactly 1 chapter
+      30 → exactly 2 chapters
+      40 → exactly 4 chapters
+      50 / 70 / 80 → at least 4 chapters
+    */
+    const OFFLINE_MARK_RULES = Object.freeze({
+      20: { min: 1, max: 1, helper: '20 marks — select 1 chapter' },
+      30: { min: 2, max: 2, helper: '30 marks — select 2 chapters' },
+      40: { min: 4, max: 4, helper: '40 marks — select 4 chapters' },
+      50: { min: 4, max: null, helper: '50 marks — select at least 4 chapters' },
+      70: { min: 4, max: null, helper: '70 marks — select at least 4 chapters' },
+      80: { min: 4, max: null, helper: '80 marks — select at least 4 chapters' }
+    });
+
+    /* Concise CBSE syllabus map used by the selectors. */
+    const SYLLABUS = {
+      'Class 10': {
+        'Science': {
+          'Life Processes': ['Nutrition', 'Respiration', 'Transportation', 'Excretion'],
+          'Control & Coordination': ['Nervous System', 'Hormones in Animals', 'Control in Plants'],
+          'Heredity & Evolution': ['Heredity', 'Evolution', 'Speciation'],
+          'Chemical Reactions': ['Chemical Reactions & Equations', 'Acids, Bases & Salts', 'Metals & Non-Metals', 'Carbon Compounds'],
+          'Natural Phenomena': ['Light – Reflection', 'Light – Refraction', 'Electricity', 'Magnetic Effects of Current'],
+          'Natural Resources': ['Sources of Energy', 'Our Environment', 'Management of Natural Resources']
+        },
+        'Mathematics': {
+          'Number System': ['Real Numbers'],
+          'Algebra': ['Polynomials', 'Pair of Linear Equations', 'Quadratic Equations', 'Arithmetic Progressions'],
+          'Geometry': ['Triangles', 'Circles', 'Constructions'],
+          'Trigonometry': ['Introduction to Trigonometry', 'Applications of Trigonometry'],
+          'Mensuration': ['Areas Related to Circles', 'Surface Areas & Volumes'],
+          'Statistics & Probability': ['Statistics', 'Probability'],
+          'Coordinate Geometry': ['Coordinate Geometry']
+        },
+          'History': {['Nationalism in Europe', 'Nationalism in India', 'Age of Industrialisation', 'Print Culture']},
+          'Geography': {['Resources & Development', 'Water Resources', 'Agriculture', 'Manufacturing Industries']},
+          'Political Science': {['Power Sharing', 'Federalism', 'Political Parties', 'Outcomes of Democracy']},
+          'Economics': {['Development', 'Sectors of the Indian Economy', 'Money & Credit', 'Globalisation']
+        },
+        'English': {
+          'Reading': ['Unseen Passage – Factual', 'Unseen Passage – Discursive'],
+          'Writing & Grammar': ['Formal Letter', 'Analytical Paragraph', 'Tenses', 'Reported Speech'],
+          'First Flight': ['A Letter to God', 'Nelson Mandela', 'Glimpses of India', 'Madam Rides the Bus'],
+          'Footprints Without Feet': ['A Triumph of Surgery', 'The Thief’s Story', 'Bholi', 'The Book That Saved the Earth']
+        },
+        'Hindi': {
+          'क्षितिज भाग 2 – गद्य': ['नेताजी का चश्मा', 'बालगोबिन भगत', 'लखनवी अंदाज़'],
+          'क्षितिज भाग 2 – काव्य': ['पद', 'राम-लक्ष्मण-परशुराम संवाद', 'आत्मकथ्य'],
+          'व्याकरण एवं रचना': ['समास', 'मुहावरे', 'पत्र लेखन', 'अनुच्छेद लेखन']
+        },
+        'Computer Applications': {
+          'Programming': ['Python Revision', 'Working with Functions', 'File Handling'],
+          'Database': ['Introduction to MySQL', 'SQL Commands', 'Queries'],
+          'Networking & Ethics': ['Network Concepts', 'Internet Services', 'Cyber Crime']
+        }
+      },
+      'Class 11': {
+        'Physics': {
+          'Mechanics': ['Units & Measurements', 'Motion in a Straight Line', 'Laws of Motion', 'Work, Energy & Power', 'Gravitation'],
+          'Properties of Matter': ['Mechanical Properties of Fluids', 'Thermal Properties', 'Thermodynamics', 'Kinetic Theory'],
+          'Oscillations & Waves': ['Oscillations', 'Waves']
+        },
+        'Chemistry': {
+          'Physical Chemistry': ['Some Basic Concepts', 'Structure of Atom', 'Chemical Bonding', 'Thermodynamics', 'Equilibrium'],
+          'Inorganic Chemistry': ['Hydrogen', 's-Block Elements', 'p-Block Elements'],
+          'Organic Chemistry': ['Organic Chemistry – Basic Principles', 'Hydrocarbons', 'Environmental Chemistry']
+        },
+        'Biology': {
+          'Diversity in Living World': ['The Living World', 'Biological Classification', 'Plant Kingdom', 'Animal Kingdom'],
+          'Cell Biology': ['Cell – The Unit of Life', 'Biomolecules', 'Cell Cycle & Cell Division'],
+          'Plant Physiology': ['Transport in Plants', 'Photosynthesis', 'Respiration in Plants'],
+          'Human Physiology': ['Digestion & Absorption', 'Breathing', 'Body Fluids & Circulation', 'Neural Control']
+        },
+        'Mathematics': {
+          'Sets & Functions': ['Sets', 'Relations & Functions', 'Trigonometric Functions'],
+          'Algebra': ['Complex Numbers', 'Permutations & Combinations', 'Binomial Theorem', 'Sequences & Series'],
+          'Coordinate Geometry': ['Straight Lines', 'Conic Sections', 'Introduction to 3D Geometry'],
+          'Calculus': ['Limits & Derivatives'],
+          'Statistics & Probability': ['Statistics', 'Probability']
+        },
+        'English': {
+          'Reading & Writing': ['Unseen Passages', 'Note Making', 'Notice', 'Article Writing', 'Speech Writing'],
+          'Hornbill': ['The Portrait of a Lady', 'Discovering Tut', 'The Ailing Planet', 'The Adventure'],
+          'Snapshots': ['The Summer of the Beautiful White Horse', 'The Address', 'Ranga’s Marriage']
+        },
+        'Accountancy': {
+          'Theory Base of Accounting': ['Introduction to Accounting', 'Recording of Transactions I', 'Recording of Transactions II'],
+          'Financial Statements': ['Bank Reconciliation Statement', 'Trial Balance', 'Depreciation', 'Bills of Exchange']
+        },
+        'Business Studies': {
+          'Nature of Business': ['Business, Trade & Commerce', 'Forms of Business Organisation', 'Business Services'],
+          'Business Environment': ['Social Responsibility', 'Sources of Business Finance', 'Internal Trade', 'International Business']
+        },
+        'Economics': {
+          'Statistics for Economics': ['Collection of Data', 'Presentation of Data', 'Central Tendency', 'Correlation'],
+          'Indian Economic Development': ['Indian Economy 1950–1990', 'Liberalisation', 'Poverty', 'Employment']
+        },
+        'History': { 'World History': ['From the Beginning of Time', 'Writing and City Life', 'Nomadic Empires', 'The Industrial Revolution'] },
+        'Political Science': { 'Constitution & Theory': ['Constitution – Why and How', 'Rights', 'Executive', 'Legislature', 'Freedom', 'Equality'] },
+        'Geography': { 'Physical & Indian Geography': ['Origin of the Earth', 'Landforms', 'Climate', 'India – Physiography', 'Drainage System'] },
+        'Sociology': { 'Society & Institutions': ['Sociology and Society', 'Social Institutions', 'Culture and Socialisation', 'Social Structure'] },
+        'Psychology': { 'Basic Processes': ['What is Psychology', 'Methods of Enquiry', 'Human Development', 'Learning', 'Memory'] },
+        'Computer Science': { 'Programming & Database': ['Python Basics', 'File Handling', 'MySQL Basics', 'SQL Queries', 'Network Concepts'] }
+      },
+      'Class 12': {
+        'Physics': {
+          'Electromagnetism': ['Electric Charges & Fields', 'Current Electricity', 'Moving Charges & Magnetism', 'Electromagnetic Induction', 'Alternating Current'],
+          'Optics': ['Ray Optics & Optical Instruments', 'Wave Optics'],
+          'Modern Physics': ['Dual Nature of Radiation & Matter', 'Atoms', 'Nuclei', 'Semiconductor Electronics']
+        },
+        'Chemistry': {
+          'Physical Chemistry': ['Solid State', 'Solutions', 'Electrochemistry', 'Chemical Kinetics', 'Surface Chemistry'],
+          'Inorganic Chemistry': ['p-Block Elements', 'd & f Block Elements', 'Coordination Compounds'],
+          'Organic Chemistry': ['Haloalkanes & Haloarenes', 'Alcohols, Phenols & Ethers', 'Aldehydes, Ketones & Acids', 'Amines', 'Biomolecules']
+        },
+        'Biology': {
+          'Reproduction': ['Reproduction in Organisms', 'Sexual Reproduction in Flowering Plants', 'Human Reproduction', 'Reproductive Health'],
+          'Genetics & Evolution': ['Principles of Inheritance', 'Molecular Basis of Inheritance', 'Evolution'],
+          'Biotechnology': ['Biotechnology – Principles & Processes', 'Biotechnology & its Applications'],
+          'Ecology': ['Organisms & Populations', 'Ecosystem', 'Biodiversity & Conservation', 'Environmental Issues']
+        },
+        'Mathematics': {
+          'Relations & Functions': ['Relations & Functions', 'Inverse Trigonometric Functions'],
+          'Algebra': ['Matrices', 'Determinants'],
+          'Calculus': ['Continuity & Differentiability', 'Applications of Derivatives', 'Integrals', 'Differential Equations'],
+          'Vectors & 3D Geometry': ['Vector Algebra', 'Three Dimensional Geometry'],
+          'Probability': ['Probability']
+        },
+        'English': {
+          'Reading & Writing': ['Unseen Passages', 'Note Making & Summary', 'Notice', 'Report Writing', 'Article Writing'],
+          'Flamingo': ['The Last Lesson', 'Lost Spring', 'Deep Water', 'Indigo', 'Going Places'],
+          'Vistas': ['The Third Level', 'The Tiger King', 'The Enemy', 'On the Face of It']
+        },
+        'Accountancy': {
+          'Partnership Accounts': ['Basic Concepts', 'Admission of a Partner', 'Retirement / Death of a Partner', 'Dissolution'],
+          'Company Accounts': ['Share Capital', 'Issue and Redemption of Debentures'],
+          'Financial Statement Analysis': ['Financial Statements', 'Accounting Ratios', 'Cash Flow Statement']
+        },
+        'Business Studies': {
+          'Management': ['Nature of Management', 'Principles of Management', 'Business Environment', 'Planning', 'Organising'],
+          'Finance & Marketing': ['Financial Management', 'Financial Markets', 'Marketing Management', 'Consumer Protection']
+        },
+        'Economics': {
+          'Microeconomics': ['Consumer Behaviour', 'Production and Costs', 'Market Equilibrium', 'Non-Competitive Markets'],
+          'Macroeconomics': ['National Income', 'Money and Banking', 'Income & Employment', 'Government Budget', 'Balance of Payments']
+        },
+        'History': { 'Themes in Indian History': ['Harappan Civilisation', 'Kings, Farmers & Towns', 'Bhakti-Sufi Traditions', 'Mahatma Gandhi', 'Framing the Constitution'] },
+        'Political Science': { 'World Politics & India': ['The Cold War Era', 'US Hegemony', 'International Organisations', 'Challenges of Nation Building', 'Regional Aspirations'] },
+        'Geography': { 'Human Geography & India': ['Population', 'Human Development', 'Primary Activities', 'International Trade', 'Resources & Agriculture'] },
+        'Sociology': { 'Indian Society': ['Social Institutions', 'Diversity and Inequality', 'Rural Transformation', 'Globalisation and Social Change'] },
+        'Psychology': { 'Individual & Society': ['Self and Personality', 'Psychological Disorders', 'Therapeutic Approaches', 'Social Influence'] },
+        'Computer Science': { 'Programming & Database': ['Python Advanced', 'Pandas', 'Data Visualisation', 'MySQL Advanced', 'Network Security'] }
+      }
+    };
+
+    const ONLINE_WEBHOOK = 'https://n8n.mytst.cloud/webhook/c12174e9-3bdd-4a62-bca0-9df11d65d31e';
+    const DIFFICULTIES = [
+      ['Easy', '🟢', 'easy'], ['Moderate', '🟡', 'moderate'], ['Hard', '🔴', 'hard'], ['Mixed', '🎲', 'mixed']
+    ];
+
+    const state = {
+      testType: 'online',
+      className: '',
+      subject: '',
+      maximumMarks: '',
+      // For Class 11–12 these are real syllabus Units. Chapters are stored separately.
+      units: [],
+      chapters: [],
+      topics: [],
+      questionTypes: [],
+      difficulty: '',
+      numberQuestions: '',
+      timeLimit: '',
+      teacherEmail: '',
+      isGenerating: false,
+      adjustmentNote: ''
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const escapeHTML = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char]));
+
+    function getQuestionTypes(subject) {
+      const normalized = (subject || '').toLowerCase();
+      if (['mathematics', 'physics', 'chemistry'].includes(normalized)) return ['MCQ', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Numerical / Problem-Solving', 'Case-Based', 'Mixed (All Types)'];
+      if (normalized === 'biology') return ['MCQ', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Diagram-Based', 'Case-Based', 'Mixed (All Types)'];
+      if (['english', 'hindi'].includes(normalized)) return ['MCQ', 'Passage / Comprehension-Based', 'Grammar-Based', 'Very Short Answer', 'Short Answer', 'Long Answer / Essay', 'Literary / Extract-Based', 'Letter / Application Writing', 'Mixed (All Types)'];
+      if (normalized === 'social science' || normalized === 'history' || normalized === 'political science') return ['MCQ', 'Assertion–Reason', 'Source-Based', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Mixed (All Types)'];
+      if (normalized === 'geography') return ['MCQ', 'Assertion–Reason', 'Map-Based', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Mixed (All Types)'];
+      if (normalized === 'accountancy' || normalized === 'economics') return ['MCQ', 'Numerical / Problem-Solving', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Case-Based', 'Mixed (All Types)'];
+      if (normalized.includes('computer')) return ['MCQ', 'Programming / Code-Based', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Case-Based', 'Mixed (All Types)'];
+      return ['MCQ', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Case-Based', 'Mixed (All Types)'];
+    }
+
+    function usesUnitChapterHierarchy() {
+      return state.className === 'Class 11' || state.className === 'Class 12';
+    }
+    function selectedUnitOptions() {
+      if (!state.className || !state.subject) return [];
+      return Object.keys(SYLLABUS[state.className]?.[state.subject] || {});
+    }
+    function selectedChapterOptions() {
+      if (!state.className || !state.subject) return [];
+      const subjectData = SYLLABUS[state.className]?.[state.subject] || {};
+      // Class 10 keys are Chapters. Class 11–12 keys are Units and their
+      // child values are the actual Chapter names.
+      return usesUnitChapterHierarchy()
+        ? state.units.flatMap((unit) => subjectData[unit] || [])
+        : Object.keys(subjectData);
+    }
+    function selectedTopicOptions() {
+      if (!state.className || !state.subject || usesUnitChapterHierarchy()) return [];
+      const subjectData = SYLLABUS[state.className]?.[state.subject] || {};
+      return state.chapters.flatMap((chapter) => subjectData[chapter] || []);
+    }
+    function chapterNoun(count = 2) { return count === 1 ? 'chapter' : 'chapters'; }
+    function currentMarkRule() {
+      return state.testType === 'offline' && state.maximumMarks ? OFFLINE_MARK_RULES[state.maximumMarks] : null;
+    }
+    function chapterRuleIsMet() {
+      const rule = currentMarkRule();
+      if (!rule) return state.testType !== 'offline';
+      const count = state.chapters.length;
+      return count >= rule.min && (rule.max === null || count <= rule.max);
+    }
+    function chapterRuleStatus() {
+      const rule = currentMarkRule();
+      if (!rule) return '';
+      if (usesUnitChapterHierarchy() && !state.units.length) return 'Select one or more units first to unlock their chapter names.';
+      const count = state.chapters.length;
+      if (count < rule.min) {
+        const remaining = rule.min - count;
+        return `Select ${remaining} more ${chapterNoun(remaining)} to continue.`;
+      }
+      if (rule.max !== null && count === rule.max) return 'Limit reached — extra chapter checkboxes are disabled.';
+      return 'Rule met — you may add more chapters if desired.';
+    }
+    function normalizeChapterSelectionForRule() {
+      const rule = currentMarkRule();
+      if (rule && rule.max !== null && state.chapters.length > rule.max) {
+        state.chapters = state.chapters.slice(0, rule.max);
+        const validTopics = new Set(selectedTopicOptions());
+        state.topics = state.topics.filter((topic) => validTopics.has(topic));
+        state.adjustmentNote = `Your chapter selection was adjusted to ${rule.max} to match the ${state.maximumMarks}-mark rule.`;
+      }
+    }
+    function isEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || '').trim()); }
+    function recommendedTime() {
+      if (!state.numberQuestions || !state.difficulty || state.difficulty === 'Mixed') return null;
+      const modifier = state.difficulty === 'Easy' ? .8 : state.difficulty === 'Hard' ? 1.2 : 1;
+      return Math.ceil(Number(state.numberQuestions) * 2 * modifier);
+    }
+    function missingRequirements() {
+      const missing = [];
+      if (!state.className) missing.push('class');
+      if (!state.subject) missing.push('subject');
+      if (state.testType === 'offline' && !state.maximumMarks) missing.push('maximum marks');
+      if (usesUnitChapterHierarchy() && !state.units.length) missing.push('units');
+      if (!state.chapters.length) missing.push('chapters');
+      if (state.testType === 'offline' && state.maximumMarks && !chapterRuleIsMet()) missing.push('the chapter selection rule');
+      if (!usesUnitChapterHierarchy() && !state.topics.length) missing.push('topics');
+      if (!state.questionTypes.length) missing.push('question type');
+      if (!state.difficulty) missing.push('difficulty');
+      if (state.testType === 'online' && !state.numberQuestions) missing.push('number of questions');
+      if (!isEmail(state.teacherEmail)) missing.push('valid teacher email');
+      return missing;
+    }
+
+    function setOptions(select, options, placeholder) {
+      select.innerHTML = `<option value="">${placeholder}</option>` + options.map((option) => `<option value="${escapeHTML(option)}">${escapeHTML(option)}</option>`).join('');
+    }
+
+    function buildDifficultyButtons(containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = DIFFICULTIES.map(([name, icon, style]) => `
+        <button type="button" class="segmented difficulty ${state.difficulty === name ? `selected ${style}` : ''}" data-difficulty="${name}">${icon} ${name}</button>
+      `).join('');
+    }
+
+    function renderTrigger(key, values, placeholder, disabled) {
+      const trigger = document.getElementById(`${key}Trigger`);
+      const selection = trigger.querySelector('.selection-text');
+      trigger.disabled = disabled;
+      if (!values.length) selection.innerHTML = `<span class="placeholder">${placeholder}</span>`;
+      else {
+        const visible = values.slice(0, 3).map((value) => `<span class="selection-pill">${escapeHTML(value)}</span>`).join('');
+        const more = values.length > 3 ? `<span class="selection-pill">+${values.length - 3} more</span>` : '';
+        selection.innerHTML = visible + more;
+      }
+    }
+
+    function renderMenu(key, options, selectedValues, optionsConfig = {}) {
+      const menu = document.getElementById(`${key}Menu`);
+      const { disabled = false, maxSelections = null, showCount = false, countLabel = 'topics' } = optionsConfig;
+      if (!options.length) {
+        menu.innerHTML = `<div class="select-option disabled">No options available yet.</div>`;
+        return;
+      }
+      const atLimit = maxSelections !== null && selectedValues.length >= maxSelections;
+      menu.innerHTML = options.map((option) => {
+        const checked = selectedValues.includes(option);
+        const optionDisabled = disabled || (!checked && atLimit);
+        const count = showCount ? (SYLLABUS[state.className]?.[state.subject]?.[option] || []).length : null;
+        return `
+          <label class="select-option ${checked ? 'selected' : ''} ${optionDisabled ? 'disabled' : ''}">
+            <input type="checkbox" data-selection-key="${key}" value="${escapeHTML(option)}" ${checked ? 'checked' : ''} ${optionDisabled ? 'disabled' : ''} />
+            <span>${escapeHTML(option)}</span>
+            ${count !== null ? `<span class="unit-count">${count} ${countLabel}</span>` : ''}
+          </label>`;
+      }).join('');
+    }
+
+    function renderChapterRule() {
+      const ruleContainer = document.getElementById('chapterRule');
+      if (state.testType !== 'offline') {
+        ruleContainer.className = 'hint';
+        if (!state.subject) ruleContainer.textContent = 'Choose a subject to see available chapters.';
+        else if (usesUnitChapterHierarchy() && !state.units.length) ruleContainer.textContent = 'Select one or more units first to reveal their chapters.';
+        else ruleContainer.textContent = 'Select one or more chapters for your paper.';
+        return;
+      }
+      if (!state.maximumMarks) {
+        ruleContainer.className = 'rule-helper';
+        ruleContainer.innerHTML = `<span class="rule-icon">ℹ</span><div><strong>Choose maximum marks first</strong><span>Chapter selection is locked until a marks value is selected.</span></div>`;
+        return;
+      }
+      const rule = currentMarkRule();
+      const valid = chapterRuleIsMet();
+      ruleContainer.className = `rule-helper ${valid ? 'valid' : ''}`;
+      ruleContainer.innerHTML = `<span class="rule-icon">${valid ? '✓' : '◌'}</span><div><strong>${rule.helper}</strong><span>${chapterRuleStatus()}${state.adjustmentNote ? ` ${state.adjustmentNote}` : ''}</span></div>`;
+    }
+
+    function renderConfiguration() {
+      const classSelect = document.getElementById('classSelect');
+      const subjectSelect = document.getElementById('subjectSelect');
+      const marksField = document.getElementById('marksField');
+      const unitsField = document.getElementById('unitsField');
+      const topicsField = document.getElementById('topicsField');
+      const onlineFields = document.getElementById('onlineFields');
+      const offlineFields = document.getElementById('offlineFields');
+      const modeBadge = document.getElementById('modeBadge');
+      const generate = document.getElementById('generateButton');
+      const formStatus = document.getElementById('formStatus');
+
+      if (!classSelect.options.length || classSelect.options.length === 1) setOptions(classSelect, Object.keys(SYLLABUS), 'Select class');
+      classSelect.value = state.className;
+      setOptions(subjectSelect, state.className ? Object.keys(SYLLABUS[state.className]) : [], 'Select subject');
+      subjectSelect.disabled = !state.className;
+      subjectSelect.value = state.subject;
+
+      marksField.classList.toggle('hidden', state.testType !== 'offline');
+      document.getElementById('marksSelect').value = state.maximumMarks;
+      onlineFields.classList.toggle('hidden', state.testType !== 'online');
+      offlineFields.classList.toggle('hidden', state.testType !== 'offline');
+      modeBadge.className = `mode-badge ${state.testType === 'offline' ? 'offline' : ''}`;
+      modeBadge.textContent = state.testType === 'offline' ? '📝 OFFLINE TEST' : '🌐 ONLINE TEST';
+      document.getElementById('onlineMode').classList.toggle('selected', state.testType === 'online');
+      document.getElementById('offlineMode').classList.toggle('selected', state.testType === 'offline');
+
+      const seniorClass = usesUnitChapterHierarchy();
+      const unitOptions = selectedUnitOptions();
+      const chapterOptions = selectedChapterOptions();
+      const topicOptions = selectedTopicOptions();
+      const questionOptions = state.subject ? getQuestionTypes(state.subject) : [];
+      const markGateLocked = !state.subject || (state.testType === 'offline' && !state.maximumMarks);
+      const unitsLocked = markGateLocked;
+      const chaptersLocked = markGateLocked || (seniorClass && !state.units.length);
+      const rule = currentMarkRule();
+
+      // Class 11 / 12 have a real Unit → Chapter hierarchy. Class 10 retains
+      // Chapter → Topic, so there is no separate Unit picker in Class 10.
+      unitsField.classList.toggle('hidden', !seniorClass);
+      topicsField.classList.toggle('hidden', seniorClass);
+      document.getElementById('chaptersLabel').innerHTML = `Chapters <span class="required">*</span>`;
+      renderTrigger('units', state.units, unitsLocked ? 'Select maximum marks to unlock units…' : 'Select units…', unitsLocked);
+      renderMenu('units', unitOptions, state.units, { disabled: unitsLocked, showCount: true, countLabel: 'chapters' });
+      renderTrigger('chapters', state.chapters, chaptersLocked ? (seniorClass && state.subject && !state.units.length ? 'Select units first…' : 'Select maximum marks to unlock chapters…') : 'Select chapters…', chaptersLocked);
+      renderMenu('chapters', chapterOptions, state.chapters, { disabled: chaptersLocked, maxSelections: rule?.max ?? null, showCount: !seniorClass, countLabel: 'topics' });
+      renderTrigger('topics', state.topics, 'Select topics to include…', !state.chapters.length);
+      renderMenu('topics', topicOptions, state.topics, { disabled: !state.chapters.length });
+      renderTrigger('questionTypes', state.questionTypes, 'Select question type(s)…', !state.subject);
+      renderMenu('questionTypes', questionOptions, state.questionTypes, { disabled: !state.subject });
+      renderChapterRule();
+      buildDifficultyButtons('onlineDifficulty');
+      buildDifficultyButtons('offlineDifficulty');
+
+      document.getElementById('numberQuestions').value = state.numberQuestions;
+      document.getElementById('timeLimit').value = state.timeLimit;
+      document.getElementById('teacherEmail').value = state.teacherEmail;
+      const hint = document.getElementById('timeHint');
+      const time = recommendedTime();
+      hint.textContent = time ? `● ${time} min recommended` : '';
+      hint.style.color = time ? 'var(--amber)' : 'var(--text3)';
+
+      const missing = missingRequirements();
+      generate.disabled = state.isGenerating || missing.length > 0;
+      generate.textContent = state.isGenerating ? '⏳ Generating questions…' : (state.testType === 'offline' ? '📝 Create Offline Question Paper' : '⚡ Generate Test Paper');
+      document.getElementById('testForm').classList.toggle('loading', state.isGenerating);
+      if (state.isGenerating) {
+        formStatus.className = 'inline-status';
+        formStatus.textContent = state.testType === 'offline' ? 'Creating your Word question paper and answer key…' : 'Creating your CBSE test…';
+      } else if (state.testType === 'offline' && state.maximumMarks && !chapterRuleIsMet()) {
+        formStatus.className = 'inline-status warn';
+        formStatus.textContent = `Offline generation is hard-blocked until ${currentMarkRule().helper.toLowerCase()}.`;
+      } else if (!missing.length) {
+        formStatus.className = 'inline-status success';
+        formStatus.textContent = '✓ All required details are ready.';
+      } else {
+        formStatus.className = 'inline-status';
+        formStatus.textContent = `Complete: ${missing.join(' · ')}.`;
+      }
+    }
+
+    function closeMenus() {
+      document.querySelectorAll('.select-menu.open').forEach((menu) => menu.classList.remove('open'));
+      document.querySelectorAll('.multi-trigger.open').forEach((trigger) => { trigger.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); });
+    }
+
+    function setTestType(nextType) {
+      if (state.testType === nextType) return;
+      state.testType = nextType;
+      state.maximumMarks = '';
+      // Do not carry a prior mode's selection into Offline mode: marks must
+      // deliberately be chosen before a fresh Chapters / Units selection.
+      state.units = [];
+      state.chapters = [];
+      state.topics = [];
+      state.adjustmentNote = '';
+      closeMenus();
+      clearError();
+      renderConfiguration();
+    }
+
+    function updateSelection(key, value, isChecked) {
+      const selected = state[key];
+      if (isChecked) {
+        if (key === 'chapters') {
+          const rule = currentMarkRule();
+          if (rule?.max !== null && rule?.max !== undefined && selected.length >= rule.max) return;
+        }
+        state[key] = selected.includes(value) ? selected : [...selected, value];
+      } else {
+        state[key] = selected.filter((item) => item !== value);
+      }
+      if (key === 'units') {
+        // A chapter is valid only while one of its parent units remains selected.
+        const availableChapters = new Set(selectedChapterOptions());
+        state.chapters = state.chapters.filter((chapter) => availableChapters.has(chapter));
+        state.topics = [];
+      }
+      if (key === 'chapters') {
+        const availableTopics = new Set(selectedTopicOptions());
+        state.topics = state.topics.filter((topic) => availableTopics.has(topic));
+      }
+      if (key === 'questionTypes') { 
+        const mixed = 'Mixed (All Types)';
+        if (isChecked && value === mixed) state.questionTypes = [mixed];
+        else if (isChecked && value !== mixed) state.questionTypes = state.questionTypes.filter((type) => type !== mixed);
+      }
+      state.adjustmentNote = '';
+      renderConfiguration();
+    }
+
+    function clearError() { const error = document.getElementById('formError'); error.textContent = ''; error.classList.remove('show'); }
+    function showError(message) { const error = document.getElementById('formError'); error.textContent = `⚠ ${message}`; error.classList.add('show'); }
+
+    function toTitle(value) { return String(value).replace(/\w\S*/g, (word) => word.charAt(0).toUpperCase() + word.slice(1)); }
+    function buildScopePayload() {
+      if (usesUnitChapterHierarchy()) {
+        return {
+          syllabus_hierarchy: 'units_to_chapters',
+          units: state.units,
+          chapters: state.chapters,
+          topics: [],
+          selected_units: state.units,
+          selected_chapters: state.chapters
+        };
+      }
+      return {
+        syllabus_hierarchy: 'chapters_to_topics',
+        units: [],
+        chapters: state.chapters,
+        topics: state.topics,
+        selected_chapters: state.chapters,
+        selected_topics: state.topics
+      };
+    }
+    function parsePaper(raw) {
+      const trimmed = String(raw || '').replace(/^=+/, '').trim();
+      try {
+        const json = JSON.parse(trimmed);
+        if (typeof json === 'string') return { type: 'online', text: json };
+        return json;
+      } catch (_) { return { type: 'online', text: trimmed }; }
+    }
+    function documentLinks(docId, filename) {
+      if (!docId) return '<span class="hint">Document link was not returned by the server.</span>';
+      const view = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/edit`;
+      const download = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/export?format=docx`;
+      return `<div class="doc-buttons"><a class="doc-button secondary" href="${view}" target="_blank" rel="noreferrer">◉ View document</a><a class="doc-button" href="${download}" download="${escapeHTML(filename)}">⇩ Download Word</a></div>`;
+    }
+    function renderResult(payload, response) {
+      const results = document.getElementById('results');
+      const meta = [payload.exam_type, payload.subject, payload.difficulty, state.testType === 'offline' ? `${payload.maximum_marks} marks` : `${payload.num_questions} questions`].filter(Boolean);
+      let panel = '';
+      if (state.testType === 'offline') {
+        const item = Array.isArray(response) ? (response[0] || {}) : response;
+        const questionId = item.questionDocumentId || item.question_document_id || item.questionDocId;
+        const answerId = item.keyDocumentId || item.key_document_id || item.answerDocumentId || item.answerDocId;
+        panel = `
+          <div class="result-panel">
+            <div class="document-actions">
+              <article class="document-card"><h3>Question Paper</h3><p>Print-ready CBSE paper generated from your configuration.</p>${documentLinks(questionId, 'cbse-question-paper.docx')}</article>
+              <article class="document-card"><h3>Answer Key</h3><p>Teacher copy with answers and marking support.</p>${documentLinks(answerId, 'cbse-answer-key.docx')}</article>
+            </div>
+          </div>`;
+      } else {
+        const text = response.text || response.generated_text || response.output || response.result || JSON.stringify(response, null, 2);
+        panel = `<div class="result-panel"><p style="margin-bottom:14px">Your online test content is ready.</p><div class="answer-preview">${escapeHTML(text)}</div></div>`;
+      }
+      results.innerHTML = `
+        <div class="results-header"><div class="result-title">Test Paper Generated <span class="result-ok">✓ SUCCESS</span></div><span class="mode-badge ${state.testType === 'offline' ? 'offline' : ''}">${state.testType === 'offline' ? '📝 OFFLINE PAPER' : '🌐 ONLINE TEST'}</span></div>
+        <div class="result-meta">${meta.map((item) => `<span class="meta-chip">${escapeHTML(item)}</span>`).join('')}</div>
+        ${panel}`;
+      results.classList.remove('hidden');
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    async function submitTest(event) {
+      event.preventDefault();
+      const missing = missingRequirements();
+      if (missing.length) {
+        showError(`Please complete ${missing.join(', ')}.`);
+        return;
+      }
+      if (state.testType === 'offline' && !chapterRuleIsMet()) {
+        showError('The selected chapters do not meet the marks-based chapter rule.');
+        return;
+      }
+      clearError();
+      state.isGenerating = true;
+      renderConfiguration();
+      const payload = state.testType === 'offline' ? {
+        test_type: 'offline',
+        exam_type: state.className,
+        subject: toTitle(state.subject),
+        ...buildScopePayload(),
+        question_types: state.questionTypes,
+        difficulty: state.difficulty,
+        maximum_marks: Number(state.maximumMarks),
+        teacher_id: state.teacherEmail.trim().toLowerCase(),
+        teacher_email: state.teacherEmail.trim().toLowerCase()
+      } : {
+        test_type: 'online',
+        exam_type: state.className,
+        subject: toTitle(state.subject),
+        ...buildScopePayload(),
+        question_types: state.questionTypes,
+        difficulty: state.difficulty,
+        num_questions: Number(state.numberQuestions),
+        time_limit: Number(state.timeLimit) || recommendedTime() || 20,
+        mode: 'ai_only',
+        teacher_email: state.teacherEmail.trim().toLowerCase()
+      };
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 6 * 60 * 1000);
+        const response = await fetch(ONLINE_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+        const raw = await response.text();
+        if (!response.ok || !raw.trim()) throw new Error(`The generation service returned ${response.status || 'an empty response'}.`);
+        const parsed = parsePaper(raw);
+        if (parsed && parsed.success === false) throw new Error(parsed.message || 'Question paper generation failed.');
+        renderResult(payload, parsed);
+      } catch (error) {
+        showError(error.name === 'AbortError' ? 'Generation timed out after 6 minutes. Please try again.' : `Generation failed: ${error.message}`);
+      } finally {
+        state.isGenerating = false;
+        renderConfiguration();
+      }
+    }
+
+    // Static control events
+    document.getElementById('onlineMode').addEventListener('click', () => setTestType('online'));
+    document.getElementById('offlineMode').addEventListener('click', () => setTestType('offline'));
+    document.getElementById('classSelect').addEventListener('change', (event) => {
+      state.className = event.target.value;
+      state.subject = ''; state.units = []; state.chapters = []; state.topics = []; state.questionTypes = []; state.adjustmentNote = '';
+      closeMenus(); clearError(); renderConfiguration();
+    });
+    document.getElementById('subjectSelect').addEventListener('change', (event) => {
+      state.subject = event.target.value;
+      state.units = []; state.chapters = []; state.topics = []; state.questionTypes = []; state.adjustmentNote = '';
+      closeMenus(); clearError(); renderConfiguration();
+    });
+    document.getElementById('marksSelect').addEventListener('change', (event) => {
+      state.maximumMarks = event.target.value;
+      state.adjustmentNote = '';
+      normalizeChapterSelectionForRule();
+      closeMenus(); clearError(); renderConfiguration();
+    });
+    document.getElementById('numberQuestions').addEventListener('input', (event) => { state.numberQuestions = event.target.value; renderConfiguration(); });
+    document.getElementById('timeLimit').addEventListener('input', (event) => { state.timeLimit = event.target.value; renderConfiguration(); });
+    document.getElementById('teacherEmail').addEventListener('input', (event) => { state.teacherEmail = event.target.value; renderConfiguration(); });
+    document.getElementById('testForm').addEventListener('submit', submitTest);
+
+    // Delegation works with menus and difficulty buttons that are re-rendered.
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('.multi-trigger');
+      if (trigger && !trigger.disabled) {
+        const key = trigger.id.replace('Trigger', '');
+        const menu = document.getElementById(`${key}Menu`);
+        const willOpen = !menu.classList.contains('open');
+        closeMenus();
+        if (willOpen) { menu.classList.add('open'); trigger.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+        return;
+      }
+      const difficulty = event.target.closest('[data-difficulty]');
+      if (difficulty) { state.difficulty = difficulty.dataset.difficulty; clearError(); renderConfiguration(); return; }
+      if (!event.target.closest('.multi-select')) closeMenus();
+    });
+    document.addEventListener('change', (event) => {
+      const checkbox = event.target.closest('[data-selection-key]');
+      if (!checkbox) return;
+      updateSelection(checkbox.dataset.selectionKey, checkbox.value, checkbox.checked);
+    });
+
+    renderConfiguration();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a2f432a80c8a7c',t:'MTc4NjU3NDEzNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
   --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
   --amber:#F5A623;--amber2:#FFB84D;--amber-dim:rgba(245,166,35,0.12);
   --blue:#3B82F6;--blue-dim:rgba(59,130,246,0.1);
