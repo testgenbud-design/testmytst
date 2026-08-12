@@ -422,6 +422,27 @@ const SYLLABUS={
 // ============================================================
 // Subject-aware question types — kept in sync with subject choice
 // ============================================================
+function getMinChaptersForMarks(marks) {
+  if (marks <= 30) return 1;
+  if (marks <= 50) return 2;       // covers 40 and 50 as specified
+  if (marks <= 60) return 3;       // DEFAULT - not explicitly specified, rounds up from the 50->2 tier
+  if (marks <= 70) return 3;       // as specified
+  return 4;                         // 80+ as specified (chose 4 over 5 - see rationale)
+}
+ 
+/**
+ * Returns a warning message if the selected chapter count is below the
+ * recommended minimum for the given marks. Returns null if no warning needed.
+ */
+function getChapterCountWarning(marks, selectedChapterCount) {
+  const minRequired = getMinChaptersForMarks(marks);
+  if (selectedChapterCount < minRequired) {
+    return `${marks} marks from ${selectedChapterCount} chapter${selectedChapterCount === 1 ? '' : 's'} may produce repetitive questions. We recommend at least ${minRequired} chapters for this mark total.`;
+  }
+  return null;
+}
+ 
+module.exports = { getMinChaptersForMarks, getChapterCountWarning };
 function getQuestionTypes(subject){
   const s=(subject||'').trim().toLowerCase();
   const langs=['english','hindi','marathi'];
