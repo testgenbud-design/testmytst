@@ -220,9 +220,9 @@ const SYLLABUS={
     "Control & Coordination":["Nervous System","Hormones in Animals","Control in Plants"],
     "Reproduction":["Reproduction in Organisms","Human Reproductive System","Reproductive Health"],
     "Heredity & Evolution":["Heredity","Evolution","Speciation"],
-    "Natural Resources":["Our Environment","Management of Natural Resources","Sources of Energy"]
     "Chemical Reactions":["Chemical Reactions & Equations","Acids Bases & Salts","Metals & Non-Metals","Carbon Compounds","Periodic Classification"],
     "Natural Phenomena":["Light – Reflection","Light – Refraction","Human Eye","Electricity","Magnetic Effects of Current"],
+    "Natural Resources":["Sources of Energy","Our Environment","Management of Natural Resources"]
   },
   "Mathematics":{
     "Number System":["Real Numbers"],
@@ -422,27 +422,6 @@ const SYLLABUS={
 // ============================================================
 // Subject-aware question types — kept in sync with subject choice
 // ============================================================
-function getMinChaptersForMarks(marks) {
-  if (marks <= 30) return 1;
-  if (marks <= 50) return 2;       // covers 40 and 50 as specified
-  if (marks <= 60) return 3;       // DEFAULT - not explicitly specified, rounds up from the 50->2 tier
-  if (marks <= 70) return 3;       // as specified
-  return 4;                         // 80+ as specified (chose 4 over 5 - see rationale)
-}
- 
-/**
- * Returns a warning message if the selected chapter count is below the
- * recommended minimum for the given marks. Returns null if no warning needed.
- */
-function getChapterCountWarning(marks, selectedChapterCount) {
-  const minRequired = getMinChaptersForMarks(marks);
-  if (selectedChapterCount < minRequired) {
-    return `${marks} marks from ${selectedChapterCount} chapter${selectedChapterCount === 1 ? '' : 's'} may produce repetitive questions. We recommend at least ${minRequired} chapters for this mark total.`;
-  }
-  return null;
-}
- 
-module.exports = { getMinChaptersForMarks, getChapterCountWarning };
 function getQuestionTypes(subject){
   const s=(subject||'').trim().toLowerCase();
   const langs=['english','hindi','marathi'];
@@ -558,6 +537,35 @@ function DocActionButtons({docId,downloadName}){
 }
 
 // Shared component: Difficulty selector, used identically by Online and Offline modes.
+/**
+ * Returns the minimum number of chapters recommended for a given total marks value.
+ * Used to warn teachers when a paper is scoped too narrowly (e.g. 50 marks from
+ * a single chapter), which tends to produce repetitive/duplicate questions.
+ *
+ * Tiers confirmed with Pratyush: 40-50 -> 2, 70 -> 3, 80 -> 4
+ * Gaps filled with sensible defaults (flagged below) - adjust if needed.
+ */
+function getMinChaptersForMarks(marks) {
+  if (marks <= 30) return 1;
+  if (marks <= 50) return 2;       // covers 40 and 50 as specified
+  if (marks <= 60) return 3;       // DEFAULT - not explicitly specified, rounds up from the 50->2 tier
+  if (marks <= 70) return 3;       // as specified
+  return 4;                         // 80+ as specified (chose 4 over 5 - see rationale)
+}
+
+/**
+ * Returns a warning message if the selected chapter count is below the
+ * recommended minimum for the given marks. Returns null if no warning needed.
+ */
+function getChapterCountWarning(marks, selectedChapterCount) {
+  const minRequired = getMinChaptersForMarks(marks);
+  if (selectedChapterCount < minRequired) {
+    return `${marks} marks from ${selectedChapterCount} chapter${selectedChapterCount === 1 ? '' : 's'} may produce repetitive questions. We recommend at least ${minRequired} chapters for this mark total.`;
+  }
+  return null;
+}
+
+module.exports = { getMinChaptersForMarks, getChapterCountWarning };
 function DifficultySelector({value,onChange}){
   return (
     <div className="field-full">
