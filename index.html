@@ -1079,7 +1079,7 @@ async function onSubmit(e) {
     }
 
     // --- Replace this URL with your actual webhook endpoint ---
-    const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE';
+    const WEBHOOK_URL = 'https://n8n.mytst.cloud/webhook/c12174e9-3bdd-4a62-bca0-9df11d65d31e';
 
     const res = await fetch(WEBHOOK_URL, {
       method: 'POST',
@@ -1208,7 +1208,7 @@ async function triggerWf2(data, payload) {
 
   try {
     // --- Replace this URL with your actual wf2 webhook endpoint ---
-    const WF2_URL = 'YOUR_WF2_WEBHOOK_URL_HERE';
+    const WF2_URL = 'https://n8n.mytst.cloud/webhook/88784932-ca43-4740-9718-091d8beb1575';
 
     const res = await fetch(WF2_URL, {
       method: 'POST',
