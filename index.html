@@ -814,6 +814,34 @@
                         ]
                   }
             },
+            "Information Technology": {
+                  "hierarchy": "units_to_chapters",
+                  "groups": {
+                        "Digital Documentation (Advanced)": [
+                              "Introduction to Styles",
+                              "Working with Images",
+                              "Advanced Features of Writer"
+                        ],
+                        "Electronic Spreadsheet (Advanced)": [
+                              "Analyse Data using Scenarios and Goal Seek",
+                              "Using Macros in Spreadsheet",
+                              "Linking Spreadsheet Data",
+                              "Share and Review a Spreadsheet"
+                        ],
+                        "Database Management System": [
+                              "Introduction to Database Management System",
+                              "Starting with LibreOffice Base",
+                              "Working with Multiple Tables",
+                              "Queries in Base",
+                              "Forms and Reports"
+                        ],
+                        "Maintain Healthy, Safe and Secure Working Environment": [
+                              "Health, Safety and Security at Workplace",
+                              "Workplace Quality Measures",
+                              "Prevent Accidents and Emergencies"
+                        ]
+                  }
+            },
             "Marathi": {
                   "hierarchy": "books_to_chapters",
                   "books": {
@@ -1037,6 +1065,37 @@
                               "भारतीय गायिकाओं में बेजोड़: लता मंगेशकर",
                               "राजस्थान की रजत बूँदें",
                               "आलो-आँधारि"
+                        ]
+                  }
+            },
+            "Information Technology": {
+                  "hierarchy": "chapters_to_topics",
+                  "groups": {
+                        "Computer Organization": [
+                              "Fundamentals of Computer and its Characteristics",
+                              "Components of Computer",
+                              "Operating System",
+                              "Troubleshooting in Computer System",
+                              "Utilities"
+                        ],
+                        "Networking and Internet": [
+                              "Computer Networking",
+                              "Internet and its Terminology",
+                              "Cybercrime and Cyber Security"
+                        ],
+                        "Office Automation Tools": [
+                              "Word Processor",
+                              "Spreadsheets",
+                              "Presentation Software (Impress)"
+                        ],
+                        "RDBMS": [
+                              "Relational Database Management System Concepts",
+                              "Introduction to MySQL",
+                              "DML Commands"
+                        ],
+                        "Fundamentals of Java": [
+                              "Integrated Development Environment (NetBeans)",
+                              "Java Programming Basics"
                         ]
                   }
             },
@@ -1403,6 +1462,42 @@
                               "जूझ",
                               "अतीत में दबे पाँव",
                               "डायरी के पन्ने"
+                        ]
+                  }
+            },
+            "Information Technology": {
+                  "hierarchy": "chapters_to_topics",
+                  "groups": {
+                        "Database Concepts – RDBMS Tool": [
+                              "Basics of RDBMS",
+                              "SQL – Creating and Opening Database",
+                              "Creating and Populating Tables",
+                              "Modifying the Content and Structure of Table",
+                              "Ordering and Grouping",
+                              "Operating with Multiple Tables"
+                        ],
+                        "Operating Web Based Applications": [
+                              "Online Reservation Systems",
+                              "E-Governance",
+                              "Online Shopping and Bill Payments",
+                              "Online Tutorials and Tests",
+                              "Project Management – Web Based Application Development",
+                              "Case Study – Online Game",
+                              "Case Study – Online Quiz",
+                              "Case Study – Online Bill Calculator"
+                        ],
+                        "JAVA Programming": [
+                              "Introduction to Java and Object Oriented Programming",
+                              "Java Language Elements and Operators",
+                              "Control Flow and Arrays",
+                              "Class Design",
+                              "Exception Handling and Assertions",
+                              "Threads",
+                              "Wrapper Classes and String Manipulation"
+                        ],
+                        "Work Integrated Learning IT – DMA": [
+                              "Identification of Work Areas",
+                              "Work Experience"
                         ]
                   }
             },
@@ -1948,6 +2043,7 @@
       state.units = [];
       state.chapters = [];
       state.topics = [];
+      state.questionTypes = [];
       state.adjustmentNote = '';
       closeMenus();
       clearError();
@@ -2070,13 +2166,21 @@
           <div class="button-row">
             <button type="button" id="createOnlineTestBtn" class="generate">🚀 Create Online Test</button>
             <div id="createOnlineTestStatus" class="inline-status" aria-live="polite"></div>
+            <div id="onlineTestLinkPanel"></div>
           </div>
         </div>`;
+    }
+   function extractFormLink(payload) {
+      if (!payload) return '';
+      const item = Array.isArray(payload) ? (payload[0] || {}) : payload;
+      return item.form_link || item.formLink || item.google_form_link || item.googleFormLink
+        || item.form_url || item.formUrl || item.link || item.url || '';
     }
 
     async function createOnlineTest(button) {
       if (!lastOnlineTest || !lastOnlineTest.item) return;
       const statusEl = document.getElementById('createOnlineTestStatus');
+      const linkPanel = document.getElementById('onlineTestLinkPanel');
       const testId = lastOnlineTest.item.test_id;
       if (!testId) {
         if (statusEl) { statusEl.className = 'inline-status warn'; statusEl.textContent = 'No test ID was found in the generated response.'; }
@@ -2084,6 +2188,7 @@
       }
       button.disabled = true;
       button.textContent = '⏳ Creating test…';
+      if (linkPanel) linkPanel.innerHTML = '';
       if (statusEl) { statusEl.className = 'inline-status'; statusEl.textContent = 'Creating your online test…'; }
       try {
         const response = await fetch(CREATE_ONLINE_TEST_WEBHOOK, {
@@ -2094,16 +2199,34 @@
             teacher_email: lastOnlineTest.payload?.teacher_email
           })
         });
+        const raw = await response.text();
         if (!response.ok) throw new Error(`The service returned ${response.status}.`);
+        let parsed = null;
+        try { parsed = raw.trim() ? JSON.parse(raw) : null; } catch (_) { parsed = null; }
+        const formLink = extractFormLink(parsed);
+
         button.textContent = '✓ Online test created';
-        if (statusEl) { statusEl.className = 'inline-status success'; statusEl.textContent = 'Your online test has been created.'; }
+        if (statusEl) {
+          statusEl.className = 'inline-status success';
+          statusEl.textContent = formLink ? 'Your online test has been created.' : 'Your online test has been created, but no form link was returned.';
+        }
+        if (linkPanel && formLink) {
+          linkPanel.innerHTML = `
+            <div class="document-card">
+              <h3>Online Test Link</h3>
+              <p>Share this Google Form with your students.</p>
+              <div class="doc-buttons">
+                <a class="doc-button" href="${escapeHTML(formLink)}" target="_blank" rel="noreferrer">◉ Open Form</a>
+                <button type="button" class="doc-button secondary" id="copyFormLinkBtn" data-link="${escapeHTML(formLink)}">⧉ Copy Link</button>
+              </div>
+            </div>`;
+        }
       } catch (error) {
         button.disabled = false;
         button.textContent = '🚀 Create Online Test';
         if (statusEl) { statusEl.className = 'inline-status warn'; statusEl.textContent = `Could not create the test: ${error.message}`; }
       }
     }
-
     function renderResult(payload, response) {
       const results = document.getElementById('results');
       const meta = [payload.exam_type, payload.subject, payload.difficulty, state.testType === 'offline' ? `${payload.maximum_marks} marks` : `${payload.num_questions} questions`].filter(Boolean);
@@ -2232,6 +2355,18 @@
       }
       const createOnlineTestBtn = event.target.closest('#createOnlineTestBtn');
       if (createOnlineTestBtn && !createOnlineTestBtn.disabled) { createOnlineTest(createOnlineTestBtn); return; }
+      const copyFormLinkBtn = event.target.closest('#copyFormLinkBtn');
+      if (copyFormLinkBtn) {
+        const link = copyFormLinkBtn.dataset.link;
+        if (link) {
+          navigator.clipboard.writeText(link).then(() => {
+            const original = copyFormLinkBtn.textContent;
+            copyFormLinkBtn.textContent = '✓ Copied';
+            setTimeout(() => { copyFormLinkBtn.textContent = original; }, 1800);
+          }).catch(() => { copyFormLinkBtn.textContent = '⚠ Copy failed'; });
+        }
+        return;
+      }
       const difficulty = event.target.closest('[data-difficulty]');
       if (difficulty) { state.difficulty = difficulty.dataset.difficulty; clearError(); renderConfiguration(); return; }
       if (!event.target.closest('.multi-select')) closeMenus();
