@@ -465,7 +465,6 @@
                   <option value="">Select maximum marks</option>
                   <option value="20">20 Marks</option>
                   <option value="30">30 Marks</option>
-                  <option value="40">40 Marks</option>
                   <option value="50">50 Marks</option>
                   <option value="70">70 Marks</option>
                   <option value="80">80 Marks</option>
@@ -588,7 +587,6 @@
     const OFFLINE_MARK_RULES = Object.freeze({
       20: { min: 1, max: 1, helper: '20 marks — select 1 chapter' },
       30: { min: 2, max: 2, helper: '30 marks — select 2 chapters' },
-      40: { min: 4, max: 4, helper: '40 marks — select 4 chapters' },
       50: { min: 4, max: null, helper: '50 marks — select at least 4 chapters' },
       70: { min: 4, max: null, helper: '70 marks — select at least 4 chapters' },
       80: { min: 4, max: null, helper: '80 marks — select at least 4 chapters' }
@@ -639,10 +637,9 @@
                               "Sexual reproduction",
                               "Reproductive health"
                         ],
-                        "Heredity and Evolution": [
+                        "Heredity": [
                               "Heredity",
                               "Mendel's laws",
-                              "Evolution and speciation"
                         ],
                         "Light – Reflection and Refraction": [
                               "Spherical mirrors",
@@ -663,7 +660,6 @@
                         "Magnetic Effects of Electric Current": [
                               "Magnetic field",
                               "Electromagnetic induction",
-                              "Electric motor and generator"
                         ],
                         "Our Environment": [
                               "Ecosystem",
@@ -696,7 +692,6 @@
                         "Geometry": [
                               "Triangles",
                               "Circles",
-                              "Constructions"
                         ],
                         "Trigonometry": [
                               "Introduction to Trigonometry",
@@ -737,7 +732,6 @@
                               "Gender, Religion and Caste",
                               "Political Parties",
                               "Outcomes of Democracy",
-                              "Challenges to Democracy"
                         ],
                         "Economics": [
                               "Development",
@@ -792,31 +786,68 @@
                               "नेताजी का चश्मा",
                               "बालगोबिन भगत",
                               "लखनवी अंदाज़",
-                              "मानवीय करुणा की दिव्य चमक",
                               "एक कहानी यह भी",
-                              "स्त्री शिक्षा के विरोधी कुतर्कों का खंडन",
-                              "नमक का दारोगा",
+                              "नौबतखाने में इबादत",
                               "संस्कृति",
                               "पद (सूरदास)",
                               "राम-लक्ष्मण-परशुराम संवाद",
-                              "सवैया एवं कवित्त",
                               "आत्मकथ्य",
                               "उत्साह एवं अट नहीं रही",
-                              "कर चले हम फ़िदा",
-                              "आत्मत्राण"
+                              "यह दंतुरहित मुस्कान और फसल",
+                              "संगतकार"
                         ],
                         "कृतिका भाग 2": [
                               "माता का अँचल",
-                              "जॉर्ज पंचम की नाक",
                               "साना-साना हाथ जोड़ि",
-                              "एही ठैयाँ झुलनी हेरानी हो रामा",
                               "मैं क्यों लिखता हूँ"
+                        ],
+                        "स्पर्श भाग 2": [
+                              "साखी (कबीर)",
+                              "पद (मीरा)",
+                              "मनुष्यता",
+                              "पर्वत प्रदेश में पावस",
+                              "तोप",
+                              "कर चले हम फ़िदा",
+                              "आत्मत्राण",
+                              "बड़े भाई साहब",
+                              "डायरी का एक पन्ना",
+                              "तताँरा-वामीरो कथा",
+                              "तीसरी कसम के शिल्पकार शैलेंद्र",
+                              "अब कहाँ दूसरे के दुख से दुखी होने वाले",
+                              "पतझर में टूटी पत्तियाँ",
+                              "कारतूस"
+                        ],
+                        "संचयन भाग 2": [
+                              "हरिहर काका",
+                              "सपनों के-से दिन",
+                              "टोपी शुक्ला"
                         ]
                   }
             },
             "Information Technology": {
                   "hierarchy": "units_to_chapters",
                   "groups": {
+                        "Communication Skills-II": [
+                              "Methods of Communication (Verbal, Non-verbal, Visual)",
+                              "Communication Cycle and Feedback",
+                              "Barriers to Effective Communication",
+                              "Principles of Communication and 7 Cs",
+                              "Basic Writing Skills"
+                        ],
+                        "Self-Management Skills-II": [
+                              "Stress Management Techniques",
+                              "Ability to Work Independently"
+                        ],
+                        "ICT Skills-II": [
+                              "Operating Systems and File Management",
+                              "Care and Maintenance of Computer"
+                        ],
+                        "Entrepreneurial Skills-II": [
+                              "Characteristics of a Successful Entrepreneur"
+                        ],
+                        "Green Skills-II": [
+                              "Sustainable Development – Importance and Problems"
+                        ],
                         "Digital Documentation (Advanced)": [
                               "Introduction to Styles",
                               "Working with Images",
@@ -845,25 +876,28 @@
             "Marathi": {
                   "hierarchy": "books_to_chapters",
                   "books": {
-                        "मराठी पाठ्यपुस्तक": [
-                              "कथा – आकलन व रसग्रहण",
-                              "ललित निबंध",
-                              "व्यक्तिचित्रण",
-                              "प्रवासवर्णन",
-                              "कविता – रसग्रहण",
-                              "कवितेतील अलंकार व वृत्त"
-                        ],
-                        "मराठी भाषा व उपयोजित लेखन": [
-                              "शब्दभेद",
-                              "समास",
-                              "अलंकार",
-                              "वाक्यरूपांतर",
-                              "वाक्यशुद्धी",
-                              "पत्रलेखन",
-                              "निबंधलेखन",
-                              "संवादलेखन",
-                              "जाहिरात लेखन",
-                              "अहवाल लेखन"
+                        "अक्षरभारती": [
+                              "तू बुद्धी दे (प्रार्थना)",
+                              "संतवाणी – अंकिला मी दास तुझा (संत नामदेव)",
+                              "संतवाणी – योगी सर्वकाळ सुखदाता (संत एकनाथ)",
+                              "शाल",
+                              "उपास",
+                              "मोठे होत असलेल्या मुलांनो… (स्थूलवाचन)",
+                              "दोन दिवस (कविता)",
+                              "चुडीवाला",
+                              "फूटप्रिन्टस",
+                              "ऊर्जाशक्तीचा जागर",
+                              "जाता अस्ताला (स्थूलवाचन)",
+                              "औक्षण (कविता)",
+                              "रंग साहित्याचे",
+                              "जंगल डायरी",
+                              "रंग मजेचे रंग उदयाचे (कविता)",
+                              "जगणं कॅक्टसचं (स्थूलवाचन)",
+                              "हिरवंगार झाडासारखं (कविता)",
+                              "बीज पेरले गेले",
+                              "खरा नागरिक",
+                              "स्वप्न करू साकार (कविता)",
+                              "व्युत्पत्ती कोश (स्थूलवाचन)"
                         ]
                   }
             },
@@ -1069,8 +1103,30 @@
                   }
             },
             "Information Technology": {
-                  "hierarchy": "chapters_to_topics",
+                  "hierarchy": "units_to_chapters",
                   "groups": {
+                        "Communication Skills-III": [
+                              "Methods of Communication",
+                              "Communication Styles",
+                              "Basic Writing Skills"
+                        ],
+                        "Self-Management Skills-III": [
+                              "Appearance and Grooming",
+                              "Team Work Skills",
+                              "Time Management Strategies"
+                        ],
+                        "ICT Skills-III": [
+                              "Creating a Document on Word Processor",
+                              "Editing, Saving and Printing a Document"
+                        ],
+                        "Entrepreneurial Skills-III": [
+                              "Entrepreneurial Values and Attitude",
+                              "Attitudinal Changes Required to Become an Entrepreneur"
+                        ],
+                        "Green Skills-III": [
+                              "Main Sectors of the Green Economy",
+                              "Green Sectors/Areas and Stakeholders"
+                        ],
                         "Computer Organization": [
                               "Fundamentals of Computer and its Characteristics",
                               "Components of Computer",
@@ -1243,7 +1299,40 @@
                         ]
                   }
             },
-            "Geography": {
+            "Marathi (Class 11)": {
+                  "hierarchy": "books_to_chapters",
+                  "books": {
+                        "युवकभारती": [
+                              "मामू",
+                              "प्राणसई",
+                              "अशी पुस्तकं",
+                              "झाडांच्या मनात जाऊ",
+                              "परिमळ",
+                              "दवांत आलिस भल्या पहाटीं",
+                              "'माणूस' बांधूया!",
+                              "ऐसीं अक्षरें रसिकें",
+                              "वहिनींचा 'सुसाट' सल्ला",
+                              "शब्द",
+                              "वाङ्मयीन लेण्याचा शिल्पकार",
+                              "पैंजण",
+                              "नाटक – साहित्यप्रकार परिचय",
+                              "हसवाफसवी",
+                              "ध्यानीमनी",
+                              "सुंदर मी होणार",
+                              "सूत्रसंचालन",
+                              "मुद्रितशोधन",
+                              "अनुवाद",
+                              "अनुदिनी (ब्लॉग) लेखन",
+                              "रेडिओजॉकी",
+                              "शब्दशक्ती",
+                              "काव्यगुण",
+                              "वाक्यसंश्लेषण",
+                              "काळ",
+                              "शब्दभेद"
+                        ]
+                  }
+            },
+           "Geography": {
                   "hierarchy": "units_to_chapters",
                   "groups": {
                         "Fundamentals of Physical Geography": [
@@ -1340,7 +1429,6 @@
                               "Chemical Kinetics"
                         ],
                         "Inorganic Chemistry": [
-                              "d- and f-Block Elements",
                               "Coordination Compounds"
                         ],
                         "Organic Chemistry": [
@@ -1465,9 +1553,59 @@
                         ]
                   }
             },
+            "Marathi (Class 12)": {
+                  "hierarchy": "books_to_chapters",
+                  "books": {
+                        "युवकभारती": [
+                              "बहु असोत सुंदर.. (काव्यानंद)",
+                              "वेगवशता",
+                              "रोज मातीत",
+                              "आयुष्य... आनंदाचा उत्सव",
+                              "रे थांब जरा आषाढघना",
+                              "वीरांना सलामी",
+                              "रंग माझा वेगळा",
+                              "आत्मविश्वासासारखी शक्ती नाही (नमुना गद्य आकलन)",
+                              "विंचू चावला...",
+                              "रेशीमबंध",
+                              "समुद्र कोंडून पडलाय",
+                              "दंतकथा",
+                              "आरशातली स्त्री",
+                              "रंगरेषा व्यंगरेषा",
+                              "जयपूर फूटचे जनक",
+                              "कथा – साहित्यप्रकार परिचय",
+                              "शोध",
+                              "गढी",
+                              "मुलाखत",
+                              "माहितीपत्रक",
+                              "अहवाल",
+                              "वृत्तलेख (फिचर रायटिंग)",
+                              "व्याकरण – वाक्यप्रकार व वाक्यरूपांतर, समास, प्रयोग, अलंकार",
+                              "लेखन – निबंधलेखन"
+                        ]
+                  }
+            },
             "Information Technology": {
-                  "hierarchy": "chapters_to_topics",
+                  "hierarchy": "units_to_chapters",
                   "groups": {
+                        "Communication Skills-IV": [
+                              "Active Listening Skills",
+                              "Basic Writing Skills"
+                        ],
+                        "Self-Management Skills-IV": [
+                              "Factors Influencing Self-Motivation",
+                              "Personality Traits, Types and Disorders"
+                        ],
+                        "ICT Skills-IV": [
+                              "Tabulation using Spreadsheet Application",
+                              "Preparing a Presentation"
+                        ],
+                        "Entrepreneurial Skills-IV": [
+                              "Entrepreneurial Behavioural Competencies",
+                              "Self-Assessment of Behavioural Competencies"
+                        ],
+                        "Green Skills-IV": [
+                              "Role and Importance of Green Jobs in Different Sectors"
+                        ],
                         "Database Concepts – RDBMS Tool": [
                               "Basics of RDBMS",
                               "SQL – Creating and Opening Database",
@@ -1711,7 +1849,7 @@
       }
 };
 
-    const ONLINE_WEBHOOK = 'https://n8n.mytst.cloud/webhook/c12174e9-3bdd-4a62-bca0-9df11d65d31e';
+    const ONLINE_WEBHOOK = 'https://n8n.mytst.cloud/webhook/e31cb8f8-76e6-4f84-b9b4-41af25646d6e';
     // WF2 — the workflow that actually creates the live online test from a generated test_id.
     // Replace with your real WF2 webhook path.
     const CREATE_ONLINE_TEST_WEBHOOK = 'https://n8n.mytst.cloud/webhook/88784932-ca43-4740-9718-091d8beb1575';
@@ -2100,13 +2238,23 @@
           selected_topics: state.chapters
         };
       }
-      if (usesUnitChapterHierarchy()) {
+            if (usesUnitChapterHierarchy()) {
+        const groups = getSubjectConfig()?.groups || {};
         return {
           syllabus_hierarchy: 'units_to_chapters',
           units: state.units,
           chapters: state.chapters,
           // Backward-compatible alias for existing workflows that read topics.
           topics: state.chapters,
+          // Unit -> selected-chapters map so the backend can trace each leaf
+          // chapter to its parent unit (drives the Part A/B Employability
+          // Skills split for skill subjects; harmless extra data for others).
+          unit_chapter_map: Object.fromEntries(
+            state.units.map((unit) => [
+              unit,
+              (groups[unit] || []).filter((chapter) => state.chapters.includes(chapter))
+            ])
+          ),
           selected_units: state.units,
           selected_chapters: state.chapters,
           selected_topics: state.chapters
