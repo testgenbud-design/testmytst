@@ -23,6 +23,9 @@
       --green-dim: rgba(16,185,129,.11);
       --blue: #60A5FA;
       --blue-dim: rgba(59,130,246,.12);
+      --violet: #A78BFA;
+      --violet-light: #C4B5FD;
+      --violet-dim: rgba(139,92,246,.13);
       --red: #F87171;
       --text: #E8EDF5;
       --text2: #96A2B8;
@@ -61,8 +64,9 @@
       z-index: -1;
       pointer-events: none;
       background:
-        radial-gradient(650px 400px at 15% 8%, rgba(245,166,35,.07), transparent 68%),
-        radial-gradient(620px 450px at 88% 86%, rgba(59,130,246,.08), transparent 72%);
+        radial-gradient(760px 440px at 12% 5%, rgba(245,166,35,.10), transparent 68%),
+        radial-gradient(720px 510px at 92% 76%, rgba(59,130,246,.105), transparent 72%),
+        radial-gradient(560px 360px at 52% 35%, rgba(139,92,246,.045), transparent 74%);
     }
 
     .nav {
@@ -97,7 +101,8 @@
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px var(--green); }
     .nav-badge { border: 1px solid rgba(245,166,35,.25); background: var(--amber-dim); padding: 4px 9px; border-radius: 4px; }
 
-    .hero { max-width: 1050px; margin: 0 auto; padding: 84px 28px 42px; text-align: center; }
+    .hero { position: relative; max-width: 1050px; margin: 0 auto; padding: 84px 28px 42px; text-align: center; }
+    .hero::before { content: ""; position: absolute; top: 47px; left: 50%; width: min(92vw, 720px); height: 210px; transform: translateX(-50%); background: radial-gradient(ellipse, rgba(245,166,35,.11), transparent 68%); filter: blur(9px); pointer-events: none; z-index: -1; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -122,7 +127,7 @@
       line-height: 1.05;
       letter-spacing: -2.5px;
     }
-    h1 .highlight { color: var(--amber); }
+    h1 .highlight { color: var(--amber); text-shadow: 0 0 32px rgba(245,166,35,.18); }
     .hero p { max-width: 640px; margin: 0 auto; color: var(--text2); font-size: 16px; font-weight: 400; line-height: 1.75; }
     .stats {
       display: grid;
@@ -159,12 +164,13 @@
     .step.active .step-copy b { color: var(--amber); }
     .step-copy span { display: block; overflow: hidden; color: var(--text3); font-size: 10.5px; white-space: nowrap; text-overflow: ellipsis; }
 
-    .card { overflow: visible; background: rgba(15,23,41,.94); border: 1px solid var(--border); border-radius: 17px; box-shadow: 0 16px 50px rgba(0,0,0,.15); }
+    .card { overflow: visible; background: linear-gradient(145deg, rgba(19,29,48,.97), rgba(12,19,32,.96)); border: 1px solid rgba(255,255,255,.09); border-radius: 18px; box-shadow: 0 22px 70px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.03); }
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 20px 24px; border-bottom: 1px solid var(--border); }
     .card-title { font-size: 16px; font-weight: 800; letter-spacing: -.3px; }
     .card-subtitle { margin-top: 3px; color: var(--text3); font-size: 12px; }
     .mode-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; color: var(--blue); background: var(--blue-dim); border: 1px solid rgba(96,165,250,.24); border-radius: 5px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .8px; white-space: nowrap; }
     .mode-badge.offline { color: var(--amber); background: var(--amber-dim); border-color: rgba(245,166,35,.28); }
+    .mode-badge.full { color: var(--violet-light); background: var(--violet-dim); border-color: rgba(167,139,250,.34); }
     .card-body { padding: 24px; }
 
     .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
@@ -200,6 +206,8 @@
     .input:disabled, select.input:disabled { cursor: not-allowed; opacity: .45; }
 
     .test-type { display: flex; flex-wrap: wrap; gap: 8px; }
+    .test-type[aria-label="Test type"] { padding: 5px; gap: 6px; background: rgba(5,10,18,.52); border: 1px solid var(--border); border-radius: 12px; }
+    .test-type[aria-label="Test type"] .segmented { flex: 1 1 180px; justify-content: center; min-height: 43px; border-color: transparent; background: transparent; font-weight: 700; }
     .segmented {
       display: inline-flex;
       align-items: center;
@@ -218,12 +226,17 @@
     .segmented:hover { border-color: rgba(255,255,255,.28); color: var(--text); }
     .segmented.online.selected { color: var(--blue); background: var(--blue-dim); border-color: rgba(96,165,250,.4); }
     .segmented.offline.selected { color: var(--amber); background: var(--amber-dim); border-color: rgba(245,166,35,.42); }
+    .segmented.full.selected { color: var(--violet-light); background: var(--violet-dim); border-color: rgba(167,139,250,.48); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
     .segmented.difficulty.selected.easy { color: #34D399; background: var(--green-dim); border-color: rgba(16,185,129,.4); }
     .segmented.difficulty.selected.moderate { color: var(--amber); background: var(--amber-dim); border-color: rgba(245,166,35,.42); }
     .segmented.difficulty.selected.hard { color: var(--red); background: rgba(248,113,113,.1); border-color: rgba(248,113,113,.4); }
     .segmented.difficulty.selected.mixed { color: var(--blue); background: var(--blue-dim); border-color: rgba(96,165,250,.4); }
 
-    .divider { height: 1px; margin: 22px 0; background: var(--border); }
+    .divider { height: 1px; margin: 22px 0; background: linear-gradient(90deg, transparent, var(--border-strong), transparent); }
+    .full-test-note { display: flex; align-items: flex-start; gap: 12px; padding: 16px 17px; color: var(--text2); background: linear-gradient(125deg, rgba(139,92,246,.16), rgba(59,130,246,.07)); border: 1px solid rgba(167,139,250,.27); border-radius: 12px; }
+    .full-test-note .note-icon { width: 30px; height: 30px; display: grid; place-items: center; flex: 0 0 auto; color: var(--violet-light); background: rgba(167,139,250,.15); border: 1px solid rgba(167,139,250,.24); border-radius: 9px; font-size: 15px; }
+    .full-test-note strong { display: block; margin-bottom: 3px; color: var(--violet-light); font-size: 13px; }
+    .full-test-note p { margin: 0; color: var(--text2); font-size: 12px; line-height: 1.55; }
     .hidden { display: none !important; }
 
     /* Custom multi-select menus use real checkboxes. The chapter menu specifically
@@ -334,7 +347,7 @@
       letter-spacing: -.2px;
       transition: transform .15s, box-shadow .15s, opacity .15s;
     }
-    .generate:hover:not(:disabled) { box-shadow: 0 8px 29px rgba(245,166,35,.35); transform: translateY(-1px); }
+    .generate:hover:not(:disabled) { box-shadow: 0 10px 32px rgba(245,166,35,.38); transform: translateY(-2px); }
     .generate:disabled { cursor: not-allowed; opacity: .42; box-shadow: none; }
     .loading-copy { display: none; margin-top: 10px; color: var(--amber); font-family: var(--mono); font-size: 10px; letter-spacing: .85px; text-align: center; }
     .loading .loading-copy { display: block; }
@@ -407,10 +420,11 @@
 
   <main>
     <section class="hero" aria-labelledby="page-title">
-      <h1 id="page-title">Your tool to generate <span class="highlight">CBSE Question Paper</span> in minutes</h1>
-      <p>Configure syllabus-aligned online quizzes or print-ready offline papers for Class 10–12 in a few thoughtful clicks.</p>
+      <div class="eyebrow">✦ Teacher assessment studio</div>
+      <h1 id="page-title">Your tool to generate <span class="highlight">CBSE Question Papers</span> in minutes</h1>
+      <p>Configure syllabus-aligned online quizzes, print-ready offline papers, or a complete full-syllabus test for Class 10–12.</p>
       <div class="stats" aria-label="Product capabilities">
-        <div class="stat"><strong>5 Minutes</strong><span>Fast generation</span></div>
+        <div class="stat"><strong>3 Modes</strong><span>Online, offline, full</span></div>
         <div class="stat"><strong>10–12</strong><span>CBSE classes</span></div>
         <div class="stat"><strong>20+</strong><span>Subjects</span></div>
       </div>
@@ -436,6 +450,7 @@
               <div class="test-type" role="group" aria-label="Test type">
                 <button type="button" class="segmented online selected" id="onlineMode">🌐 Online Test</button>
                 <button type="button" class="segmented offline" id="offlineMode">📝 Offline Test</button>
+                <button type="button" class="segmented full" id="fullMode">✦ Full Test</button>
               </div>
             </div>
 
@@ -452,20 +467,19 @@
               </div>
 
               <!-- Language subjects use their prescribed book before chapter selection. -->
-              <div id="booksField" class="field full hidden">
+              <div id="booksField" class="field full scope-field hidden">
                 <label class="label" for="bookSelect">Book Name <span class="required">*</span></label>
                 <select id="bookSelect" class="input" disabled><option value="">Select book</option></select>
                 <div class="hint">Choose the prescribed book first; its chapter list will appear below.</div>
               </div>
 
               <!-- Offline-only: intentionally placed BEFORE Books / Units / Chapters. -->
-              <div id="marksField" class="field full hidden">
+              <div id="marksField" class="field full scope-field hidden">
                 <label class="label" for="marksSelect">Maximum Marks <span class="required">*</span></label>
                 <select id="marksSelect" class="input">
                   <option value="">Select maximum marks</option>
                   <option value="20">20 Marks</option>
                   <option value="30">30 Marks</option>
-                  <option value="50">50 Marks</option>
                   <option value="70">70 Marks</option>
                   <option value="80">80 Marks</option>
                 </select>
@@ -473,7 +487,7 @@
               </div>
 
               <!-- Unit-based subjects: select Units before their actual Chapters. -->
-              <div class="field full hidden" id="unitsField">
+              <div class="field full scope-field hidden" id="unitsField">
                 <label class="label">Units <span class="required">*</span></label>
                 <div class="multi-select" id="unitsSelect">
                   <button type="button" class="multi-trigger" id="unitsTrigger" aria-haspopup="listbox" aria-expanded="false" disabled>
@@ -484,7 +498,7 @@
                 <div class="hint">Select units first to reveal their chapter names. Marks rules apply to the chapters selected next.</div>
               </div>
 
-              <div class="field full" id="chaptersField">
+              <div class="field full scope-field" id="chaptersField">
                 <label class="label" id="chaptersLabel">Chapters <span class="required">*</span></label>
                 <div class="multi-select" id="chaptersSelect">
                   <button type="button" class="multi-trigger" id="chaptersTrigger" aria-haspopup="listbox" aria-expanded="false">
@@ -495,7 +509,7 @@
                 <div id="chapterRule" class="hint">Choose a subject to see available chapters.</div>
               </div>
 
-              <div class="field full" id="topicsField">
+              <div class="field full scope-field" id="topicsField">
                 <label class="label">Topics <span class="required">*</span></label>
                 <div class="multi-select" id="topicsSelect">
                   <button type="button" class="multi-trigger" id="topicsTrigger" aria-haspopup="listbox" aria-expanded="false" disabled>
@@ -506,7 +520,7 @@
                 <div class="hint">Topics are filtered from your selected chapters where the CBSE syllabus has a chapter-to-topic structure.</div>
               </div>
 
-              <div class="field full">
+              <div class="field full scope-field" id="questionTypesField">
                 <label class="label">Question Type <span class="required">*</span></label>
                 <div class="multi-select" id="questionTypesSelect">
                   <button type="button" class="multi-trigger" id="questionTypesTrigger" aria-haspopup="listbox" aria-expanded="false" disabled>
@@ -514,7 +528,7 @@
                   </button>
                   <div class="select-menu" id="questionTypesMenu" role="listbox" aria-label="Question types"></div>
                 </div>
-                <div class="hint">“Mixed (All Types)” is exclusive and creates a varied paper.</div>
+                <div class="hint">Choose one or more approved CBSE question formats for this paper.</div>
               </div>
 
               <div class="field full">
@@ -549,6 +563,18 @@
               </div>
             </div>
 
+            <div id="fullFields" class="hidden">
+              <div class="full-test-note">
+                <span class="note-icon">✦</span>
+                <div><strong>Full-syllabus assessment</strong><p>We will create a complete paper across the selected class and subject. No chapter, topic, marks, or question-type selection is needed.</p></div>
+              </div>
+              <div class="field" style="margin-top:18px">
+                <label class="label">Difficulty <span class="required">*</span></label>
+                <div id="fullDifficulty" class="test-type" role="group" aria-label="Full test difficulty"></div>
+                <div class="hint">Your full test is prepared as a print-ready paper with an answer key.</div>
+              </div>
+            </div>
+
             <div class="button-row">
               <button id="generateButton" class="generate" type="submit" disabled>⚡ Generate Test Paper</button>
               <div id="formStatus" class="inline-status" aria-live="polite"></div>
@@ -566,9 +592,9 @@
       <div class="how-kicker">HOW IT WORKS</div>
       <h2 id="how-title">Three steps to a complete question paper</h2>
       <div class="how-grid">
-        <article class="how-card"><div class="how-number">01</div><h3>Configure</h3><p>Choose class, subject, marks and difficulty. The form adapts to Units → Chapters, Chapters → Topics, or Books → Chapters for language subjects.</p></article>
+        <article class="how-card"><div class="how-number">01</div><h3>Configure</h3><p>Choose a mode, then configure class, subject, scope and difficulty. Full Test keeps the setup focused on class, subject and difficulty.</p></article>
         <article class="how-card"><div class="how-number">02</div><h3>Generate</h3><p>myTST produces a syllabus-aligned paper, based on your chosen question formats and classroom requirements.</p></article>
-        <article class="how-card"><div class="how-number">03</div><h3>Deliver</h3><p>Use an auto-graded online test or open and download the print-ready Word question paper and answer key.</p></article>
+        <article class="how-card"><div class="how-number">03</div><h3>Deliver</h3><p>Use an auto-graded online test or open and download a print-ready offline or full-test paper and answer key.</p></article>
       </div>
     </section>
   </main>
@@ -581,13 +607,12 @@
       ----------------------
       20 → exactly 1 chapter
       30 → exactly 2 chapters
-      40 → exactly 4 chapters
-      50 / 70 / 80 → at least 4 chapters
+      70 / 80 → at least 4 chapters
+      Topic selection is available only for 20- and 30-mark offline papers.
     */
     const OFFLINE_MARK_RULES = Object.freeze({
       20: { min: 1, max: 1, helper: '20 marks — select 1 chapter' },
       30: { min: 2, max: 2, helper: '30 marks — select 2 chapters' },
-      50: { min: 4, max: null, helper: '50 marks — select at least 4 chapters' },
       70: { min: 4, max: null, helper: '70 marks — select at least 4 chapters' },
       80: { min: 4, max: null, helper: '80 marks — select at least 4 chapters' }
     });
@@ -1897,16 +1922,16 @@
     const $ = (selector) => document.querySelector(selector);
     const escapeHTML = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char]));
 
-    function getQuestionTypes(subject, testType) {
-      if (testType === 'online') return ['MCQ', 'Assertion–Reason (Case-Based MCQ)'];
-      const normalized = (subject || '').toLowerCase();      if (['mathematics', 'physics', 'chemistry'].includes(normalized)) return ['MCQ', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Numerical / Problem-Solving', 'Case-Based', 'Mixed (All Types)'];
-      if (normalized === 'biology') return ['MCQ', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Diagram-Based', 'Case-Based', 'Mixed (All Types)'];
-      if (['english', 'hindi', 'marathi'].includes(normalized)) return ['MCQ', 'Passage / Comprehension-Based', 'Grammar-Based', 'Very Short Answer', 'Short Answer', 'Long Answer / Essay', 'Literary / Extract-Based', 'Letter / Application Writing', 'Mixed (All Types)'];
-      if (normalized === 'social science' || normalized === 'history' || normalized === 'political science') return ['MCQ', 'Assertion–Reason', 'Source-Based', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Mixed (All Types)'];
-      if (normalized === 'geography') return ['MCQ', 'Assertion–Reason', 'Map-Based', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Mixed (All Types)'];
-      if (normalized === 'accountancy' || normalized === 'economics') return ['MCQ', 'Numerical / Problem-Solving', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Case-Based', 'Mixed (All Types)'];
-      if (normalized.includes('computer')) return ['MCQ', 'Programming / Code-Based', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Case-Based', 'Mixed (All Types)'];
-      return ['MCQ', 'Assertion–Reason', 'Very Short Answer', 'Short Answer', 'Long Answer', 'Case-Based', 'Mixed (All Types)'];
+    const APPROVED_QUESTION_TYPES = Object.freeze([
+      'MCQ',
+      'Assertion–Reason',
+      'Short Answer',
+      'Long Answer',
+      'Case-Based'
+    ]);
+
+    function getQuestionTypes() {
+      return [...APPROVED_QUESTION_TYPES];
     }
 
     function getSubjectConfig() {
@@ -1945,6 +1970,11 @@
       return state.chapters.flatMap((chapter) => config.groups?.[chapter] || []);
     }
     function chapterNoun(count = 2) { return count === 1 ? 'chapter' : 'chapters'; }
+    function isFullTest() { return state.testType === 'full_test'; }
+    function isOfflineTest() { return state.testType === 'offline'; }
+    function supportsTopicSelection() {
+      return usesChapterTopicHierarchy() && !(isOfflineTest() && Number(state.maximumMarks) > 30) && !isFullTest();
+    }
     function currentMarkRule() {
       return state.testType === 'offline' && state.maximumMarks ? OFFLINE_MARK_RULES[state.maximumMarks] : null;
     }
@@ -1986,12 +2016,17 @@
       const missing = [];
       if (!state.className) missing.push('class');
       if (!state.subject) missing.push('subject');
+      if (isFullTest()) {
+        if (!state.difficulty) missing.push('difficulty');
+        if (!isEmail(state.teacherEmail)) missing.push('valid teacher email');
+        return missing;
+      }
       if (usesBookChapterHierarchy() && !state.book) missing.push('book name');
-      if (state.testType === 'offline' && !state.maximumMarks) missing.push('maximum marks');
+      if (isOfflineTest() && !state.maximumMarks) missing.push('maximum marks');
       if (usesUnitChapterHierarchy() && !state.units.length) missing.push('units');
       if (!state.chapters.length) missing.push('chapters');
-      if (state.testType === 'offline' && state.maximumMarks && !chapterRuleIsMet()) missing.push('the chapter selection rule');
-      if (usesChapterTopicHierarchy() && !state.topics.length) missing.push('topics');
+      if (isOfflineTest() && state.maximumMarks && !chapterRuleIsMet()) missing.push('the chapter selection rule');
+      if (supportsTopicSelection() && !state.topics.length) missing.push('topics');
       if (!state.questionTypes.length) missing.push('question type');
       if (!state.difficulty) missing.push('difficulty');
       if (state.testType === 'online' && !state.numberQuestions) missing.push('number of questions');
@@ -2072,12 +2107,17 @@
       const bookSelect = document.getElementById('bookSelect');
       const marksField = document.getElementById('marksField');
       const unitsField = document.getElementById('unitsField');
+      const chaptersField = document.getElementById('chaptersField');
       const topicsField = document.getElementById('topicsField');
+      const questionTypesField = document.getElementById('questionTypesField');
       const onlineFields = document.getElementById('onlineFields');
       const offlineFields = document.getElementById('offlineFields');
+      const fullFields = document.getElementById('fullFields');
       const modeBadge = document.getElementById('modeBadge');
       const generate = document.getElementById('generateButton');
       const formStatus = document.getElementById('formStatus');
+      const fullTest = isFullTest();
+      const offlineTest = isOfflineTest();
 
       if (!classSelect.options.length || classSelect.options.length === 1) setOptions(classSelect, Object.keys(SYLLABUS), 'Select class');
       classSelect.value = state.className;
@@ -2085,38 +2125,45 @@
       subjectSelect.disabled = !state.className;
       subjectSelect.value = state.subject;
 
-      marksField.classList.toggle('hidden', state.testType !== 'offline');
+      marksField.classList.toggle('hidden', !offlineTest);
       document.getElementById('marksSelect').value = state.maximumMarks;
       onlineFields.classList.toggle('hidden', state.testType !== 'online');
-      offlineFields.classList.toggle('hidden', state.testType !== 'offline');
-      modeBadge.className = `mode-badge ${state.testType === 'offline' ? 'offline' : ''}`;
-      modeBadge.textContent = state.testType === 'offline' ? '📝 OFFLINE TEST' : '🌐 ONLINE TEST';
+      offlineFields.classList.toggle('hidden', !offlineTest);
+      fullFields.classList.toggle('hidden', !fullTest);
+
+      const mode = fullTest ? { badge: '✦ FULL TEST', badgeClass: 'full' }
+        : offlineTest ? { badge: '📝 OFFLINE TEST', badgeClass: 'offline' }
+        : { badge: '🌐 ONLINE TEST', badgeClass: '' };
+      modeBadge.className = `mode-badge ${mode.badgeClass}`.trim();
+      modeBadge.textContent = mode.badge;
       document.getElementById('onlineMode').classList.toggle('selected', state.testType === 'online');
-      document.getElementById('offlineMode').classList.toggle('selected', state.testType === 'offline');
+      document.getElementById('offlineMode').classList.toggle('selected', offlineTest);
+      document.getElementById('fullMode').classList.toggle('selected', fullTest);
 
       const hierarchy = state.subject ? getHierarchy() : null;
       const unitBased = hierarchy === 'units_to_chapters';
       const bookBased = hierarchy === 'books_to_chapters';
       const topicBased = hierarchy === 'chapters_to_topics';
+      const topicsAvailable = supportsTopicSelection();
+      if (!topicsAvailable && offlineTest && Number(state.maximumMarks) > 30) state.topics = [];
+
       const bookOptions = selectedBookOptions();
       const unitOptions = selectedUnitOptions();
       const chapterOptions = selectedChapterOptions();
       const topicOptions = selectedTopicOptions();
-      const questionOptions = state.subject ? getQuestionTypes(state.subject, state.testType) : [];
-      // Keep scope selectors usable before marks are chosen. Marks are still
-      // required to generate an offline paper and immediately apply the cap.
-      const scopeLocked = !state.subject;
+      const questionOptions = state.subject ? getQuestionTypes() : [];
+      const scopeLocked = !state.subject || fullTest;
       const unitsLocked = scopeLocked;
       const chaptersLocked = scopeLocked || (unitBased && !state.units.length) || (bookBased && !state.book);
       const rule = currentMarkRule();
 
-      // Every subject declares its own hierarchy in the syllabus schema:
-      // Units → Chapters, Chapters → Topics, or Books → Chapters.
-      booksField.classList.toggle('hidden', !bookBased);
-      unitsField.classList.toggle('hidden', !unitBased);
-      topicsField.classList.toggle('hidden', !topicBased);
+      booksField.classList.toggle('hidden', fullTest || !bookBased);
+      unitsField.classList.toggle('hidden', fullTest || !unitBased);
+      chaptersField.classList.toggle('hidden', fullTest);
+      topicsField.classList.toggle('hidden', fullTest || !topicsAvailable);
+      questionTypesField.classList.toggle('hidden', fullTest);
       setOptions(bookSelect, bookOptions, 'Select book name');
-      bookSelect.disabled = !bookBased || !state.subject;
+      bookSelect.disabled = fullTest || !bookBased || !state.subject;
       bookSelect.value = state.book;
       document.getElementById('chaptersLabel').innerHTML = `Chapters <span class="required">*</span>`;
 
@@ -2127,17 +2174,18 @@
       if (!state.subject) chapterPlaceholder = 'Select a subject first…';
       else if (bookBased && !state.book) chapterPlaceholder = 'Select a book name first…';
       else if (unitBased && !state.units.length) chapterPlaceholder = 'Select units first…';
-      else if (state.testType === 'offline' && !state.maximumMarks) chapterPlaceholder = 'Select chapters (choose marks before generating)…';
+      else if (offlineTest && !state.maximumMarks) chapterPlaceholder = 'Select chapters (choose marks before generating)…';
       renderTrigger('chapters', state.chapters, chapterPlaceholder, chaptersLocked);
       renderMenu('chapters', chapterOptions, state.chapters, { disabled: chaptersLocked, maxSelections: rule?.max ?? null, showCount: topicBased, countLabel: 'topics' });
 
-      renderTrigger('topics', state.topics, 'Select topics to include…', !topicBased || !state.chapters.length);
-      renderMenu('topics', topicOptions, state.topics, { disabled: !topicBased || !state.chapters.length });
-      renderTrigger('questionTypes', state.questionTypes, 'Select question type(s)…', !state.subject);
-      renderMenu('questionTypes', questionOptions, state.questionTypes, { disabled: !state.subject });
+      renderTrigger('topics', state.topics, 'Select topics to include…', !topicsAvailable || !state.chapters.length);
+      renderMenu('topics', topicOptions, state.topics, { disabled: !topicsAvailable || !state.chapters.length });
+      renderTrigger('questionTypes', state.questionTypes, 'Select question type(s)…', !state.subject || fullTest);
+      renderMenu('questionTypes', questionOptions, state.questionTypes, { disabled: !state.subject || fullTest });
       renderChapterRule();
       buildDifficultyButtons('onlineDifficulty');
       buildDifficultyButtons('offlineDifficulty');
+      buildDifficultyButtons('fullDifficulty');
 
       document.getElementById('numberQuestions').value = state.numberQuestions;
       document.getElementById('timeLimit').value = state.timeLimit;
@@ -2149,17 +2197,22 @@
 
       const missing = missingRequirements();
       generate.disabled = state.isGenerating || missing.length > 0;
-      generate.textContent = state.isGenerating ? '⏳ Generating questions…' : (state.testType === 'offline' ? '📝 Create Offline Question Paper' : '⚡ Generate Test Paper');
+      const idleLabels = {
+        online: '⚡ Generate Online Test',
+        offline: '📝 Create Offline Question Paper',
+        full_test: '✦ Create Full Test Paper'
+      };
+      generate.textContent = state.isGenerating ? '⏳ Generating questions…' : idleLabels[state.testType];
       document.getElementById('testForm').classList.toggle('loading', state.isGenerating);
       if (state.isGenerating) {
         formStatus.className = 'inline-status';
-        formStatus.textContent = state.testType === 'offline' ? 'Creating your Word question paper and answer key…' : 'Creating your CBSE test…';
-      } else if (state.testType === 'offline' && state.maximumMarks && !chapterRuleIsMet()) {
+        formStatus.textContent = (offlineTest || fullTest) ? 'Creating your print-ready question paper and answer key…' : 'Creating your CBSE test…';
+      } else if (offlineTest && state.maximumMarks && !chapterRuleIsMet()) {
         formStatus.className = 'inline-status warn';
         formStatus.textContent = `Offline generation is hard-blocked until ${currentMarkRule().helper.toLowerCase()}.`;
       } else if (!missing.length) {
         formStatus.className = 'inline-status success';
-        formStatus.textContent = '✓ All required details are ready.';
+        formStatus.textContent = fullTest ? '✓ Full test configuration is ready.' : '✓ All required details are ready.';
       } else {
         formStatus.className = 'inline-status';
         formStatus.textContent = `Complete: ${missing.join(' · ')}.`;
@@ -2208,11 +2261,6 @@
       if (key === 'chapters') {
         const availableTopics = new Set(selectedTopicOptions());
         state.topics = state.topics.filter((topic) => availableTopics.has(topic));
-      }
-      if (key === 'questionTypes') { 
-        const mixed = 'Mixed (All Types)';
-        if (isChecked && value === mixed) state.questionTypes = [mixed];
-        else if (isChecked && value !== mixed) state.questionTypes = state.questionTypes.filter((type) => type !== mixed);
       }
       state.adjustmentNote = '';
       renderConfiguration();
@@ -2377,16 +2425,27 @@
     }
     function renderResult(payload, response) {
       const results = document.getElementById('results');
-      const meta = [payload.exam_type, payload.subject, payload.difficulty, state.testType === 'offline' ? `${payload.maximum_marks} marks` : `${payload.num_questions} questions`].filter(Boolean);
+      const fullTest = isFullTest();
+      const documentTest = isOfflineTest() || fullTest;
+      const meta = [
+        payload.exam_type,
+        payload.subject,
+        payload.difficulty,
+        isOfflineTest() ? `${payload.maximum_marks} marks` : (state.testType === 'online' ? `${payload.num_questions} questions` : 'Full syllabus')
+      ].filter(Boolean);
       let panel = '';
-      if (state.testType === 'offline') {
+      if (documentTest) {
         const item = Array.isArray(response) ? (response[0] || {}) : response;
         const questionId = item.questionDocumentId || item.question_document_id || item.questionDocId;
         const answerId = item.keyDocumentId || item.key_document_id || item.answerDocumentId || item.answerDocId;
+        const paperName = fullTest ? 'Full Test Paper' : 'Question Paper';
+        const paperDescription = fullTest
+          ? 'Complete class-and-subject paper generated from your full-test configuration.'
+          : 'Print-ready CBSE paper generated from your configuration.';
         panel = `
           <div class="result-panel">
             <div class="document-actions">
-              <article class="document-card"><h3>Question Paper</h3><p>Print-ready CBSE paper generated from your configuration.</p>${documentLinks(questionId, 'cbse-question-paper.docx')}</article>
+              <article class="document-card"><h3>${paperName}</h3><p>${paperDescription}</p>${documentLinks(questionId, fullTest ? 'cbse-full-test-paper.docx' : 'cbse-question-paper.docx')}</article>
               <article class="document-card"><h3>Answer Key</h3><p>Teacher copy with answers and marking support.</p>${documentLinks(answerId, 'cbse-answer-key.docx')}</article>
             </div>
           </div>`;
@@ -2395,8 +2454,11 @@
         lastOnlineTest = { item, payload };
         panel = renderOnlineQuestions(item);
       }
+      const resultMode = fullTest ? { label: '✦ FULL TEST', className: 'full' }
+        : isOfflineTest() ? { label: '📝 OFFLINE PAPER', className: 'offline' }
+        : { label: '🌐 ONLINE TEST', className: '' };
       results.innerHTML = `
-        <div class="results-header"><div class="result-title">Test Paper Generated <span class="result-ok">✓ SUCCESS</span></div><span class="mode-badge ${state.testType === 'offline' ? 'offline' : ''}">${state.testType === 'offline' ? '📝 OFFLINE PAPER' : '🌐 ONLINE TEST'}</span></div>
+        <div class="results-header"><div class="result-title">Test Paper Generated <span class="result-ok">✓ SUCCESS</span></div><span class="mode-badge ${resultMode.className}">${resultMode.label}</span></div>
         <div class="result-meta">${meta.map((item) => `<span class="meta-chip">${escapeHTML(item)}</span>`).join('')}</div>
         ${panel}`;
       results.classList.remove('hidden');
@@ -2409,35 +2471,53 @@
         showError(`Please complete ${missing.join(', ')}.`);
         return;
       }
-      if (state.testType === 'offline' && !chapterRuleIsMet()) {
+      if (isOfflineTest() && !chapterRuleIsMet()) {
         showError('The selected chapters do not meet the marks-based chapter rule.');
         return;
       }
       clearError();
       state.isGenerating = true;
       renderConfiguration();
-      const payload = state.testType === 'offline' ? {
-        test_type: 'offline',
-        exam_type: state.className,
-        subject: toTitle(state.subject),
-        ...buildScopePayload(),
-        question_types: state.questionTypes,
-        difficulty: state.difficulty,
-        maximum_marks: Number(state.maximumMarks),
-        teacher_id: state.teacherEmail.trim().toLowerCase(),
-        teacher_email: state.teacherEmail.trim().toLowerCase()
-      } : {
-        test_type: 'online',
-        exam_type: state.className,
-        subject: toTitle(state.subject),
-        ...buildScopePayload(),
-        question_types: state.questionTypes,
-        difficulty: state.difficulty,
-        num_questions: Number(state.numberQuestions),
-        time_limit: Number(state.timeLimit) || recommendedTime() || 20,
-        mode: 'ai_only',
-        teacher_email: state.teacherEmail.trim().toLowerCase()
-      };
+      const teacherEmail = state.teacherEmail.trim().toLowerCase();
+      let payload;
+      if (isFullTest()) {
+        payload = {
+          test_type: 'full_test',
+          test_type_label: 'Full Test',
+          mode: 'full_test',
+          scope: 'full_syllabus',
+          exam_type: state.className,
+          subject: toTitle(state.subject),
+          difficulty: state.difficulty,
+          teacher_id: teacherEmail,
+          teacher_email: teacherEmail
+        };
+      } else if (isOfflineTest()) {
+        payload = {
+          test_type: 'offline',
+          exam_type: state.className,
+          subject: toTitle(state.subject),
+          ...buildScopePayload(),
+          question_types: state.questionTypes,
+          difficulty: state.difficulty,
+          maximum_marks: Number(state.maximumMarks),
+          teacher_id: teacherEmail,
+          teacher_email: teacherEmail
+        };
+      } else {
+        payload = {
+          test_type: 'online',
+          exam_type: state.className,
+          subject: toTitle(state.subject),
+          ...buildScopePayload(),
+          question_types: state.questionTypes,
+          difficulty: state.difficulty,
+          num_questions: Number(state.numberQuestions),
+          time_limit: Number(state.timeLimit) || recommendedTime() || 20,
+          mode: 'ai_only',
+          teacher_email: teacherEmail
+        };
+      }
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 20 * 60 * 1000);
@@ -2454,7 +2534,7 @@
         if (parsed && parsed.success === false) throw new Error(parsed.message || 'Question paper generation failed.');
         renderResult(payload, parsed);
       } catch (error) {
-        showError(error.name === 'AbortError' ? 'Generation timed out after 6 minutes. Please try again.' : `Generation failed: ${error.message}`);
+        showError(error.name === 'AbortError' ? 'Generation timed out after 20 minutes. Please try again.' : `Generation failed: ${error.message}`);
       } finally {
         state.isGenerating = false;
         renderConfiguration();
@@ -2464,6 +2544,7 @@
     // Static control events
     document.getElementById('onlineMode').addEventListener('click', () => setTestType('online'));
     document.getElementById('offlineMode').addEventListener('click', () => setTestType('offline'));
+    document.getElementById('fullMode').addEventListener('click', () => setTestType('full_test'));
     document.getElementById('classSelect').addEventListener('change', (event) => {
       state.className = event.target.value;
       state.subject = ''; state.book = ''; state.units = []; state.chapters = []; state.topics = []; state.questionTypes = []; state.adjustmentNote = '';
@@ -2481,6 +2562,7 @@
     });
     document.getElementById('marksSelect').addEventListener('change', (event) => {
       state.maximumMarks = event.target.value;
+      if (isOfflineTest() && Number(state.maximumMarks) > 30) state.topics = [];
       state.adjustmentNote = '';
       normalizeChapterSelectionForRule();
       closeMenus(); clearError(); renderConfiguration();
@@ -2527,5 +2609,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a3506d092ed23d',t:'MTc4NjU3NzkxMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4a0fe71ee0f74f6',t:'MTc5MTkyMjI5MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
