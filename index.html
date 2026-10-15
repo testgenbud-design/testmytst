@@ -528,7 +528,7 @@
                   </button>
                   <div class="select-menu" id="questionTypesMenu" role="listbox" aria-label="Question types"></div>
                 </div>
-                <div class="hint">Choose one or more approved CBSE question formats for this paper.</div>
+                <div id="questionTypesHint" class="hint">Choose one or more approved CBSE question formats for this paper.</div>
               </div>
 
               <div class="field full">
@@ -1922,17 +1922,26 @@
     const $ = (selector) => document.querySelector(selector);
     const escapeHTML = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char]));
 
-    const APPROVED_QUESTION_TYPES = Object.freeze([
+    /* Online forms are intentionally limited to auto-gradeable formats.
+       Offline papers retain the approved written formats plus an exclusive
+       Mixed option at the end of the menu. */
+    const ONLINE_QUESTION_TYPES = Object.freeze([
+      'MCQ',
+      'Assertion–Reason'
+    ]);
+    const OFFLINE_QUESTION_TYPES = Object.freeze([
       'MCQ',
       'Assertion–Reason',
       'Short Answer',
       'Long Answer',
       'Case-Based',
-      'mixed'
+      'Mixed (All Types)'
     ]);
 
-    function getQuestionTypes() {
-      return [...APPROVED_QUESTION_TYPES];
+    function getQuestionTypes(testType = state.testType) {
+      return testType === 'online'
+        ? [...ONLINE_QUESTION_TYPES]
+        : [...OFFLINE_QUESTION_TYPES];
     }
 
     function getSubjectConfig() {
@@ -2060,15 +2069,19 @@
 
     function renderMenu(key, options, selectedValues, optionsConfig = {}) {
       const menu = document.getElementById(`${key}Menu`);
-      const { disabled = false, maxSelections = null, showCount = false, countLabel = 'topics' } = optionsConfig;
+      const { disabled = false, maxSelections = null, showCount = false, countLabel = 'topics', exclusiveValue = null } = optionsConfig;
       if (!options.length) {
         menu.innerHTML = `<div class="select-option disabled">No options available yet.</div>`;
         return;
       }
       const atLimit = maxSelections !== null && selectedValues.length >= maxSelections;
+      const exclusiveSelected = !!exclusiveValue && selectedValues.includes(exclusiveValue);
       menu.innerHTML = options.map((option) => {
         const checked = selectedValues.includes(option);
-        const optionDisabled = disabled || (!checked && atLimit);
+        /* Once Mixed is selected, it is the only selectable option. It can
+           still be unticked to return to individual question formats. */
+        const blockedByExclusiveChoice = exclusiveSelected && option !== exclusiveValue;
+        const optionDisabled = disabled || (!checked && atLimit) || blockedByExclusiveChoice;
         const count = showCount ? (getSubjectConfig()?.groups?.[option] || []).length : null;
         return `
           <label class="select-option ${checked ? 'selected' : ''} ${optionDisabled ? 'disabled' : ''}">
@@ -2152,7 +2165,7 @@
       const unitOptions = selectedUnitOptions();
       const chapterOptions = selectedChapterOptions();
       const topicOptions = selectedTopicOptions();
-      const questionOptions = state.subject ? getQuestionTypes() : [];
+      const questionOptions = state.subject ? getQuestionTypes(state.testType) : [];
       const scopeLocked = !state.subject || fullTest;
       const unitsLocked = scopeLocked;
       const chaptersLocked = scopeLocked || (unitBased && !state.units.length) || (bookBased && !state.book);
@@ -2182,7 +2195,18 @@
       renderTrigger('topics', state.topics, 'Select topics to include…', !topicsAvailable || !state.chapters.length);
       renderMenu('topics', topicOptions, state.topics, { disabled: !topicsAvailable || !state.chapters.length });
       renderTrigger('questionTypes', state.questionTypes, 'Select question type(s)…', !state.subject || fullTest);
-      renderMenu('questionTypes', questionOptions, state.questionTypes, { disabled: !state.subject || fullTest });
+      renderMenu('questionTypes', questionOptions, state.questionTypes, {
+        disabled: !state.subject || fullTest,
+        exclusiveValue: offlineTest ? 'Mixed (All Types)' : null
+      });
+      const questionTypesHint = document.getElementById('questionTypesHint');
+      if (questionTypesHint) {
+        questionTypesHint.textContent = state.testType === 'online'
+          ? 'Online tests support auto-gradeable MCQs and Assertion–Reason questions only.'
+          : offlineTest
+            ? 'Select one or more formats, or choose “Mixed (All Types)” to use a varied paper. Mixed is exclusive.'
+            : 'Question formats are selected automatically for a Full Test.';
+      }
       renderChapterRule();
       buildDifficultyButtons('onlineDifficulty');
       buildDifficultyButtons('offlineDifficulty');
@@ -2263,6 +2287,16 @@
         const availableTopics = new Set(selectedTopicOptions());
         state.topics = state.topics.filter((topic) => availableTopics.has(topic));
       }
+      if (key === 'questionTypes' && state.testType === 'offline') {
+        const mixed = 'Mixed (All Types)';
+        if (isChecked && value === mixed) {
+          /* Mixed replaces every individual format. */
+          state.questionTypes = [mixed];
+        } else if (isChecked && value !== mixed) {
+          /* Selecting an individual format clears Mixed before adding it. */
+          state.questionTypes = state.questionTypes.filter((type) => type !== mixed);
+        }
+      }
       state.adjustmentNote = '';
       renderConfiguration();
     }
@@ -2333,10 +2367,21 @@
       const download = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/export?format=docx`;
       return `<div class="doc-buttons"><a class="doc-button secondary" href="${view}" target="_blank" rel="noreferrer">◉ View document</a><a class="doc-button" href="${download}" download="${escapeHTML(filename)}">⇩ Download Word</a></div>`;
     }
+    function renderCreateOnlineTestAction(item) {
+      const hasTestId = !!item?.test_id;
+      return `
+        <div class="button-row">
+          <button type="button" id="createOnlineTestBtn" class="generate" ${hasTestId ? '' : 'disabled'}>🚀 Create Online Test</button>
+          <div id="createOnlineTestStatus" class="inline-status ${hasTestId ? '' : 'warn'}" aria-live="polite">${hasTestId ? 'Ready to create the shareable test form.' : 'The generated response did not include a test ID, so the form workflow cannot be started yet.'}</div>
+          <div id="onlineTestLinkPanel"></div>
+        </div>`;
+    }
+
     function renderOnlineQuestions(item) {
       const questions = Array.isArray(item?.questions) ? item.questions : [];
+      const formAction = renderCreateOnlineTestAction(item);
       if (!questions.length) {
-        return `<div class="result-panel"><p style="margin-bottom:14px">Your online test content is ready, but no structured questions were found in the response.</p><div class="answer-preview">${escapeHTML(JSON.stringify(item, null, 2))}</div></div>`;
+        return `<div class="result-panel"><p style="margin-bottom:14px">Your online test content is ready, but no structured questions were found in the response.</p><div class="answer-preview">${escapeHTML(JSON.stringify(item, null, 2))}</div>${formAction}</div>`;
       }
       const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
       const cards = questions.map((q) => {
@@ -2360,11 +2405,7 @@
       return `
         <div class="result-panel">
           <div class="mcq-list">${cards}</div>
-          <div class="button-row">
-            <button type="button" id="createOnlineTestBtn" class="generate">🚀 Create Online Test</button>
-            <div id="createOnlineTestStatus" class="inline-status" aria-live="polite"></div>
-            <div id="onlineTestLinkPanel"></div>
-          </div>
+          ${formAction}
         </div>`;
     }
    function extractFormLink(payload) {
@@ -2610,5 +2651,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4a0fe71ee0f74f6',t:'MTc5MTkyMjI5MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
