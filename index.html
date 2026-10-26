@@ -593,6 +593,32 @@
       .stats, .steps { border-radius: 13px; }
     }
 
+  
+    /* v2: teacher-facing analytics are a presentation-only companion to the
+       generated paper. No chart recomputes paper data in the browser. */
+    .paper-insights { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); }
+    .insights-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:14px; }
+    .insights-heading h3 { margin:0; font-size:16px; font-weight:800; letter-spacing:-.2px; }
+    .insights-heading p { margin:4px 0 0; color:var(--text3); font-size:11.5px; }
+    .insights-basis { color:var(--amber); font:700 10px var(--mono); letter-spacing:.7px; text-transform:uppercase; }
+    .insights-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+    .insight-card { min-width:0; padding:15px; background:rgba(8,12,20,.42); border:1px solid var(--border); border-radius:12px; }
+    .insight-card-header { display:flex; justify-content:space-between; gap:8px; align-items:flex-start; margin-bottom:13px; }
+    .insight-card h4 { margin:0; font-size:12.5px; font-weight:800; }
+    .insight-card .insight-subtitle { margin-top:3px; color:var(--text3); font-size:10.5px; }
+    .insight-coverage { padding:3px 6px; color:var(--text2); background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:99px; font:700 9px var(--mono); white-space:nowrap; }
+    .insight-content { display:flex; align-items:center; gap:14px; }
+    .insight-donut { position:relative; display:grid; place-items:center; width:92px; height:92px; flex:0 0 92px; border-radius:50%; }
+    .insight-donut::after { content:""; width:58px; height:58px; border-radius:50%; background:var(--panel); box-shadow:inset 0 0 0 1px var(--border); }
+    .insight-donut-label { position:absolute; z-index:1; color:var(--text2); font:800 10px var(--mono); text-align:center; line-height:1.2; }
+    .insight-legend { display:grid; gap:6px; min-width:0; width:100%; }
+    .insight-legend-row { display:grid; grid-template-columns:8px minmax(0,1fr) auto; align-items:center; gap:7px; color:var(--text2); font-size:10.5px; }
+    .insight-legend-row span:nth-child(2) { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+    .insight-dot { width:8px; height:8px; border-radius:50%; }
+    .insight-value { color:var(--text); font:700 10px var(--mono); }
+    .insight-warnings { margin:13px 0 0; padding:9px 10px; color:var(--amber-light); background:var(--amber-dim); border:1px solid rgba(245,166,35,.22); border-radius:8px; font-size:10.5px; line-height:1.5; }
+    @media (max-width:680px) { .insights-grid { grid-template-columns:1fr; } .insights-heading { align-items:flex-start; flex-direction:column; } }
+
   </style>
 </head>
 <body>
@@ -2058,6 +2084,18 @@
 };
 
     const ONLINE_WEBHOOK = 'https://n8n.mytst.cloud/webhook/e31cb8f8-76e6-4f84-b9b4-41af25646d6e';
+    /* The inactive V11 successor has its own endpoint. Keep all existing
+       online and partial/offline behaviour on the established workflow; only
+       the existing Full Test UI is sent to the Format-first successor once it
+       is activated and live-tested. */
+    const FULL_PAPER_WEBHOOK = 'https://n8n.mytst.cloud/webhook/mytst-paper-generator-v11';
+    const FULL_PAPER_CONTEXT = Object.freeze({
+      board: 'CBSE', academic_session: '2026-27', delivery_mode: 'OFFLINE',
+      subject_keys: {
+        'Class 11': { 'Physics': '11-phy', 'Chemistry': '11-che', 'Biology': '11-bio' },
+        'Class 12': { 'Physics': '12-phy', 'Chemistry': '12-chem', 'Biology': '12-bio', 'Informatics Practices': '12-ip' }
+      }
+    });
     // WF2 — the workflow that actually creates the live online test from a generated test_id.
     // Replace with your real WF2 webhook path.
     const CREATE_ONLINE_TEST_WEBHOOK = 'https://n8n.mytst.cloud/webhook/88784932-ca43-4740-9718-091d8beb1575';
@@ -2079,6 +2117,22 @@
     const DIFFICULTIES = [
       ['Easy', '🟢', 'easy'], ['Moderate', '🟡', 'moderate'], ['Hard', '🔴', 'hard'], ['Mixed', '🎲', 'mixed']
     ];
+
+    function classNumberFromLabel(value) {
+      const match = String(value || '').match(/(11|12)/);
+      return match ? Number(match[1]) : null;
+    }
+    function resolvedAcademicSubjectKey() {
+      return FULL_PAPER_CONTEXT.subject_keys[state.className]?.[state.subject] || '';
+    }
+    function difficultyPreset(value) {
+      const raw = String(value || '').trim().toLowerCase();
+      if (raw === 'easy') return 'EASY';
+      if (raw === 'hard' || raw === 'challenging') return 'CHALLENGING';
+      /* The legacy UI label Mixed is treated as the named BALANCED preset.
+         The backend records the realized E/M/D distribution separately. */
+      return 'BALANCED';
+    }
 
    const state = {
       testType: 'online',
@@ -2648,6 +2702,65 @@
         if (statusEl) { statusEl.className = 'inline-status warn'; statusEl.textContent = `Could not create the test: ${error.message}`; }
       }
     }
+    function responseItem(response) { return Array.isArray(response) ? (response[0] || {}) : (response || {}); }
+    function safePercent(value) { const n = Number(value); return Number.isFinite(n) && n >= 0 ? n : 0; }
+    function analyticsDistribution(analytics, key) {
+      const list = analytics?.distributions?.[key];
+      return Array.isArray(list) ? list.filter((row) => safePercent(row?.marks_percent) > 0 || Number(row?.allocated_marks) > 0) : [];
+    }
+    function distributionCoverage(analytics, key) {
+      const coverage = analytics?.coverage || {};
+      const map = {
+        cognitive_typology: 'cognitive_typology_marks_percent_classified',
+        difficulty: 'difficulty_marks_percent_classified',
+        question_type: 'question_type_marks_percent_classified',
+        chapter_weightage: 'chapter_weightage_marks_percent_attributed'
+      };
+      const n = Number(coverage[map[key]]);
+      return Number.isFinite(n) ? n : null;
+    }
+    function donutGradient(rows, colors) {
+      let cursor = 0;
+      const parts = rows.map((row, index) => {
+        const amount = safePercent(row.marks_percent);
+        const next = Math.min(100, cursor + amount);
+        const part = `${colors[index % colors.length]} ${cursor.toFixed(3)}% ${next.toFixed(3)}%`;
+        cursor = next;
+        return part;
+      });
+      if (cursor < 100) parts.push(`rgba(255,255,255,.10) ${cursor.toFixed(3)}% 100%`);
+      return `conic-gradient(${parts.join(', ') || 'rgba(255,255,255,.10) 0 100%'})`;
+    }
+    function renderAnalyticsCard(title, subtitle, analytics, key, colors) {
+      const rows = analyticsDistribution(analytics, key);
+      if (!rows.length) return '';
+      const coverage = distributionCoverage(analytics, key);
+      const coverageText = coverage === null ? '—' : `${coverage.toFixed(0)}% tagged`;
+      const visible = rows.slice(0, 6);
+      const legend = visible.map((row, index) => `
+        <div class="insight-legend-row"><span class="insight-dot" style="background:${colors[index % colors.length]}"></span><span title="${escapeHTML(row.label || row.code || 'Unclassified')}">${escapeHTML(row.label || row.code || 'Unclassified')}</span><span class="insight-value">${safePercent(row.marks_percent).toFixed(1)}%</span></div>`).join('');
+      const extra = rows.length > visible.length ? `<div class="insight-legend-row"><span></span><span>+${rows.length - visible.length} more</span><span></span></div>` : '';
+      return `
+        <article class="insight-card">
+          <div class="insight-card-header"><div><h4>${escapeHTML(title)}</h4><div class="insight-subtitle">${escapeHTML(subtitle)}</div></div><span class="insight-coverage">${coverageText}</span></div>
+          <div class="insight-content"><div class="insight-donut" style="background:${donutGradient(visible, colors)}"><span class="insight-donut-label">MARKS<br>%</span></div><div class="insight-legend">${legend}${extra}</div></div>
+        </article>`;
+    }
+    function renderPaperInsights(response) {
+      const item = responseItem(response);
+      const analytics = item.paper_analytics || item.analytics || null;
+      if (!analytics || analytics.schema_version !== 'mytst-paper-analytics-v1') return '';
+      const palette = ['#E7C98D','#86E8B0','#8FB7FF','#C4B5FD','#FB9AA0','#55D7C5','#F5A6D8'];
+      const cards = [
+        renderAnalyticsCard('Cognitive topology', 'Realized paper distribution', analytics, 'cognitive_typology', palette),
+        renderAnalyticsCard('Difficulty', `Requested: ${analytics.paper_context?.requested_difficulty_preset || '—'}`, analytics, 'difficulty', ['#86E8B0','#E7C98D','#FB9AA0','#8FB7FF']),
+        renderAnalyticsCard('Question types', 'Marks-weighted view', analytics, 'question_type', ['#8FB7FF','#C4B5FD','#55D7C5','#E7C98D','#FB9AA0']),
+        analytics.coverage?.chapter_weightage_applicable === false ? '' : renderAnalyticsCard('Chapter weightage', 'Final attributed marks', analytics, 'chapter_weightage', ['#E7C98D','#86E8B0','#8FB7FF','#C4B5FD','#55D7C5','#FB9AA0'])
+      ].filter(Boolean).join('');
+      if (!cards) return '';
+      const warnings = Array.isArray(analytics.coverage?.warnings) ? analytics.coverage.warnings : [];
+      return `<section class="paper-insights" aria-label="Paper insights"><div class="insights-heading"><div><h3>Paper Insights</h3><p>Calculated from the validated final paper plan.</p></div><span class="insights-basis">Teacher view · marks basis</span></div><div class="insights-grid">${cards}</div>${warnings.length ? `<div class="insight-warnings">${warnings.map(escapeHTML).join('<br>')}</div>` : ''}</section>`;
+    }
     function renderResult(payload, response) {
       const results = document.getElementById('results');
       const fullTest = isFullTest();
@@ -2660,9 +2773,9 @@
       ].filter(Boolean);
       let panel = '';
       if (documentTest) {
-        const item = Array.isArray(response) ? (response[0] || {}) : response;
-        const questionId = item.questionDocumentId || item.question_document_id || item.questionDocId;
-        const answerId = item.keyDocumentId || item.key_document_id || item.answerDocumentId || item.answerDocId;
+        const item = responseItem(response);
+        const questionId = item.questionDocumentId || item.question_document_id || item.questionDocId || item.paper?.question_document_id || item.paper?.questionDocumentId;
+        const answerId = item.keyDocumentId || item.key_document_id || item.answerDocumentId || item.answerDocId || item.paper?.answer_key_document_id || item.paper?.keyDocumentId;
         const paperName = fullTest ? 'Full Test Paper' : 'Question Paper';
         const paperDescription = fullTest
           ? 'Complete class-and-subject paper generated from your full-test configuration.'
@@ -2673,9 +2786,10 @@
               <article class="document-card"><h3>${paperName}</h3><p>${paperDescription}</p>${documentLinks(questionId, fullTest ? 'cbse-full-test-paper.docx' : 'cbse-question-paper.docx')}</article>
               <article class="document-card"><h3>Answer Key</h3><p>Teacher copy with answers and marking support.</p>${documentLinks(answerId, 'cbse-answer-key.docx')}</article>
             </div>
+            ${renderPaperInsights(response)}
           </div>`;
       } else {
-        const item = Array.isArray(response) ? (response[0] || {}) : response;
+        const item = responseItem(response);
         lastOnlineTest = { item, payload };
         panel = renderOnlineQuestions(item);
       }
@@ -2706,9 +2820,29 @@
       const teacherEmail = state.teacherEmail.trim().toLowerCase();
       let payload;
       if (isFullTest()) {
+        const classNumber = classNumberFromLabel(state.className);
+        const academicSubjectKey = resolvedAcademicSubjectKey();
+        if (!classNumber || !academicSubjectKey) {
+          state.isGenerating = false;
+          renderConfiguration();
+          showError('No active full-paper subject context is available for this class and subject.');
+          return;
+        }
         payload = {
+          request_schema_version: 'mytst-paper-request-v3',
           test_type: 'full_test',
           test_type_label: 'Full Test',
+          paper_length: 'FULL_LENGTH',
+          exam_scope: 'FULL_SYLLABUS',
+          planning_mode: 'FULL_SYLLABUS_BLUEPRINT_OR_FORMULA',
+          board: FULL_PAPER_CONTEXT.board,
+          class_number: classNumber,
+          academic_subject_key: academicSubjectKey,
+          academic_session: FULL_PAPER_CONTEXT.academic_session,
+          delivery_mode: FULL_PAPER_CONTEXT.delivery_mode,
+          difficulty_preset: difficultyPreset(state.difficulty),
+          paper_analytics_requested: true,
+          /* Kept as safe presentation metadata and transition aliases. */
           mode: 'full_test',
           scope: 'full_syllabus',
           exam_type: state.className,
@@ -2746,7 +2880,8 @@
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 20 * 60 * 1000);
-        const response = await fetch(ONLINE_WEBHOOK, {
+        const generationEndpoint = isFullTest() ? FULL_PAPER_WEBHOOK : ONLINE_WEBHOOK;
+        const response = await fetch(generationEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
@@ -2834,5 +2969,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5075e34cf35fc34',t:'MTc5Mjk5NTc2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
