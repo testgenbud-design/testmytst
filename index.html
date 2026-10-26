@@ -2114,8 +2114,10 @@
       if (logo.complete && logo.naturalWidth === 0) useEmbeddedLogo();
     }
     configureLogoAssets();
+    /* Named backend presets. The existing selection control is retained,
+       but its labels now match the policy contract exactly. */
     const DIFFICULTIES = [
-      ['Easy', '🟢', 'easy'], ['Moderate', '🟡', 'moderate'], ['Hard', '🔴', 'hard'], ['Mixed', '🎲', 'mixed']
+      ['Easy', '🟢', 'easy'], ['Balanced', '🟡', 'moderate'], ['Challenging', '🔴', 'hard']
     ];
 
     function classNumberFromLabel(value) {
@@ -2129,8 +2131,6 @@
       const raw = String(value || '').trim().toLowerCase();
       if (raw === 'easy') return 'EASY';
       if (raw === 'hard' || raw === 'challenging') return 'CHALLENGING';
-      /* The legacy UI label Mixed is treated as the named BALANCED preset.
-         The backend records the realized E/M/D distribution separately. */
       return 'BALANCED';
     }
 
@@ -2255,8 +2255,8 @@
     }
     function isEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || '').trim()); }
     function recommendedTime() {
-      if (!state.numberQuestions || !state.difficulty || state.difficulty === 'Mixed') return null;
-      const modifier = state.difficulty === 'Easy' ? .8 : state.difficulty === 'Hard' ? 1.2 : 1;
+      if (!state.numberQuestions || !state.difficulty) return null;
+      const modifier = state.difficulty === 'Easy' ? .8 : state.difficulty === 'Challenging' ? 1.2 : 1;
       return Math.ceil(Number(state.numberQuestions) * 2 * modifier);
     }
     function missingRequirements() {
@@ -2969,5 +2969,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5075e34cf35fc34',t:'MTc5Mjk5NTc2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5076b0f88485795',t:'MTc5Mjk5NjI4Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
