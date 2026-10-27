@@ -687,10 +687,11 @@
                 <label class="label" for="marksSelect">Maximum Marks <span class="required">*</span></label>
                 <select id="marksSelect" class="input">
                   <option value="">Select maximum marks</option>
+                  <option value="10">10 Marks</option>
                   <option value="20">20 Marks</option>
                   <option value="30">30 Marks</option>
-                  <option value="70">70 Marks</option>
-                  <option value="80">80 Marks</option>
+                  <option value="50">50 Marks</option>
+                  <option value="FULL_MARKS">Full Marks (subject-specific CBSE format)</option>
                 </select>
                 <div class="marks-order-note">↳ Select marks first — the unit / chapter selectors unlock with the correct CBSE chapter rule.</div>
               </div>
@@ -812,18 +813,24 @@
 
   <script>
     /*
-      Offline chapter rules
-      ----------------------
-      20 → exactly 1 chapter
-      30 → exactly 2 chapters
-      70 / 80 → at least 4 chapters
-      Topic selection is available only for 20- and 30-mark offline papers.
+      Custom-offline chapter rules — approved successor scope
+      -------------------------------------------------------
+      10 → exactly 1 chapter
+      20 → 1–2 chapters
+      30 → 2–3 chapters
+      50 → 3–5 chapters
+      FULL_MARKS → at least 4 chapters; the subject's active backend Format
+                   supplies its official maximum marks and Full CBSE layout.
+
+      Topic selection remains available for the 10/20/30 custom-paper scopes.
+      The browser never hard-codes a subject's full maximum marks.
     */
     const OFFLINE_MARK_RULES = Object.freeze({
-      20: { min: 1, max: 1, helper: '20 marks — select 1 chapter' },
-      30: { min: 2, max: 2, helper: '30 marks — select 2 chapters' },
-      70: { min: 4, max: null, helper: '70 marks — select at least 4 chapters' },
-      80: { min: 4, max: null, helper: '80 marks — select at least 4 chapters' }
+      10: { min: 1, max: 1, helper: '10 marks — select 1 chapter' },
+      20: { min: 1, max: 2, helper: '20 marks — select 1–2 chapters' },
+      30: { min: 2, max: 3, helper: '30 marks — select 2–3 chapters' },
+      50: { min: 3, max: 5, helper: '50 marks — select 3–5 chapters' },
+      FULL_MARKS: { min: 4, max: null, helper: 'Full marks — select at least 4 chapters' }
     });
 
     /* Concise CBSE syllabus map used by the selectors. */
@@ -2121,7 +2128,10 @@
     ];
 
     function classNumberFromLabel(value) {
-      const match = String(value || '').match(/(11|12)/);
+      /* Retain the existing selector's class range and leave context resolution
+         to the backend. The regex supports a future Class 9 syllabus entry
+         without imposing a frontend Format-availability map. */
+      const match = String(value || '').match(/\b(9|10|11|12)\b/);
       return match ? Number(match[1]) : null;
     }
     function resolvedAcademicSubjectKey() {
@@ -2219,8 +2229,11 @@
     function chapterNoun(count = 2) { return count === 1 ? 'chapter' : 'chapters'; }
     function isFullTest() { return state.testType === 'full_test'; }
     function isOfflineTest() { return state.testType === 'offline'; }
+    function isFullMarksCustomPaper() { return isOfflineTest() && state.maximumMarks === 'FULL_MARKS'; }
     function supportsTopicSelection() {
-      return usesChapterTopicHierarchy() && !(isOfflineTest() && Number(state.maximumMarks) > 30) && !isFullTest();
+      return usesChapterTopicHierarchy()
+        && !(isOfflineTest() && (Number(state.maximumMarks) > 30 || isFullMarksCustomPaper()))
+        && !isFullTest();
     }
     function currentMarkRule() {
       return state.testType === 'offline' && state.maximumMarks ? OFFLINE_MARK_RULES[state.maximumMarks] : null;
@@ -2264,6 +2277,9 @@
       if (!state.className) missing.push('class');
       if (!state.subject) missing.push('subject');
       if (isFullTest()) {
+        /* Format availability is backend authority. Never infer it from a
+           small frontend map: Format families may be legitimately shared
+           across classes and subjects. */
         if (!state.difficulty) missing.push('difficulty');
         if (!isEmail(state.teacherEmail)) missing.push('valid teacher email');
         return missing;
@@ -2372,7 +2388,11 @@
 
       if (!classSelect.options.length || classSelect.options.length === 1) setOptions(classSelect, Object.keys(SYLLABUS), 'Select class');
       classSelect.value = state.className;
-      setOptions(subjectSelect, state.className ? Object.keys(SYLLABUS[state.className]) : [], 'Select subject');
+      const syllabusSubjects = state.className ? Object.keys(SYLLABUS[state.className] || {}) : [];
+      /* Keep the established class/subject selector intact. The backend
+         resolves the actual Format profile/family, including shared profiles;
+         the frontend must not claim availability from a partial hard-coded map. */
+      setOptions(subjectSelect, syllabusSubjects, 'Select subject');
       subjectSelect.disabled = !state.className;
       subjectSelect.value = state.subject;
 
@@ -2396,7 +2416,7 @@
       const bookBased = hierarchy === 'books_to_chapters';
       const topicBased = hierarchy === 'chapters_to_topics';
       const topicsAvailable = supportsTopicSelection();
-      if (!topicsAvailable && offlineTest && Number(state.maximumMarks) > 30) state.topics = [];
+      if (!topicsAvailable && offlineTest && (Number(state.maximumMarks) > 30 || isFullMarksCustomPaper())) state.topics = [];
 
       const bookOptions = selectedBookOptions();
       const unitOptions = selectedUnitOptions();
@@ -2704,6 +2724,15 @@
     }
     function responseItem(response) { return Array.isArray(response) ? (response[0] || {}) : (response || {}); }
     function safePercent(value) { const n = Number(value); return Number.isFinite(n) && n >= 0 ? n : 0; }
+    const PAPER_INSIGHT_LABELS = Object.freeze({
+      cognitive_typology: Object.freeze({ REM: 'Remembering', UND: 'Understanding', APPL: 'Application', ANL: 'Analysis', EVAL: 'Evaluation', CRE: 'Creation' }),
+      difficulty: Object.freeze({ EASY: 'Easy', MEDIUM: 'Balanced', MODERATE: 'Balanced', BALANCED: 'Balanced', DIFFICULT: 'Challenging', HARD: 'Challenging', CHALLENGING: 'Challenging' }),
+      question_type: Object.freeze({ MCQ: 'Multiple Choice Question', A_R: 'Assertion–Reason', VSA: 'Very Short Answer', SA: 'Short Answer', LA: 'Long Answer', C_S: 'Case-Based Question' })
+    });
+    function paperInsightLabel(row, key) {
+      const code = String(row?.code || '').trim().toUpperCase();
+      return PAPER_INSIGHT_LABELS[key]?.[code] || row?.label || String(row?.code || '').replace(/_/g, ' ');
+    }
     function analyticsDistribution(analytics, key) {
       const list = analytics?.distributions?.[key];
       return Array.isArray(list) ? list.filter((row) => safePercent(row?.marks_percent) > 0 || Number(row?.allocated_marks) > 0) : [];
@@ -2737,8 +2766,11 @@
       const coverage = distributionCoverage(analytics, key);
       const coverageText = coverage === null ? '—' : `${coverage.toFixed(0)}% tagged`;
       const visible = rows.slice(0, 6);
-      const legend = visible.map((row, index) => `
-        <div class="insight-legend-row"><span class="insight-dot" style="background:${colors[index % colors.length]}"></span><span title="${escapeHTML(row.label || row.code || 'Unclassified')}">${escapeHTML(row.label || row.code || 'Unclassified')}</span><span class="insight-value">${safePercent(row.marks_percent).toFixed(1)}%</span></div>`).join('');
+      const legend = visible.map((row, index) => {
+        const label = paperInsightLabel(row, key);
+        return `
+        <div class="insight-legend-row"><span class="insight-dot" style="background:${colors[index % colors.length]}"></span><span title="${escapeHTML(label)}">${escapeHTML(label)}</span><span class="insight-value">${safePercent(row.marks_percent).toFixed(1)}%</span></div>`;
+      }).join('');
       const extra = rows.length > visible.length ? `<div class="insight-legend-row"><span></span><span>+${rows.length - visible.length} more</span><span></span></div>` : '';
       return `
         <article class="insight-card">
@@ -2769,7 +2801,7 @@
         payload.exam_type,
         payload.subject,
         payload.difficulty,
-        isOfflineTest() ? `${payload.maximum_marks} marks` : (state.testType === 'online' ? `${payload.num_questions} questions` : 'Full syllabus')
+        isOfflineTest() ? (payload.full_marks_requested ? 'Full marks' : `${payload.maximum_marks} marks`) : (state.testType === 'online' ? `${payload.num_questions} questions` : 'Full syllabus')
       ].filter(Boolean);
       let panel = '';
       if (documentTest) {
@@ -2821,11 +2853,11 @@
       let payload;
       if (isFullTest()) {
         const classNumber = classNumberFromLabel(state.className);
-        const academicSubjectKey = resolvedAcademicSubjectKey();
-        if (!classNumber || !academicSubjectKey) {
+        const academicSubjectKey = resolvedAcademicSubjectKey() || null;
+        if (!classNumber) {
           state.isGenerating = false;
           renderConfiguration();
-          showError('No active full-paper subject context is available for this class and subject.');
+          showError('A valid class is required for a Full Test.');
           return;
         }
         payload = {
@@ -2838,10 +2870,12 @@
           board: FULL_PAPER_CONTEXT.board,
           class_number: classNumber,
           academic_subject_key: academicSubjectKey,
+          format_context_resolution: academicSubjectKey ? 'CLIENT_REGISTERED_KEY' : 'BACKEND_SUBJECT_CONTEXT_REQUIRED',
           academic_session: FULL_PAPER_CONTEXT.academic_session,
           delivery_mode: FULL_PAPER_CONTEXT.delivery_mode,
           difficulty_preset: difficultyPreset(state.difficulty),
           paper_analytics_requested: true,
+          answer_line_policy: 'NONE',
           /* Kept as safe presentation metadata and transition aliases. */
           mode: 'full_test',
           scope: 'full_syllabus',
@@ -2859,7 +2893,12 @@
           ...buildScopePayload(),
           question_types: state.questionTypes,
           difficulty: state.difficulty,
-          maximum_marks: Number(state.maximumMarks),
+          maximum_marks: isFullMarksCustomPaper() ? null : Number(state.maximumMarks),
+          full_marks_requested: isFullMarksCustomPaper(),
+          paper_length: isFullMarksCustomPaper() ? 'FULL_LENGTH' : 'CUSTOM',
+          exam_scope: 'SELECTED_CHAPTERS',
+          planning_mode: isFullMarksCustomPaper() ? 'SELECTED_CHAPTER_FORMULA_ONLY' : 'CUSTOM_OFFLINE_BANK_FIRST',
+          answer_line_policy: isFullMarksCustomPaper() ? 'NONE' : 'MARKS_BASED',
           teacher_id: teacherEmail,
           teacher_email: teacherEmail
         };
@@ -2874,6 +2913,7 @@
           num_questions: Number(state.numberQuestions),
           time_limit: Number(state.timeLimit) || recommendedTime() || 20,
           mode: 'ai_only',
+          online_assessment_contract: 'AUTO_GRADED_OBJECTIVE_ONLY',
           teacher_email: teacherEmail
         };
       }
@@ -2969,5 +3009,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5076b0f88485795',t:'MTc5Mjk5NjI4Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a50f447b2bc50868',t:'MTc5MzA3ODU5Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
