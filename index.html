@@ -2090,12 +2090,11 @@
       }
 };
 
-    const ONLINE_WEBHOOK = 'https://n8n.mytst.cloud/webhook/e31cb8f8-76e6-4f84-b9b4-41af25646d6e';
-    /* The inactive V11 successor has its own endpoint. Keep all existing
-       online and partial/offline behaviour on the established workflow; only
-       the existing Full Test UI is sent to the Format-first successor once it
-       is activated and live-tested. */
-    const FULL_PAPER_WEBHOOK = 'https://n8n.mytst.cloud/webhook/mytst-paper-generator-v11';
+    /* Inactive V12 test candidate only. This file is not deployed; production
+       continues using the active frontend and its established endpoints. */
+    const UNIFIED_V12_WEBHOOK = 'https://n8n.mytst.cloud/webhook/mytst-paper-generator-v12';
+    const ONLINE_WEBHOOK = UNIFIED_V12_WEBHOOK;
+    const FULL_PAPER_WEBHOOK = UNIFIED_V12_WEBHOOK;
     const FULL_PAPER_CONTEXT = Object.freeze({
       board: 'CBSE', academic_session: '2026-27', delivery_mode: 'OFFLINE',
       subject_keys: {
@@ -2142,6 +2141,19 @@
       if (raw === 'easy') return 'EASY';
       if (raw === 'hard' || raw === 'challenging') return 'CHALLENGING';
       return 'BALANCED';
+    }
+    function buildV12BackendContext() {
+      const classNumber = classNumberFromLabel(state.className);
+      const academicSubjectKey = resolvedAcademicSubjectKey() || null;
+      return {
+        request_schema_version: 'mytst-paper-request-v4',
+        board: FULL_PAPER_CONTEXT.board,
+        class_number: classNumber,
+        academic_subject_key: academicSubjectKey,
+        format_context_resolution: academicSubjectKey ? 'CLIENT_REGISTERED_KEY' : 'BACKEND_SUBJECT_CONTEXT_REQUIRED',
+        academic_session: FULL_PAPER_CONTEXT.academic_session,
+        paper_analytics_requested: true
+      };
     }
 
    const state = {
@@ -2861,7 +2873,7 @@
           return;
         }
         payload = {
-          request_schema_version: 'mytst-paper-request-v3',
+          request_schema_version: 'mytst-paper-request-v4',
           test_type: 'full_test',
           test_type_label: 'Full Test',
           paper_length: 'FULL_LENGTH',
@@ -2887,7 +2899,9 @@
         };
       } else if (isOfflineTest()) {
         payload = {
+          ...buildV12BackendContext(),
           test_type: 'offline',
+          delivery_mode: 'OFFLINE',
           exam_type: state.className,
           subject: toTitle(state.subject),
           ...buildScopePayload(),
@@ -2904,7 +2918,9 @@
         };
       } else {
         payload = {
+          ...buildV12BackendContext(),
           test_type: 'online',
+          delivery_mode: 'ONLINE',
           exam_type: state.className,
           subject: toTitle(state.subject),
           ...buildScopePayload(),
@@ -2920,7 +2936,7 @@
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 20 * 60 * 1000);
-        const generationEndpoint = isFullTest() ? FULL_PAPER_WEBHOOK : ONLINE_WEBHOOK;
+        const generationEndpoint = UNIFIED_V12_WEBHOOK;
         const response = await fetch(generationEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -3009,5 +3025,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a50f447b2bc50868',t:'MTc5MzA3ODU5Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a50f72346aaddc7f',t:'MTc5MzA4MDQ2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
