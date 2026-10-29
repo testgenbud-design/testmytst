@@ -624,18 +624,18 @@
 <body>
   <header class="nav">
     <div class="brand"><span class="brand-mark"><img id="brandLogo" src="assets/mytst-kangaroo-logo-192.png" alt="myTST kangaroo logo" /></span><span>myTST</span></div>
-    <div class="nav-meta"></span><span></span><span class="nav-badge">CBSE · CLASSES 6–12</span></div>
+    <div class="nav-meta"></span><span></span><span class="nav-badge">CBSE · CLASSES 10–12</span></div>
   </header>
 
   <main>
     <section class="hero" aria-labelledby="page-title">
-      <div class="eyebrow">✦ Teacher suppoet Tool</div>
+      <div class="eyebrow">✦ Teacher support tool</div>
       <h1 id="page-title">Your tool to generate <span class="highlight">CBSE Question Papers</span> in minutes</h1>
       <p>Configure syllabus-aligned online quizzes, print-ready offline papers, or a complete full-syllabus test for Class 10–12.</p>
       <div class="stats" aria-label="Product capabilities">
         <div class="stat"><strong>3 Modes</strong><span>Online, offline, full</span></div>
         <div class="stat"><strong>10–12</strong><span>CBSE classes</span></div>
-        <div class="stat"><strong>20+</strong><span>Subjects</span></div>
+        <div class="stat"><strong>48</strong><span>Official subject tracks</span></div>
       </div>
     </section>
 
@@ -673,6 +673,7 @@
               <div class="field">
                 <label class="label" for="subjectSelect">Subject <span class="required">*</span></label>
                 <select id="subjectSelect" class="input" disabled><option value="">Select subject</option></select>
+                <div id="curriculumProvenance" class="hint" role="status">Official CBSE 2026–27 curriculum source will appear after you select a subject.</div>
               </div>
 
               <!-- Language subjects use their prescribed book before chapter selection. -->
@@ -835,1259 +836,1164 @@
 
     /* Concise CBSE syllabus map used by the selectors. */
     const SYLLABUS = {
-      "Class 10": {
-            "Science": {
-                  "hierarchy": "chapters_to_topics",
-                  "groups": {
-                        "Chemical Reactions and Equations": [
-                              "Chemical equations",
-                              "Types of chemical reactions",
-                              "Oxidation and reduction",
-                              "Effects of oxidation in everyday life"
-                        ],
-                        "Acids, Bases and Salts": [
-                              "Understanding acids and bases",
-                              "pH scale",
-                              "Salts and their uses"
-                        ],
-                        "Metals and Non-metals": [
-                              "Physical properties",
-                              "Chemical properties",
-                              "Reactivity series",
-                              "Occurrence and extraction of metals"
-                        ],
-                        "Carbon and Its Compounds": [
-                              "Covalent bonding",
-                              "Homologous series",
-                              "Ethanol and ethanoic acid",
-                              "Soaps and detergents"
-                        ],
-                        "Life Processes": [
-                              "Nutrition",
-                              "Respiration",
-                              "Transportation",
-                              "Excretion"
-                        ],
-                        "Control and Coordination": [
-                              "Nervous system",
-                              "Coordination in plants",
-                              "Hormones in animals"
-                        ],
-                        "How do Organisms Reproduce?": [
-                              "Asexual reproduction",
-                              "Sexual reproduction",
-                              "Reproductive health"
-                        ],
-                        "Heredity": [
-                              "Heredity",
-                              "Mendel's laws",
-                        ],
-                        "Light – Reflection and Refraction": [
-                              "Spherical mirrors",
-                              "Refraction",
-                              "Lenses"
-                        ],
-                        "The Human Eye and the Colourful World": [
-                              "Human eye",
-                              "Defects of vision",
-                              "Dispersion and scattering"
-                        ],
-                        "Electricity": [
-                              "Current and potential difference",
-                              "Ohm's law",
-                              "Resistance",
-                              "Electrical power"
-                        ],
-                        "Magnetic Effects of Electric Current": [
-                              "Magnetic field",
-                              "Electromagnetic induction",
-                        ],
-                        "Our Environment": [
-                              "Ecosystem",
-                              "Food chains and food webs",
-                              "Ozone layer",
-                              "Waste management"
-                        ],
-                        "Sustainable Management of Natural Resources": [
-                              "Forest and wildlife",
-                              "Water harvesting",
-                              "Coal and petroleum"
-                        ]
-                  }
-            },
-            "Mathematics": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Number Systems": [
-                              "Real Numbers"
-                        ],
-                        "Algebra": [
-                              "Polynomials",
-                              "Pair of Linear Equations in Two Variables",
-                              "Quadratic Equations",
-                              "Arithmetic Progressions"
-                        ],
-                        "Coordinate Geometry": [
-                              "Coordinate Geometry"
-                        ],
-                        "Geometry": [
-                              "Triangles",
-                              "Circles",
-                        ],
-                        "Trigonometry": [
-                              "Introduction to Trigonometry",
-                              "Applications of Trigonometry"
-                        ],
-                        "Mensuration": [
-                              "Areas Related to Circles",
-                              "Surface Areas and Volumes"
-                        ],
-                        "Statistics and Probability": [
-                              "Statistics",
-                              "Probability"
-                        ]
-                  }
-            },
-            "Social Science": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "History": [
-                              "The Rise of Nationalism in Europe",
-                              "Nationalism in India",
-                              "The Making of a Global World",
-                              "The Age of Industrialisation",
-                              "Print Culture and the Modern World"
-                        ],
-                        "Geography": [
-                              "Resources and Development",
-                              "Forest and Wildlife Resources",
-                              "Water Resources",
-                              "Agriculture",
-                              "Minerals and Energy Resources",
-                              "Manufacturing Industries",
-                              "Lifelines of National Economy"
-                        ],
-                        "Political Science": [
-                              "Power Sharing",
-                              "Federalism",
-                              "Gender, Religion and Caste",
-                              "Political Parties",
-                              "Outcomes of Democracy",
-                        ],
-                        "Economics": [
-                              "Development",
-                              "Sectors of the Indian Economy",
-                              "Money and Credit",
-                              "Globalisation and the Indian Economy",
-                              "Consumer Rights"
-                        ]
-                  }
-            },
-            "English": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "First Flight": [
-                              "A Letter to God",
-                              "Nelson Mandela: Long Walk to Freedom",
-                              "Two Stories about Flying",
-                              "From the Diary of Anne Frank",
-                              "Glimpses of India",
-                              "Mijbil the Otter",
-                              "Madam Rides the Bus",
-                              "The Sermon at Benares",
-                              "The Proposal",
-                              "Dust of Snow",
-                              "Fire and Ice",
-                              "A Tiger in the Zoo",
-                              "How to Tell Wild Animals",
-                              "The Ball Poem",
-                              "Amanda!",
-                              "The Trees",
-                              "Fog",
-                              "The Tale of Custard the Dragon",
-                              "For Anne Gregory"
-                        ],
-                        "Footprints Without Feet": [
-                              "A Triumph of Surgery",
-                              "The Thief's Story",
-                              "The Midnight Visitor",
-                              "A Question of Trust",
-                              "Footprints without Feet",
-                              "The Making of a Scientist",
-                              "The Necklace",
-                              "Bholi",
-                              "The Book that Saved the Earth"
-                        ]
-                  }
-            },
-            "Hindi": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "क्षितिज भाग 2": [
-                              "नेताजी का चश्मा",
-                              "बालगोबिन भगत",
-                              "लखनवी अंदाज़",
-                              "एक कहानी यह भी",
-                              "नौबतखाने में इबादत",
-                              "संस्कृति",
-                              "पद (सूरदास)",
-                              "राम-लक्ष्मण-परशुराम संवाद",
-                              "आत्मकथ्य",
-                              "उत्साह एवं अट नहीं रही",
-                              "यह दंतुरहित मुस्कान और फसल",
-                              "संगतकार"
-                        ],
-                        "कृतिका भाग 2": [
-                              "माता का अँचल",
-                              "साना-साना हाथ जोड़ि",
-                              "मैं क्यों लिखता हूँ"
-                        ],
-                        "स्पर्श भाग 2": [
-                              "साखी (कबीर)",
-                              "पद (मीरा)",
-                              "मनुष्यता",
-                              "पर्वत प्रदेश में पावस",
-                              "तोप",
-                              "कर चले हम फ़िदा",
-                              "आत्मत्राण",
-                              "बड़े भाई साहब",
-                              "डायरी का एक पन्ना",
-                              "तताँरा-वामीरो कथा",
-                              "तीसरी कसम के शिल्पकार शैलेंद्र",
-                              "अब कहाँ दूसरे के दुख से दुखी होने वाले",
-                              "पतझर में टूटी पत्तियाँ",
-                              "कारतूस"
-                        ],
-                        "संचयन भाग 2": [
-                              "हरिहर काका",
-                              "सपनों के-से दिन",
-                              "टोपी शुक्ला"
-                        ]
-                  }
-            },
-            "Information Technology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Communication Skills-II": [
-                              "Methods of Communication (Verbal, Non-verbal, Visual)",
-                              "Communication Cycle and Feedback",
-                              "Barriers to Effective Communication",
-                              "Principles of Communication and 7 Cs",
-                              "Basic Writing Skills"
-                        ],
-                        "Self-Management Skills-II": [
-                              "Stress Management Techniques",
-                              "Ability to Work Independently"
-                        ],
-                        "ICT Skills-II": [
-                              "Operating Systems and File Management",
-                              "Care and Maintenance of Computer"
-                        ],
-                        "Entrepreneurial Skills-II": [
-                              "Characteristics of a Successful Entrepreneur"
-                        ],
-                        "Green Skills-II": [
-                              "Sustainable Development – Importance and Problems"
-                        ],
-                        "Digital Documentation (Advanced)": [
-                              "Introduction to Styles",
-                              "Working with Images",
-                              "Advanced Features of Writer"
-                        ],
-                        "Electronic Spreadsheet (Advanced)": [
-                              "Analyse Data using Scenarios and Goal Seek",
-                              "Using Macros in Spreadsheet",
-                              "Linking Spreadsheet Data",
-                              "Share and Review a Spreadsheet"
-                        ],
-                        "Database Management System": [
-                              "Introduction to Database Management System",
-                              "Starting with LibreOffice Base",
-                              "Working with Multiple Tables",
-                              "Queries in Base",
-                              "Forms and Reports"
-                        ],
-                        "Maintain Healthy, Safe and Secure Working Environment": [
-                              "Health, Safety and Security at Workplace",
-                              "Workplace Quality Measures",
-                              "Prevent Accidents and Emergencies"
-                        ]
-                  }
-            },
-            "Marathi": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "अक्षरभारती": [
-                              "तू बुद्धी दे (प्रार्थना)",
-                              "संतवाणी – अंकिला मी दास तुझा (संत नामदेव)",
-                              "संतवाणी – योगी सर्वकाळ सुखदाता (संत एकनाथ)",
-                              "शाल",
-                              "उपास",
-                              "मोठे होत असलेल्या मुलांनो… (स्थूलवाचन)",
-                              "दोन दिवस (कविता)",
-                              "चुडीवाला",
-                              "फूटप्रिन्टस",
-                              "ऊर्जाशक्तीचा जागर",
-                              "जाता अस्ताला (स्थूलवाचन)",
-                              "औक्षण (कविता)",
-                              "रंग साहित्याचे",
-                              "जंगल डायरी",
-                              "रंग मजेचे रंग उदयाचे (कविता)",
-                              "जगणं कॅक्टसचं (स्थूलवाचन)",
-                              "हिरवंगार झाडासारखं (कविता)",
-                              "बीज पेरले गेले",
-                              "खरा नागरिक",
-                              "स्वप्न करू साकार (कविता)",
-                              "व्युत्पत्ती कोश (स्थूलवाचन)"
-                        ]
-                  }
-            },
-            "Computer Applications": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Programming": [
-                              "Python Revision",
-                              "Working with Functions",
-                              "File Handling",
-                              "Exception Handling"
-                        ],
-                        "Database": [
-                              "Introduction to MySQL",
-                              "SQL Commands – DDL and DML",
-                              "Queries",
-                              "Joins"
-                        ],
-                        "Networking": [
-                              "Network Concepts",
-                              "Network Devices",
-                              "Network Topologies",
-                              "Internet Services"
-                        ],
-                        "Society, Law and Ethics": [
-                              "Digital Footprint",
-                              "Netiquettes",
-                              "Data Protection",
-                              "Cyber Crime",
-                              "IT Act"
-                        ]
-                  }
-            }
+  "Class 10": {
+    "Science": {
+      "hierarchy": "chapters_to_topics",
+      "groups": {
+        "Chemical Reactions and Equations": [
+          "Chemical equations",
+          "Types of chemical reactions",
+          "Oxidation and reduction",
+          "Effects of oxidation in everyday life"
+        ],
+        "Acids, Bases and Salts": [
+          "Understanding acids and bases",
+          "pH scale",
+          "Salts and their uses"
+        ],
+        "Metals and Non-metals": [
+          "Physical properties",
+          "Chemical properties",
+          "Reactivity series",
+          "Occurrence and extraction of metals"
+        ],
+        "Carbon and Its Compounds": [
+          "Covalent bonding",
+          "Homologous series",
+          "Ethanol and ethanoic acid",
+          "Soaps and detergents"
+        ],
+        "Life Processes": [
+          "Nutrition",
+          "Respiration",
+          "Transportation",
+          "Excretion"
+        ],
+        "Control and Coordination": [
+          "Nervous system",
+          "Coordination in plants",
+          "Hormones in animals"
+        ],
+        "How do Organisms Reproduce?": [
+          "Asexual reproduction",
+          "Sexual reproduction",
+          "Reproductive health"
+        ],
+        "Heredity": [
+          "Heredity",
+          "Mendel's laws"
+        ],
+        "Light – Reflection and Refraction": [
+          "Spherical mirrors",
+          "Refraction",
+          "Lenses"
+        ],
+        "The Human Eye and the Colourful World": [
+          "Human eye",
+          "Defects of vision",
+          "Dispersion and scattering"
+        ],
+        "Electricity": [
+          "Current and potential difference",
+          "Ohm's law",
+          "Resistance",
+          "Electrical power"
+        ],
+        "Magnetic Effects of Electric Current": [
+          "Magnetic field and field lines",
+          "Field due to a current-carrying conductor, coil or solenoid",
+          "Force on a current-carrying conductor",
+          "Fleming’s Left Hand Rule",
+          "Direct current, alternating current and domestic electric circuits"
+        ],
+        "Our Environment": [
+          "Ecosystem",
+          "Food chains and food webs",
+          "Ozone layer",
+          "Waste management"
+        ]
       },
-      "Class 11": {
-            "Physics": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Mechanics": [
-                              "Physical World and Measurement",
-                              "Units and Measurements",
-                              "Motion in a Straight Line",
-                              "Motion in a Plane",
-                              "Laws of Motion",
-                              "Work, Energy and Power",
-                              "System of Particles and Rotational Motion",
-                              "Gravitation"
-                        ],
-                        "Properties of Matter": [
-                              "Mechanical Properties of Solids",
-                              "Mechanical Properties of Fluids",
-                              "Thermal Properties of Matter",
-                              "Thermodynamics",
-                              "Kinetic Theory"
-                        ],
-                        "Oscillations and Waves": [
-                              "Oscillations",
-                              "Waves"
-                        ]
-                  }
-            },
-            "Chemistry": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Physical Chemistry": [
-                              "Some Basic Concepts of Chemistry",
-                              "Structure of Atom",
-                              "Classification of Elements and Periodicity",
-                              "Chemical Bonding and Molecular Structure",
-                              "Thermodynamics",
-                              "Equilibrium",
-                              "Redox Reactions"
-                        ],
-                        "Inorganic Chemistry": [
-                              "Hydrogen",
-                              "s-Block Elements",
-                              "p-Block Elements"
-                        ],
-                        "Organic Chemistry": [
-                              "Organic Chemistry – Basic Principles and Techniques",
-                              "Hydrocarbons",
-                              "Environmental Chemistry"
-                        ]
-                  }
-            },
-            "Biology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Diversity in Living World": [
-                              "The Living World",
-                              "Biological Classification",
-                              "Plant Kingdom",
-                              "Animal Kingdom"
-                        ],
-                        "Structural Organisation in Plants and Animals": [
-                              "Morphology of Flowering Plants",
-                              "Anatomy of Flowering Plants",
-                              "Structural Organisation in Animals"
-                        ],
-                        "Cell Biology": [
-                              "Cell – The Unit of Life",
-                              "Biomolecules",
-                              "Cell Cycle and Cell Division"
-                        ],
-                        "Plant Physiology": [
-                              "Transport in Plants",
-                              "Mineral Nutrition",
-                              "Photosynthesis in Higher Plants",
-                              "Respiration in Plants",
-                              "Plant Growth and Development"
-                        ],
-                        "Human Physiology": [
-                              "Digestion and Absorption",
-                              "Breathing and Exchange of Gases",
-                              "Body Fluids and Circulation",
-                              "Excretory Products and their Elimination",
-                              "Locomotion and Movement",
-                              "Neural Control and Coordination",
-                              "Chemical Coordination and Integration"
-                        ]
-                  }
-            },
-            "Mathematics": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Sets and Functions": [
-                              "Sets",
-                              "Relations and Functions",
-                              "Trigonometric Functions"
-                        ],
-                        "Algebra": [
-                              "Complex Numbers and Quadratic Equations",
-                              "Linear Inequalities",
-                              "Permutations and Combinations",
-                              "Binomial Theorem",
-                              "Sequences and Series"
-                        ],
-                        "Coordinate Geometry": [
-                              "Straight Lines",
-                              "Conic Sections",
-                              "Introduction to Three Dimensional Geometry"
-                        ],
-                        "Calculus": [
-                              "Limits and Derivatives"
-                        ],
-                        "Statistics and Probability": [
-                              "Statistics",
-                              "Probability"
-                        ]
-                  }
-            },
-            "English": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "Hornbill": [
-                              "The Portrait of a Lady",
-                              "A Photograph",
-                              "We’re Not Afraid to Die… if We Can All Be Together",
-                              "Discovering Tut: The Saga Continues",
-                              "The Laburnum Top",
-                              "The Voice of the Rain",
-                              "Childhood",
-                              "The Adventure",
-                              "Silk Road",
-                              "Father to Son"
-                        ],
-                        "Snapshots": [
-                              "The Summer of the Beautiful White Horse",
-                              "The Address",
-                              "Ranga's Marriage",
-                              "Albert Einstein at School",
-                              "Mother's Day",
-                              "The Ghat of the Only World",
-                              "Birth",
-                              "The Tale of Melon City"
-                        ]
-                  }
-            },
-            "Hindi": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "आरोह भाग 1": [
-                              "नमक का दारोगा",
-                              "मियाँ नसीरुद्दीन",
-                              "अपू के साथ ढाई साल",
-                              "विदाई-संभाषण",
-                              "गलता लोहा",
-                              "स्पीति में बारिश",
-                              "कबीर के पद",
-                              "मीरा के पद",
-                              "घर की याद",
-                              "चंपा काले काले अक्षर नहीं चीन्हती",
-                              "ग़ज़ल",
-                              "हे भूख मत मचल",
-                              "सबसे खतरनाक",
-                              "आओ मिलकर बचाएँ"
-                        ],
-                        "वितान भाग 1": [
-                              "भारतीय गायिकाओं में बेजोड़: लता मंगेशकर",
-                              "राजस्थान की रजत बूँदें",
-                              "आलो-आँधारि"
-                        ]
-                  }
-            },
-            "Information Technology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Communication Skills-III": [
-                              "Methods of Communication",
-                              "Communication Styles",
-                              "Basic Writing Skills"
-                        ],
-                        "Self-Management Skills-III": [
-                              "Appearance and Grooming",
-                              "Team Work Skills",
-                              "Time Management Strategies"
-                        ],
-                        "ICT Skills-III": [
-                              "Creating a Document on Word Processor",
-                              "Editing, Saving and Printing a Document"
-                        ],
-                        "Entrepreneurial Skills-III": [
-                              "Entrepreneurial Values and Attitude",
-                              "Attitudinal Changes Required to Become an Entrepreneur"
-                        ],
-                        "Green Skills-III": [
-                              "Main Sectors of the Green Economy",
-                              "Green Sectors/Areas and Stakeholders"
-                        ],
-                        "Computer Organization": [
-                              "Fundamentals of Computer and its Characteristics",
-                              "Components of Computer",
-                              "Operating System",
-                              "Troubleshooting in Computer System",
-                              "Utilities"
-                        ],
-                        "Networking and Internet": [
-                              "Computer Networking",
-                              "Internet and its Terminology",
-                              "Cybercrime and Cyber Security"
-                        ],
-                        "Office Automation Tools": [
-                              "Word Processor",
-                              "Spreadsheets",
-                              "Presentation Software (Impress)"
-                        ],
-                        "RDBMS": [
-                              "Relational Database Management System Concepts",
-                              "Introduction to MySQL",
-                              "DML Commands"
-                        ],
-                        "Fundamentals of Java": [
-                              "Integrated Development Environment (NetBeans)",
-                              "Java Programming Basics"
-                        ]
-                  }
-            },
-            "Computer Science": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Programming in Python": [
-                              "Python Basics",
-                              "Control Flow",
-                              "Functions",
-                              "Strings and Lists",
-                              "File Handling"
-                        ],
-                        "Data Handling": [
-                              "Pandas",
-                              "Matplotlib"
-                        ],
-                        "Database and Networks": [
-                              "MySQL Basics",
-                              "SQL Queries",
-                              "Network Concepts",
-                              "Cyber Safety"
-                        ]
-                  }
-            },
-            "Accountancy": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Theory Base of Accounting": [
-                              "Introduction to Accounting",
-                              "Theory Base of Accounting",
-                              "Recording of Transactions I",
-                              "Recording of Transactions II"
-                        ],
-                        "Bank Reconciliation and Trial Balance": [
-                              "Bank Reconciliation Statement",
-                              "Trial Balance and Rectification of Errors"
-                        ],
-                        "Financial Statements": [
-                              "Depreciation, Provisions and Reserves",
-                              "Bills of Exchange",
-                              "Financial Statements I",
-                              "Financial Statements II"
-                        ],
-                        "Computerised Accounting": [
-                              "Computerised Accounting System",
-                              "Accounting Information Systems",
-                              "Spreadsheet for Accounting"
-                        ]
-                  }
-            },
-            "Business Studies": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Nature and Purpose of Business": [
-                              "Business, Trade and Commerce",
-                              "Forms of Business Organisation",
-                              "Private, Public and Global Enterprises",
-                              "Business Services",
-                              "Emerging Modes of Business"
-                        ],
-                        "Business Finance and Trade": [
-                              "Social Responsibility of Business",
-                              "Formation of a Company",
-                              "Sources of Business Finance",
-                              "Small Business",
-                              "Internal Trade",
-                              "International Business"
-                        ]
-                  }
-            },
-            "Economics": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Statistics for Economics": [
-                              "Introduction",
-                              "Collection of Data",
-                              "Organisation of Data",
-                              "Presentation of Data",
-                              "Measures of Central Tendency",
-                              "Measures of Dispersion",
-                              "Correlation",
-                              "Index Numbers"
-                        ],
-                        "Indian Economic Development": [
-                              "Indian Economy on the Eve of Independence",
-                              "Indian Economy 1950–1990",
-                              "Liberalisation, Privatisation and Globalisation",
-                              "Poverty",
-                              "Human Capital Formation",
-                              "Rural Development",
-                              "Employment",
-                              "Infrastructure",
-                              "Environment and Sustainable Development"
-                        ]
-                  }
-            },
-            "History": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Early Societies": [
-                              "From the Beginning of Time",
-                              "Writing and City Life"
-                        ],
-                        "Empires and Cultures": [
-                              "An Empire Across Three Continents",
-                              "The Central Islamic Lands",
-                              "Nomadic Empires",
-                              "The Three Orders",
-                              "Changing Cultural Traditions",
-                              "Confrontation of Cultures"
-                        ],
-                        "Towards Modernity": [
-                              "The Industrial Revolution",
-                              "Displacing Indigenous Peoples",
-                              "Paths to Modernisation"
-                        ]
-                  }
-            },
-            "Political Science": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Indian Constitution at Work": [
-                              "Constitution – Why and How",
-                              "Rights in the Indian Constitution",
-                              "Election and Representation",
-                              "Executive",
-                              "Legislature",
-                              "Judiciary",
-                              "Federalism",
-                              "Local Governments",
-                              "Constitution as a Living Document"
-                        ],
-                        "Political Theory": [
-                              "Political Theory – Introduction",
-                              "Freedom",
-                              "Equality",
-                              "Social Justice",
-                              "Rights",
-                              "Citizenship",
-                              "Nationalism",
-                              "Secularism",
-                              "Peace",
-                              "Development"
-                        ]
-                  }
-            },
-            "Marathi (Class 11)": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "युवकभारती": [
-                              "मामू",
-                              "प्राणसई",
-                              "अशी पुस्तकं",
-                              "झाडांच्या मनात जाऊ",
-                              "परिमळ",
-                              "दवांत आलिस भल्या पहाटीं",
-                              "'माणूस' बांधूया!",
-                              "ऐसीं अक्षरें रसिकें",
-                              "वहिनींचा 'सुसाट' सल्ला",
-                              "शब्द",
-                              "वाङ्मयीन लेण्याचा शिल्पकार",
-                              "पैंजण",
-                              "नाटक – साहित्यप्रकार परिचय",
-                              "हसवाफसवी",
-                              "ध्यानीमनी",
-                              "सुंदर मी होणार",
-                              "सूत्रसंचालन",
-                              "मुद्रितशोधन",
-                              "अनुवाद",
-                              "अनुदिनी (ब्लॉग) लेखन",
-                              "रेडिओजॉकी",
-                              "शब्दशक्ती",
-                              "काव्यगुण",
-                              "वाक्यसंश्लेषण",
-                              "काळ",
-                              "शब्दभेद"
-                        ]
-                  }
-            },
-           "Geography": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Fundamentals of Physical Geography": [
-                              "Geography as a Discipline",
-                              "Origin and Evolution of the Earth",
-                              "Interior of the Earth",
-                              "Landforms",
-                              "Climate",
-                              "Water (Oceans)",
-                              "Life on Earth"
-                        ],
-                        "India – Physical Environment": [
-                              "India – Location",
-                              "Structure and Physiography",
-                              "Drainage System",
-                              "Climate",
-                              "Natural Vegetation",
-                              "Soils",
-                              "Natural Hazards and Disasters"
-                        ]
-                  }
-            },
-            "Sociology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Introducing Sociology": [
-                              "Sociology and Society",
-                              "Terms, Concepts and their Use",
-                              "Understanding Social Institutions",
-                              "Culture and Socialisation",
-                              "Doing Sociology"
-                        ],
-                        "Understanding Society": [
-                              "Social Structure, Stratification and Social Processes",
-                              "Social Change and Social Order",
-                              "Environment and Society",
-                              "Introducing Western Sociologists"
-                        ]
-                  }
-            },
-            "Psychology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Introduction and Basic Processes": [
-                              "What is Psychology",
-                              "Methods of Enquiry",
-                              "Biological Bases of Behaviour",
-                              "Human Development",
-                              "Sensory, Attentional and Perceptual Processes",
-                              "Learning"
-                        ],
-                        "Higher Mental Processes": [
-                              "Memory",
-                              "Thinking",
-                              "Motivation and Emotion"
-                        ]
-                  }
-            }
-      },
-      "Class 12": {
-            "Physics": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Electrostatics and Current Electricity": [
-                              "Electric Charges and Fields",
-                              "Electrostatic Potential and Capacitance",
-                              "Current Electricity"
-                        ],
-                        "Magnetism and Electromagnetic Induction": [
-                              "Moving Charges and Magnetism",
-                              "Magnetism and Matter",
-                              "Electromagnetic Induction",
-                              "Alternating Current",
-                              "Electromagnetic Waves"
-                        ],
-                        "Optics": [
-                              "Ray Optics and Optical Instruments",
-                              "Wave Optics"
-                        ],
-                        "Modern Physics and Electronics": [
-                              "Dual Nature of Radiation and Matter",
-                              "Atoms",
-                              "Nuclei",
-                              "Semiconductor Electronics"
-                        ]
-                  }
-            },
-            "Chemistry": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Physical Chemistry": [
-                              "Solutions",
-                              "Electrochemistry",
-                              "Chemical Kinetics"
-                        ],
-                        "Inorganic Chemistry": [
-                              "Coordination Compounds"
-                        ],
-                        "Organic Chemistry": [
-                              "Haloalkanes and Haloarenes",
-                              "Alcohols, Phenols and Ethers",
-                              "Aldehydes, Ketones and Carboxylic Acids",
-                              "Amines",
-                              "Biomolecules"
-                        ]
-                  }
-            },
-            "Biology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Reproduction": [
-                              "Sexual Reproduction in Flowering Plants",
-                              "Human Reproduction",
-                              "Reproductive Health"
-                        ],
-                        "Genetics and Evolution": [
-                              "Principles of Inheritance and Variation",
-                              "Molecular Basis of Inheritance",
-                              "Evolution"
-                        ],
-                        "Biology and Human Welfare": [
-                              "Human Health and Disease",
-                              "Microbes in Human Welfare"
-                        ],
-                        "Biotechnology": [
-                              "Biotechnology – Principles and Processes",
-                              "Biotechnology and its Applications"
-                        ],
-                        "Ecology and Environment": [
-                              "Organisms and Populations",
-                              "Ecosystem",
-                              "Biodiversity and Conservation",
-                              "Environmental Issues"
-                        ]
-                  }
-            },
-            "Mathematics": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Relations and Functions": [
-                              "Relations and Functions",
-                              "Inverse Trigonometric Functions"
-                        ],
-                        "Algebra": [
-                              "Matrices",
-                              "Determinants"
-                        ],
-                        "Calculus": [
-                              "Continuity and Differentiability",
-                              "Applications of Derivatives",
-                              "Integrals",
-                              "Applications of Integrals",
-                              "Differential Equations"
-                        ],
-                        "Vectors and 3D Geometry": [
-                              "Vector Algebra",
-                              "Three Dimensional Geometry"
-                        ],
-                        "Linear Programming and Probability": [
-                              "Linear Programming",
-                              "Probability"
-                        ]
-                  }
-            },
-            "English": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "Flamingo": [
-                              "The Last Lesson",
-                              "Lost Spring",
-                              "Deep Water",
-                              "The Rattrap",
-                              "Indigo",
-                              "Poets and Pancakes",
-                              "The Interview",
-                              "Going Places",
-                              "My Mother at Sixty-Six",
-                              "Keeping Quiet",
-                              "A Thing of Beauty",
-                              "A Roadside Stand",
-                              "Aunt Jennifer’s Tigers"
-                        ],
-                        "Vistas": [
-                              "The Third Level",
-                              "The Tiger King",
-                              "Journey to the End of the Earth",
-                              "The Enemy",
-                              "On the Face of It",
-                              "Memories of Childhood"
-                        ]
-                  }
-            },
-            "Hindi": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "आरोह भाग 2": [
-                              "भक्तिन",
-                              "बाजार दर्शन",
-                              "काले मेघा पानी दे",
-                              "पहलवान की ढोलक",
-                              "शिरीष के फूल",
-                              "श्रम विभाजन और जाति-प्रथा",
-                              "कविता के बहाने",
-                              "बात सीधी थी पर",
-                              "कैमरे में बंद अपाहिज",
-                              "सहर्ष स्वीकारा है",
-                              "उषा",
-                              "बादल राग",
-                              "रुबाइयाँ",
-                              "छोटे मेरे खेत",
-                              "बगुलों के पंख"
-                        ],
-                        "वितान भाग 2": [
-                              "सिल्वर वैडिंग",
-                              "जूझ",
-                              "अतीत में दबे पाँव",
-                              "डायरी के पन्ने"
-                        ]
-                  }
-            },
-            "Marathi (Class 12)": {
-                  "hierarchy": "books_to_chapters",
-                  "books": {
-                        "युवकभारती": [
-                              "बहु असोत सुंदर.. (काव्यानंद)",
-                              "वेगवशता",
-                              "रोज मातीत",
-                              "आयुष्य... आनंदाचा उत्सव",
-                              "रे थांब जरा आषाढघना",
-                              "वीरांना सलामी",
-                              "रंग माझा वेगळा",
-                              "आत्मविश्वासासारखी शक्ती नाही (नमुना गद्य आकलन)",
-                              "विंचू चावला...",
-                              "रेशीमबंध",
-                              "समुद्र कोंडून पडलाय",
-                              "दंतकथा",
-                              "आरशातली स्त्री",
-                              "रंगरेषा व्यंगरेषा",
-                              "जयपूर फूटचे जनक",
-                              "कथा – साहित्यप्रकार परिचय",
-                              "शोध",
-                              "गढी",
-                              "मुलाखत",
-                              "माहितीपत्रक",
-                              "अहवाल",
-                              "वृत्तलेख (फिचर रायटिंग)",
-                              "व्याकरण – वाक्यप्रकार व वाक्यरूपांतर, समास, प्रयोग, अलंकार",
-                              "लेखन – निबंधलेखन"
-                        ]
-                  }
-            },
-            "Information Technology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Communication Skills-IV": [
-                              "Active Listening Skills",
-                              "Basic Writing Skills"
-                        ],
-                        "Self-Management Skills-IV": [
-                              "Factors Influencing Self-Motivation",
-                              "Personality Traits, Types and Disorders"
-                        ],
-                        "ICT Skills-IV": [
-                              "Tabulation using Spreadsheet Application",
-                              "Preparing a Presentation"
-                        ],
-                        "Entrepreneurial Skills-IV": [
-                              "Entrepreneurial Behavioural Competencies",
-                              "Self-Assessment of Behavioural Competencies"
-                        ],
-                        "Green Skills-IV": [
-                              "Role and Importance of Green Jobs in Different Sectors"
-                        ],
-                        "Database Concepts – RDBMS Tool": [
-                              "Basics of RDBMS",
-                              "SQL – Creating and Opening Database",
-                              "Creating and Populating Tables",
-                              "Modifying the Content and Structure of Table",
-                              "Ordering and Grouping",
-                              "Operating with Multiple Tables"
-                        ],
-                        "Operating Web Based Applications": [
-                              "Online Reservation Systems",
-                              "E-Governance",
-                              "Online Shopping and Bill Payments",
-                              "Online Tutorials and Tests",
-                              "Project Management – Web Based Application Development",
-                              "Case Study – Online Game",
-                              "Case Study – Online Quiz",
-                              "Case Study – Online Bill Calculator"
-                        ],
-                        "JAVA Programming": [
-                              "Introduction to Java and Object Oriented Programming",
-                              "Java Language Elements and Operators",
-                              "Control Flow and Arrays",
-                              "Class Design",
-                              "Exception Handling and Assertions",
-                              "Threads",
-                              "Wrapper Classes and String Manipulation"
-                        ],
-                        "Work Integrated Learning IT – DMA": [
-                              "Identification of Work Areas",
-                              "Work Experience"
-                        ]
-                  }
-            },
-            "Computer Science": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Programming and Data Handling": [
-                              "Python Advanced",
-                              "Pandas Advanced",
-                              "Data Visualisation",
-                              "File Handling Advanced"
-                        ],
-                        "Database Management": [
-                              "MySQL Advanced",
-                              "Views and Stored Procedures",
-                              "Python–MySQL Connectivity"
-                        ],
-                        "Computer Networks and Society": [
-                              "Internet Basics",
-                              "Network Security",
-                              "Open Source Concepts",
-                              "Societal Impact"
-                        ]
-                  }
-            },
-            "Accountancy": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Partnership Accounts": [
-                              "Accounting for Partnership – Basic Concepts",
-                              "Admission of a Partner",
-                              "Retirement / Death of a Partner",
-                              "Dissolution of Partnership Firm"
-                        ],
-                        "Company Accounts": [
-                              "Accounting for Share Capital",
-                              "Issue and Redemption of Debentures"
-                        ],
-                        "Financial Statement Analysis": [
-                              "Financial Statements of a Company",
-                              "Analysis of Financial Statements",
-                              "Accounting Ratios",
-                              "Cash Flow Statement"
-                        ]
-                  }
-            },
-            "Business Studies": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Principles and Functions of Management": [
-                              "Nature and Significance of Management",
-                              "Principles of Management",
-                              "Business Environment",
-                              "Planning",
-                              "Organising",
-                              "Staffing",
-                              "Directing",
-                              "Controlling"
-                        ],
-                        "Business Finance and Marketing": [
-                              "Financial Management",
-                              "Financial Markets",
-                              "Marketing Management",
-                              "Consumer Protection"
-                        ]
-                  }
-            },
-            "Economics": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Microeconomics": [
-                              "Introduction to Microeconomics",
-                              "Theory of Consumer Behaviour",
-                              "Production and Costs",
-                              "Theory of the Firm under Perfect Competition",
-                              "Market Equilibrium",
-                              "Non-Competitive Markets"
-                        ],
-                        "Macroeconomics": [
-                              "National Income Accounting",
-                              "Money and Banking",
-                              "Determination of Income and Employment",
-                              "Government Budget and the Economy",
-                              "Balance of Payments"
-                        ]
-                  }
-            },
-            "History": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Themes in Indian History I": [
-                              "Bricks, Beads and Bones – Harappan Civilisation",
-                              "Kings, Farmers and Towns",
-                              "Kinship, Caste and Class"
-                        ],
-                        "Themes in Indian History II": [
-                              "Thinkers, Beliefs and Buildings",
-                              "Through the Eyes of Travellers",
-                              "Bhakti-Sufi Traditions",
-                              "An Imperial Capital – Vijayanagara",
-                              "Peasants, Zamindars and the State",
-                              "Kings and Chronicles – the Mughal Courts"
-                        ],
-                        "Themes in Indian History III": [
-                              "Colonialism and the Countryside",
-                              "Rebels and the Raj – 1857",
-                              "Colonial Cities",
-                              "Mahatma Gandhi and the Nationalist Movement",
-                              "Understanding Partition",
-                              "Framing the Constitution"
-                        ]
-                  }
-            },
-            "Political Science": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Contemporary World Politics": [
-                              "The Cold War Era",
-                              "End of Bipolarity",
-                              "US Hegemony in World Politics",
-                              "Alternative Centres of Power",
-                              "Contemporary South Asia",
-                              "International Organisations",
-                              "Security in the Contemporary World",
-                              "Environment and Natural Resources",
-                              "Globalisation"
-                        ],
-                        "Politics in India Since Independence": [
-                              "Challenges of Nation Building",
-                              "Era of One-Party Dominance",
-                              "Politics of Planned Development",
-                              "India's External Relations",
-                              "Challenges to and Restoration of the Congress System",
-                              "Crisis of the Democratic Order",
-                              "Regional Aspirations",
-                              "Recent Developments in Indian Politics"
-                        ]
-                  }
-            },
-            "Geography": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Fundamentals of Human Geography": [
-                              "Human Geography – Nature and Scope",
-                              "World Population – Distribution, Density and Growth",
-                              "Population Composition",
-                              "Human Development",
-                              "Primary Activities",
-                              "Secondary Activities",
-                              "Tertiary and Quaternary Activities",
-                              "Transport and Communication",
-                              "International Trade",
-                              "Human Settlements"
-                        ],
-                        "India – People and Economy": [
-                              "Population – Distribution, Density and Growth",
-                              "Migration",
-                              "Human Development in India",
-                              "Human Settlements",
-                              "Land Resources and Agriculture",
-                              "Water Resources",
-                              "Mineral and Energy Resources",
-                              "Manufacturing Industries",
-                              "Planning and Sustainable Development",
-                              "Transport and Communication",
-                              "Geographical Perspective on Selected Issues"
-                        ]
-                  }
-            },
-            "Sociology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Indian Society": [
-                              "Introducing Indian Society",
-                              "Social Institutions – Continuity and Change",
-                              "Demographic Structure of Indian Society",
-                              "Diversity and Inequality",
-                              "Social Change",
-                              "Rural and Agrarian Transformation",
-                              "Industrial Society"
-                        ],
-                        "Social Change and Development in India": [
-                              "Structural Change",
-                              "Cultural Change",
-                              "The Story of Indian Democracy",
-                              "Change and Development in Rural Society",
-                              "Change and Development in Industrial Society",
-                              "Globalisation and Social Change",
-                              "Mass Media and Communications",
-                              "Social Movements"
-                        ]
-                  }
-            },
-            "Psychology": {
-                  "hierarchy": "units_to_chapters",
-                  "groups": {
-                        "Individual Differences and Self": [
-                              "Variations in Psychological Attributes",
-                              "Self and Personality"
-                        ],
-                        "Disorders and Society": [
-                              "Meeting Life Challenges",
-                              "Psychological Disorders",
-                              "Therapeutic Approaches",
-                              "Attitude and Social Cognition",
-                              "Social Influence and Group Processes",
-                              "Developing Psychological Skills"
-                        ]
-                  }
-            }
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_science.pdf",
+        "scope_note": "Year-end selectable scope; formative-only content is not included."
       }
+    },
+    "Mathematics": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Number Systems": [
+          "Real Numbers"
+        ],
+        "Algebra": [
+          "Polynomials",
+          "Pair of Linear Equations in Two Variables",
+          "Quadratic Equations",
+          "Arithmetic Progressions"
+        ],
+        "Coordinate Geometry": [
+          "Coordinate Geometry"
+        ],
+        "Geometry": [
+          "Triangles",
+          "Circles"
+        ],
+        "Trigonometry": [
+          "Introduction to Trigonometry",
+          "Applications of Trigonometry"
+        ],
+        "Mensuration": [
+          "Areas Related to Circles",
+          "Surface Areas and Volumes"
+        ],
+        "Statistics and Probability": [
+          "Statistics",
+          "Probability"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_math.pdf"
+      }
+    },
+    "Social Science": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "History": [
+          "The Rise of Nationalism in Europe",
+          "Nationalism in India",
+          "The Making of a Global World",
+          "The Age of Industrialisation",
+          "Print Culture and the Modern World"
+        ],
+        "Geography": [
+          "Resources and Development",
+          "Forest and Wildlife Resources",
+          "Water Resources",
+          "Agriculture",
+          "Minerals and Energy Resources",
+          "Manufacturing Industries",
+          "Lifelines of National Economy"
+        ],
+        "Political Science": [
+          "Power Sharing",
+          "Federalism",
+          "Gender, Religion and Caste",
+          "Political Parties",
+          "Outcomes of Democracy"
+        ],
+        "Economics": [
+          "Development",
+          "Sectors of the Indian Economy",
+          "Money and Credit",
+          "Globalisation and the Indian Economy",
+          "Consumer Rights"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_sst.pdf"
+      }
+    },
+    "English Language & Literature": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "First Flight": [
+          "A Letter to God",
+          "Nelson Mandela: Long Walk to Freedom",
+          "Two Stories about Flying",
+          "From the Diary of Anne Frank",
+          "Glimpses of India",
+          "Mijbil the Otter",
+          "Madam Rides the Bus",
+          "The Sermon at Benares",
+          "The Proposal",
+          "Dust of Snow",
+          "Fire and Ice",
+          "A Tiger in the Zoo",
+          "How to Tell Wild Animals",
+          "The Ball Poem",
+          "Amanda!",
+          "The Trees",
+          "Fog",
+          "The Tale of Custard the Dragon",
+          "For Anne Gregory"
+        ],
+        "Footprints Without Feet": [
+          "A Triumph of Surgery",
+          "The Thief's Story",
+          "The Midnight Visitor",
+          "A Question of Trust",
+          "Footprints without Feet",
+          "The Making of a Scientist",
+          "The Necklace",
+          "Bholi",
+          "The Book that Saved the Earth"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_english_ll.pdf"
+      }
+    },
+    "English Communicative": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "Main Course Book (Revised Edition)": [
+          "CBSE prescribed thematic selections"
+        ],
+        "Literature Reader (Revised Edition)": [
+          "CBSE prescribed prose, poetry and drama selections"
+        ],
+        "Workbook (Revised Edition)": [
+          "CBSE prescribed grammar and practice selections"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_english_comm.pdf"
+      }
+    },
+    "Hindi Course A": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "क्षितिज भाग 2": [
+          "नेताजी का चश्मा",
+          "बालगोबिन भगत",
+          "लखनवी अंदाज़",
+          "एक कहानी यह भी",
+          "नौबतखाने में इबादत",
+          "संस्कृति",
+          "पद (सूरदास)",
+          "राम-लक्ष्मण-परशुराम संवाद",
+          "आत्मकथ्य",
+          "उत्साह एवं अट नहीं रही",
+          "यह दंतुरहित मुस्कान और फसल",
+          "संगतकार"
+        ],
+        "कृतिका भाग 2": [
+          "माता का अँचल",
+          "साना-साना हाथ जोड़ि",
+          "मैं क्यों लिखता हूँ"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_hindi_a.pdf"
+      }
+    },
+    "Hindi Course B": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "स्पर्श भाग 2": [
+          "साखी (कबीर)",
+          "पद (मीरा)",
+          "मनुष्यता",
+          "पर्वत प्रदेश में पावस",
+          "तोप",
+          "कर चले हम फ़िदा",
+          "आत्मत्राण",
+          "बड़े भाई साहब",
+          "डायरी का एक पन्ना",
+          "तताँरा-वामीरो कथा",
+          "तीसरी कसम के शिल्पकार शैलेंद्र",
+          "अब कहाँ दूसरे के दुख से दुखी होने वाले",
+          "पतझर में टूटी पत्तियाँ",
+          "कारतूस"
+        ],
+        "संचयन भाग 2": [
+          "हरिहर काका",
+          "सपनों के-से दिन",
+          "टोपी शुक्ला"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_hindi_b.pdf"
+      }
+    },
+    "Information Technology": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Communication Skills-II": [
+          "Methods of Communication (Verbal, Non-verbal, Visual)",
+          "Communication Cycle and Feedback",
+          "Barriers to Effective Communication",
+          "Principles of Communication and 7 Cs",
+          "Basic Writing Skills"
+        ],
+        "Self-Management Skills-II": [
+          "Stress Management Techniques",
+          "Ability to Work Independently"
+        ],
+        "ICT Skills-II": [
+          "Operating Systems and File Management",
+          "Care and Maintenance of Computer"
+        ],
+        "Entrepreneurial Skills-II": [
+          "Characteristics of a Successful Entrepreneur"
+        ],
+        "Green Skills-II": [
+          "Sustainable Development – Importance and Problems"
+        ],
+        "Digital Documentation (Advanced)": [
+          "Introduction to Styles",
+          "Working with Images",
+          "Advanced Features of Writer"
+        ],
+        "Electronic Spreadsheet (Advanced)": [
+          "Analyse Data using Scenarios and Goal Seek",
+          "Using Macros in Spreadsheet",
+          "Linking Spreadsheet Data",
+          "Share and Review a Spreadsheet"
+        ],
+        "Database Management System": [
+          "Introduction to Database Management System",
+          "Starting with LibreOffice Base",
+          "Working with Multiple Tables",
+          "Queries in Base",
+          "Forms and Reports"
+        ],
+        "Maintain Healthy, Safe and Secure Working Environment": [
+          "Health, Safety and Security at Workplace",
+          "Workplace Quality Measures",
+          "Prevent Accidents and Emergencies"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_it.pdf"
+      }
+    },
+    "Marathi": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "अक्षरभारती (इयत्ता दहावी)": [
+          "संतवाणी – अंकिला मी दास तुझा",
+          "शाल",
+          "उपास",
+          "दोन दिवस",
+          "चुडीवाला",
+          "फूटप्रिन्टस",
+          "ऊर्जाशक्तीचा जागर",
+          "औक्षण",
+          "रंग साहित्याचे",
+          "खरा नागरिक",
+          "स्वप्न करू साकार"
+        ],
+        "भाषिक कौशल्ये": [
+          "शब्दांच्या आठ जाती",
+          "लिंग व वचन",
+          "काळ",
+          "वाक्यांचे प्रकार",
+          "समानार्थी व विरुद्धार्थी शब्द",
+          "समास",
+          "आकलन व लेखन"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_marathi.pdf"
+      }
+    },
+    "Computer Applications": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Networking": [
+          "Internet and World Wide Web",
+          "Web servers, web clients and web browsers",
+          "Internet protocols",
+          "Internet services and web services",
+          "Mobile technologies"
+        ],
+        "HTML": [
+          "Introduction to web page designing using HTML",
+          "HTML document structure and basic tags",
+          "Lists, images, tables and links",
+          "HTML forms",
+          "Embedding audio and video",
+          "Cascading Style Sheets"
+        ],
+        "Cyber Ethics": [
+          "Netiquettes",
+          "Software licences and open-source software",
+          "Intellectual property rights, plagiarism and digital property rights",
+          "Freedom of information and the digital divide",
+          "E-commerce: privacy, fraud and secure data transmission"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "10_ca.pdf"
+      }
+    }
+  },
+  "Class 11": {
+    "Physics": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Mechanics": [
+          "Units and Measurements",
+          "Motion in a Straight Line",
+          "Motion in a Plane",
+          "Laws of Motion",
+          "Work, Energy and Power",
+          "System of Particles and Rotational Motion",
+          "Gravitation"
+        ],
+        "Properties of Matter": [
+          "Mechanical Properties of Solids",
+          "Mechanical Properties of Fluids",
+          "Thermal Properties of Matter",
+          "Thermodynamics",
+          "Kinetic Theory"
+        ],
+        "Oscillations and Waves": [
+          "Oscillations",
+          "Waves"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_physics.pdf"
+      }
+    },
+    "Chemistry": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Physical Chemistry": [
+          "Some Basic Concepts of Chemistry",
+          "Structure of Atom",
+          "Classification of Elements and Periodicity in Properties",
+          "Chemical Bonding and Molecular Structure",
+          "Chemical Thermodynamics",
+          "Equilibrium",
+          "Redox Reactions"
+        ],
+        "Organic Chemistry": [
+          "Organic Chemistry – Some Basic Principles and Techniques",
+          "Hydrocarbons"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_chem.pdf"
+      }
+    },
+    "Biology": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Diversity of Living Organisms": [
+          "The Living World",
+          "Biological Classification",
+          "Plant Kingdom",
+          "Animal Kingdom"
+        ],
+        "Structural Organisation in Plants and Animals": [
+          "Morphology of Flowering Plants",
+          "Anatomy of Flowering Plants",
+          "Structural Organisation in Animals"
+        ],
+        "Cell: Structure and Function": [
+          "Cell – The Unit of Life",
+          "Biomolecules",
+          "Cell Cycle and Cell Division"
+        ],
+        "Plant Physiology": [
+          "Photosynthesis in Higher Plants",
+          "Respiration in Plants",
+          "Plant Growth and Development"
+        ],
+        "Human Physiology": [
+          "Breathing and Exchange of Gases",
+          "Body Fluids and Circulation",
+          "Excretory Products and their Elimination",
+          "Locomotion and Movement",
+          "Neural Control and Coordination",
+          "Chemical Coordination and Integration"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_bio.pdf"
+      }
+    },
+    "Mathematics": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Sets and Functions": [
+          "Sets",
+          "Relations and Functions",
+          "Trigonometric Functions"
+        ],
+        "Algebra": [
+          "Complex Numbers and Quadratic Equations",
+          "Linear Inequalities",
+          "Permutations and Combinations",
+          "Binomial Theorem",
+          "Sequences and Series"
+        ],
+        "Coordinate Geometry": [
+          "Straight Lines",
+          "Conic Sections",
+          "Introduction to Three Dimensional Geometry"
+        ],
+        "Calculus": [
+          "Limits and Derivatives"
+        ],
+        "Statistics and Probability": [
+          "Statistics",
+          "Probability"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_math.pdf"
+      }
+    },
+    "Information Technology": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Communication Skills-III": [
+          "Methods of Communication",
+          "Communication Styles",
+          "Basic Writing Skills"
+        ],
+        "Self-Management Skills-III": [
+          "Appearance and Grooming",
+          "Team Work Skills",
+          "Time Management Strategies"
+        ],
+        "ICT Skills-III": [
+          "Creating a Document on Word Processor",
+          "Editing, Saving and Printing a Document"
+        ],
+        "Entrepreneurial Skills-III": [
+          "Entrepreneurial Values and Attitude",
+          "Attitudinal Changes Required to Become an Entrepreneur"
+        ],
+        "Green Skills-III": [
+          "Main Sectors of the Green Economy",
+          "Green Sectors/Areas and Stakeholders"
+        ],
+        "Computer Organization": [
+          "Fundamentals of Computer and its Characteristics",
+          "Components of Computer",
+          "Operating System",
+          "Troubleshooting in Computer System",
+          "Utilities"
+        ],
+        "Networking and Internet": [
+          "Computer Networking",
+          "Internet and its Terminology",
+          "Cybercrime and Cyber Security"
+        ],
+        "Office Automation Tools": [
+          "Word Processor",
+          "Spreadsheets",
+          "Presentation Software (Impress)"
+        ],
+        "RDBMS": [
+          "Relational Database Management System Concepts",
+          "Introduction to MySQL",
+          "DML Commands"
+        ],
+        "Fundamentals of Java": [
+          "Integrated Development Environment (NetBeans)",
+          "Java Programming Basics"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_it.pdf"
+      }
+    },
+    "Informatics Practices": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Introduction to Computer System": [
+          "Computer and computing fundamentals",
+          "Components and interconnections of a computer system",
+          "Input/output devices",
+          "Computer memory, data deletion and recovery",
+          "System and application software"
+        ],
+        "Introduction to Python": [
+          "Python basics, data types, operators and input/output",
+          "Control statements",
+          "Lists",
+          "Dictionaries",
+          "Introduction to NumPy"
+        ],
+        "Database Concepts and the Structured Query Language": [
+          "Database concepts and relational data model",
+          "Introduction to MySQL and data types",
+          "Data definition commands",
+          "Data query commands",
+          "Data manipulation commands"
+        ],
+        "Introduction to Emerging Trends": [
+          "Artificial Intelligence, Machine Learning and Natural Language Processing",
+          "AR and VR",
+          "Robotics and Big Data",
+          "Internet of Things and Smart Cities",
+          "Cloud, grid and blockchain technology"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_ip.pdf"
+      }
+    },
+    "English Core": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "Hornbill": [
+          "The Portrait of a Lady",
+          "A Photograph",
+          "We’re Not Afraid to Die… if We Can Be Together",
+          "Discovering Tut: The Saga Continues",
+          "The Laburnum Top",
+          "The Voice of the Rain",
+          "Childhood",
+          "The Adventure",
+          "Silk Road",
+          "Father to Son"
+        ],
+        "Snapshots": [
+          "The Summer of the Beautiful White Horse",
+          "The Address",
+          "Mother’s Day",
+          "Birth",
+          "The Tale of Melon City"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_eng_core.pdf"
+      }
+    },
+    "English Elective": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "Woven Words – Short Stories": [
+          "The Lament",
+          "A Pair of Mustachios",
+          "The Rocking-horse Winner",
+          "The Adventure of the Three Garridebs",
+          "Pappachi’s Moth",
+          "The Third and Final Continent"
+        ],
+        "Woven Words – Poetry": [
+          "The Peacock",
+          "Let me Not to the Marriage of True Minds",
+          "Coming",
+          "Telephone Conversation",
+          "The World is too Much with Us",
+          "Mother Tongue",
+          "Hawk Roosting",
+          "Ode to a Nightingale"
+        ],
+        "Woven Words – Essays": [
+          "My Watch",
+          "My Three Passions",
+          "Patterns of Creativity",
+          "Tribal Verse",
+          "What is a Good Book?",
+          "The Story",
+          "Bridges"
+        ],
+        "Fiction": [
+          "The Old Man and the Sea"
+        ],
+        "Drama": [
+          "Arms and the Man"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_eng_elective.pdf"
+      }
+    },
+    "Hindi Core": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "आरोह भाग 1": [
+          "नमक का दारोगा",
+          "मियाँ नसीरुद्दीन",
+          "अपू के साथ ढाई साल",
+          "विदाई-संभाषण",
+          "गलता लोहा",
+          "स्पीति में बारिश",
+          "कबीर के पद",
+          "मीरा के पद",
+          "घर की याद",
+          "चंपा काले काले अक्षर नहीं चीन्हती",
+          "ग़ज़ल",
+          "हे भूख मत मचल",
+          "सबसे खतरनाक",
+          "आओ मिलकर बचाएँ"
+        ],
+        "वितान भाग 1": [
+          "भारतीय गायिकाओं में बेजोड़: लता मंगेशकर",
+          "राजस्थान की रजत बूँदें",
+          "आलो-आँधारि"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_hindi_core.pdf"
+      }
+    },
+    "Hindi Elective": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "अंतरा भाग 1": [
+          "CBSE prescribed prose and poetry selections"
+        ],
+        "अंतराल भाग 1": [
+          "CBSE prescribed supplementary selections"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_hindi_elective.pdf"
+      }
+    },
+    "Marathi": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "युवकभारती – गद्य व पद्य": [
+          "मामू",
+          "झाडांच्या मनात जाऊ",
+          "परिमळ",
+          "दवांत आलिस भल्या पहाटीं",
+          "'माणूस' बांधूया!",
+          "ऐसीं अक्षरें रसिकें",
+          "वहिनींचा 'सुसाट' सल्ला",
+          "वाङ्मयीन लेण्याचा शिल्पकार",
+          "पैंजण"
+        ],
+        "युवकभारती – साहित्यप्रकार": [
+          "ध्यानीमनी",
+          "सुंदर मी होणार"
+        ],
+        "उपयोजित मराठी व व्याकरण": [
+          "सूत्रसंचालन",
+          "मुद्रितशोधन",
+          "अनुवाद",
+          "अनुदिनी (ब्लॉग) लेखन",
+          "वाक्यसंश्लेषण",
+          "काळ",
+          "शब्दभेद",
+          "पत्रलेखन"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_marathi.pdf"
+      }
+    }
+  },
+  "Class 12": {
+    "Physics": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Electrostatics and Current Electricity": [
+          "Electric Charges and Fields",
+          "Electrostatic Potential and Capacitance",
+          "Current Electricity"
+        ],
+        "Magnetism and Electromagnetic Induction": [
+          "Moving Charges and Magnetism",
+          "Magnetism and Matter",
+          "Electromagnetic Induction",
+          "Alternating Current",
+          "Electromagnetic Waves"
+        ],
+        "Optics": [
+          "Ray Optics and Optical Instruments",
+          "Wave Optics"
+        ],
+        "Modern Physics and Electronics": [
+          "Dual Nature of Radiation and Matter",
+          "Atoms",
+          "Nuclei",
+          "Semiconductor Electronics"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_physics.pdf"
+      }
+    },
+    "Chemistry": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Physical Chemistry": [
+          "Solutions",
+          "Electrochemistry",
+          "Chemical Kinetics"
+        ],
+        "Inorganic Chemistry": [
+          "d- and f-Block Elements",
+          "Coordination Compounds"
+        ],
+        "Organic Chemistry": [
+          "Haloalkanes and Haloarenes",
+          "Alcohols, Phenols and Ethers",
+          "Aldehydes, Ketones and Carboxylic Acids",
+          "Amines",
+          "Biomolecules"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_chem.pdf"
+      }
+    },
+    "Biology": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Reproduction": [
+          "Sexual Reproduction in Flowering Plants",
+          "Human Reproduction",
+          "Reproductive Health"
+        ],
+        "Genetics and Evolution": [
+          "Principles of Inheritance and Variation",
+          "Molecular Basis of Inheritance",
+          "Evolution"
+        ],
+        "Biology and Human Welfare": [
+          "Human Health and Disease",
+          "Microbes in Human Welfare"
+        ],
+        "Biotechnology": [
+          "Biotechnology – Principles and Processes",
+          "Biotechnology and its Applications"
+        ],
+        "Ecology and Environment": [
+          "Organisms and Populations",
+          "Ecosystem",
+          "Biodiversity and Conservation"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_bio.pdf"
+      }
+    },
+    "Mathematics": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Relations and Functions": [
+          "Relations and Functions",
+          "Inverse Trigonometric Functions"
+        ],
+        "Algebra": [
+          "Matrices",
+          "Determinants"
+        ],
+        "Calculus": [
+          "Continuity and Differentiability",
+          "Applications of Derivatives",
+          "Integrals",
+          "Applications of Integrals",
+          "Differential Equations"
+        ],
+        "Vectors and 3D Geometry": [
+          "Vector Algebra",
+          "Three Dimensional Geometry"
+        ],
+        "Linear Programming and Probability": [
+          "Linear Programming",
+          "Probability"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_math.pdf"
+      }
+    },
+    "Information Technology": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Communication Skills-IV": [
+          "Active Listening Skills",
+          "Basic Writing Skills"
+        ],
+        "Self-Management Skills-IV": [
+          "Factors Influencing Self-Motivation",
+          "Personality Traits, Types and Disorders"
+        ],
+        "ICT Skills-IV": [
+          "Tabulation using Spreadsheet Application",
+          "Preparing a Presentation"
+        ],
+        "Entrepreneurial Skills-IV": [
+          "Entrepreneurial Behavioural Competencies",
+          "Self-Assessment of Behavioural Competencies"
+        ],
+        "Green Skills-IV": [
+          "Role and Importance of Green Jobs in Different Sectors"
+        ],
+        "Database Concepts – RDBMS Tool": [
+          "Basics of RDBMS",
+          "SQL – Creating and Opening Database",
+          "Creating and Populating Tables",
+          "Modifying the Content and Structure of Table",
+          "Ordering and Grouping",
+          "Operating with Multiple Tables"
+        ],
+        "Operating Web Based Applications": [
+          "Online Reservation Systems",
+          "E-Governance",
+          "Online Shopping and Bill Payments",
+          "Online Tutorials and Tests",
+          "Project Management – Web Based Application Development",
+          "Case Study – Online Game",
+          "Case Study – Online Quiz",
+          "Case Study – Online Bill Calculator"
+        ],
+        "JAVA Programming": [
+          "Introduction to Java and Object Oriented Programming",
+          "Java Language Elements and Operators",
+          "Control Flow and Arrays",
+          "Class Design",
+          "Exception Handling and Assertions",
+          "Threads",
+          "Wrapper Classes and String Manipulation"
+        ],
+        "Work Integrated Learning IT – DMA": [
+          "Identification of Work Areas",
+          "Work Experience"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_it.pdf"
+      }
+    },
+    "Informatics Practices": {
+      "hierarchy": "units_to_chapters",
+      "groups": {
+        "Data Handling using Pandas and Data Visualization": [
+          "Pandas Series and Data Frames",
+          "Data Frame operations, indexing and CSV import/export",
+          "Data visualization using Matplotlib",
+          "Customizing line plots, bar graphs and histograms"
+        ],
+        "Database Query using SQL": [
+          "Revision of database concepts and SQL commands",
+          "Math, text and date functions",
+          "Aggregate functions, grouping and ordering",
+          "Working with two tables",
+          "Python–SQL connectivity"
+        ],
+        "Introduction to Computer Networks": [
+          "Networks and types of network",
+          "Network devices and topologies",
+          "Internet, URL and WWW",
+          "Websites, web servers and hosting",
+          "Web browsers, settings, add-ons, plug-ins and cookies"
+        ],
+        "Societal Impacts": [
+          "Digital footprint and net/communication etiquettes",
+          "Data protection and intellectual property rights",
+          "Cybercrime, cyber safety and malware",
+          "E-waste management",
+          "Technology, gender and disability"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_ip.pdf"
+      }
+    },
+    "English Core": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "Flamingo": [
+          "The Last Lesson",
+          "Lost Spring",
+          "Deep Water",
+          "The Rattrap",
+          "Indigo",
+          "Poets and Pancakes",
+          "The Interview",
+          "Going Places",
+          "My Mother at Sixty-Six",
+          "Keeping Quiet",
+          "A Thing of Beauty",
+          "A Roadside Stand",
+          "Aunt Jennifer’s Tigers"
+        ],
+        "Vistas": [
+          "The Third Level",
+          "The Tiger King",
+          "Journey to the End of the Earth",
+          "The Enemy",
+          "On the Face of It",
+          "Memories of Childhood"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_eng_core.pdf"
+      }
+    },
+    "English Elective": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "Kaleidoscope – Short Stories": [
+          "I Sell my Dreams",
+          "Eveline",
+          "A Wedding in Brownsville"
+        ],
+        "Kaleidoscope – Poetry": [
+          "A Lecture Upon the Shadow",
+          "Poems by Milton",
+          "Poems by Blake",
+          "Kubla Khan",
+          "Trees",
+          "The Wild Swans of Coole",
+          "Time and Time Again"
+        ],
+        "Kaleidoscope – Non-fiction": [
+          "Freedom",
+          "The Mark on the Wall",
+          "Film-making",
+          "Why the Novel Matters",
+          "The Argumentative Indian"
+        ],
+        "Drama": [
+          "Chandalika"
+        ],
+        "Fiction (one prescribed option)": [
+          "A Tiger for Malgudi",
+          "The Financial Expert"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_eng_elective.pdf"
+      }
+    },
+    "Hindi Core": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "आरोह भाग 2": [
+          "भक्तिन",
+          "बाजार दर्शन",
+          "काले मेघा पानी दे",
+          "पहलवान की ढोलक",
+          "शिरीष के फूल",
+          "श्रम विभाजन और जाति-प्रथा",
+          "कविता के बहाने",
+          "बात सीधी थी पर",
+          "कैमरे में बंद अपाहिज",
+          "सहर्ष स्वीकारा है",
+          "उषा",
+          "बादल राग",
+          "रुबाइयाँ",
+          "छोटे मेरे खेत",
+          "बगुलों के पंख"
+        ],
+        "वितान भाग 2": [
+          "सिल्वर वैडिंग",
+          "जूझ",
+          "अतीत में दबे पाँव",
+          "डायरी के पन्ने"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_hindi_core.pdf"
+      }
+    },
+    "Hindi Elective": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "अंतरा भाग 2": [
+          "CBSE prescribed prose and poetry selections"
+        ],
+        "अंतराल भाग 2": [
+          "CBSE prescribed supplementary selections"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_hindi_elective.pdf"
+      }
+    },
+    "Marathi": {
+      "hierarchy": "books_to_chapters",
+      "books": {
+        "युवकभारती – गद्य व पद्य": [
+          "रोज मातीत",
+          "आयुष्य... आनंदाचा उत्सव",
+          "रे थांब जरा आषाढघना",
+          "वीरांना सलामी",
+          "रंग माझा वेगळा",
+          "विंचू चावला...",
+          "रेशीमबंध",
+          "दंतकथा",
+          "आरशातली स्त्री"
+        ],
+        "युवकभारती – साहित्यप्रकार": [
+          "गढी"
+        ],
+        "उपयोजित मराठी व व्याकरण": [
+          "मुलाखत",
+          "माहितीपत्रक",
+          "अहवाल",
+          "वृत्तलेख (फिचर रायटिंग)",
+          "वाक्यप्रकार व वाक्यरूपांतर",
+          "समास",
+          "प्रयोग",
+          "निबंधलेखन",
+          "पत्रलेखन"
+        ]
+      },
+      "curriculum": {
+        "academic_session": "2026-27",
+        "authority": "CBSE Academic",
+        "source_file": "11_12_marathi.pdf"
+      }
+    }
+  }
 };
 
     /* Inactive V12 test candidate only. This file is not deployed; production
@@ -2095,12 +2001,12 @@
     const UNIFIED_V12_WEBHOOK = 'https://n8n.mytst.cloud/webhook/mytst-paper-generator-v12';
     const ONLINE_WEBHOOK = UNIFIED_V12_WEBHOOK;
     const FULL_PAPER_WEBHOOK = UNIFIED_V12_WEBHOOK;
+    /* The frontend submits the teacher’s class, subject and (where required)
+       academic product variant. V12 resolves the operational Format key and
+       canonical Blueprint subject code server-side; this UI does not carry a
+       partial client availability/Format map. */
     const FULL_PAPER_CONTEXT = Object.freeze({
-      board: 'CBSE', academic_session: '2026-27', delivery_mode: 'OFFLINE',
-      subject_keys: {
-        'Class 11': { 'Physics': '11-phy', 'Chemistry': '11-che', 'Biology': '11-bio' },
-        'Class 12': { 'Physics': '12-phy', 'Chemistry': '12-chem', 'Biology': '12-bio', 'Informatics Practices': '12-ip' }
-      }
+      board: 'CBSE', academic_session: '2026-27', delivery_mode: 'OFFLINE'
     });
     // WF2 — the workflow that actually creates the live online test from a generated test_id.
     // Replace with your real WF2 webhook path.
@@ -2133,8 +2039,31 @@
       const match = String(value || '').match(/\b(9|10|11|12)\b/);
       return match ? Number(match[1]) : null;
     }
-    function resolvedAcademicSubjectKey() {
-      return FULL_PAPER_CONTEXT.subject_keys[state.className]?.[state.subject] || '';
+    function subjectOptionValue(subject, variant = '') {
+      return variant ? `${subject}::${variant}` : subject;
+    }
+    function subjectOptionsForClass(className) {
+      const subjects = Object.keys(SYLLABUS[className] || {});
+      /* Class X Mathematics is deliberately two teacher-visible academic
+         products. The underlying syllabus taxonomy remains Mathematics; V12
+         receives the explicit variant and resolves identity authoritatively. */
+      return subjects.flatMap((subject) => {
+        if (className === 'Class 10' && subject === 'Mathematics') {
+          return [
+            { value: subjectOptionValue('Mathematics', 'STANDARD'), label: 'Mathematics — Standard' },
+            { value: subjectOptionValue('Mathematics', 'BASIC'), label: 'Mathematics — Basic' }
+          ];
+        }
+        return [{ value: subjectOptionValue(subject), label: subject }];
+      });
+    }
+    function selectedSubjectVariant() {
+      return state.subjectVariant || null;
+    }
+    function selectedSubjectLabel() {
+      if (state.subject === 'Mathematics' && state.subjectVariant === 'STANDARD') return 'Mathematics — Standard';
+      if (state.subject === 'Mathematics' && state.subjectVariant === 'BASIC') return 'Mathematics — Basic';
+      return state.subject;
     }
     function difficultyPreset(value) {
       const raw = String(value || '').trim().toLowerCase();
@@ -2144,13 +2073,15 @@
     }
     function buildV12BackendContext() {
       const classNumber = classNumberFromLabel(state.className);
-      const academicSubjectKey = resolvedAcademicSubjectKey() || null;
       return {
         request_schema_version: 'mytst-paper-request-v4',
         board: FULL_PAPER_CONTEXT.board,
         class_number: classNumber,
-        academic_subject_key: academicSubjectKey,
-        format_context_resolution: academicSubjectKey ? 'CLIENT_REGISTERED_KEY' : 'BACKEND_SUBJECT_CONTEXT_REQUIRED',
+        subject_variant: selectedSubjectVariant(),
+        academic_subject_label: selectedSubjectLabel(),
+        frontend_curriculum_session: '2026-27',
+        frontend_curriculum_source: getSubjectConfig()?.curriculum?.source_file || null,
+        format_context_resolution: 'BACKEND_SUBJECT_CONTEXT_REQUIRED',
         academic_session: FULL_PAPER_CONTEXT.academic_session,
         paper_analytics_requested: true
       };
@@ -2160,6 +2091,7 @@
       testType: 'online',
       className: '',
       subject: '',
+      subjectVariant: '',
       book: '',
       maximumMarks: '',
       // Units and Chapters are stored separately for every unit-based subject.
@@ -2191,6 +2123,7 @@
     const OFFLINE_QUESTION_TYPES = Object.freeze([
       'MCQ',
       'Assertion–Reason',
+      'Very Short Answer',
       'Short Answer',
       'Long Answer',
       'Case-Based',
@@ -2310,7 +2243,11 @@
     }
 
     function setOptions(select, options, placeholder) {
-      select.innerHTML = `<option value="">${placeholder}</option>` + options.map((option) => `<option value="${escapeHTML(option)}">${escapeHTML(option)}</option>`).join('');
+      select.innerHTML = `<option value="">${placeholder}</option>` + options.map((option) => {
+        const value = typeof option === 'object' ? option.value : option;
+        const label = typeof option === 'object' ? option.label : option;
+        return `<option value="${escapeHTML(value)}">${escapeHTML(label)}</option>`;
+      }).join('');
     }
 
     function buildDifficultyButtons(containerId) {
@@ -2400,13 +2337,21 @@
 
       if (!classSelect.options.length || classSelect.options.length === 1) setOptions(classSelect, Object.keys(SYLLABUS), 'Select class');
       classSelect.value = state.className;
-      const syllabusSubjects = state.className ? Object.keys(SYLLABUS[state.className] || {}) : [];
+      const syllabusSubjects = state.className ? subjectOptionsForClass(state.className) : [];
       /* Keep the established class/subject selector intact. The backend
          resolves the actual Format profile/family, including shared profiles;
          the frontend must not claim availability from a partial hard-coded map. */
       setOptions(subjectSelect, syllabusSubjects, 'Select subject');
       subjectSelect.disabled = !state.className;
-      subjectSelect.value = state.subject;
+      subjectSelect.value = subjectOptionValue(state.subject, state.subjectVariant);
+      const curriculumProvenance = document.getElementById('curriculumProvenance');
+      const curriculum = getSubjectConfig()?.curriculum;
+      if (curriculum) {
+        const note = curriculum.scope_note ? ` ${curriculum.scope_note}` : '';
+        curriculumProvenance.textContent = `Official ${curriculum.authority} curriculum ${curriculum.academic_session} • ${curriculum.source_file}.${note}`;
+      } else {
+        curriculumProvenance.textContent = 'Official CBSE 2026–27 curriculum source will appear after you select a subject.';
+      }
 
       marksField.classList.toggle('hidden', !offlineTest);
       document.getElementById('marksSelect').value = state.maximumMarks;
@@ -2473,7 +2418,7 @@
         questionTypesHint.textContent = state.testType === 'online'
           ? 'Online tests support auto-gradeable MCQs and Assertion–Reason questions only.'
           : offlineTest
-            ? 'Select one or more formats, or choose “Mixed (All Types)” to use a varied paper. Mixed is exclusive.'
+            ? 'Select one or more formats, or choose “Mixed (All Types)” to use a varied paper. Very Short Answer is a 2-mark written type; Mixed includes it and is exclusive.'
             : 'Question formats are selected automatically for a Full Test.';
       }
       renderChapterRule();
@@ -2811,7 +2756,7 @@
       const documentTest = isOfflineTest() || fullTest;
       const meta = [
         payload.exam_type,
-        payload.subject,
+        payload.subject_variant ? `${payload.subject} — ${String(payload.subject_variant).charAt(0) + String(payload.subject_variant).slice(1).toLowerCase()}` : payload.subject,
         payload.difficulty,
         isOfflineTest() ? (payload.full_marks_requested ? 'Full marks' : `${payload.maximum_marks} marks`) : (state.testType === 'online' ? `${payload.num_questions} questions` : 'Full syllabus')
       ].filter(Boolean);
@@ -2865,7 +2810,6 @@
       let payload;
       if (isFullTest()) {
         const classNumber = classNumberFromLabel(state.className);
-        const academicSubjectKey = resolvedAcademicSubjectKey() || null;
         if (!classNumber) {
           state.isGenerating = false;
           renderConfiguration();
@@ -2873,17 +2817,12 @@
           return;
         }
         payload = {
-          request_schema_version: 'mytst-paper-request-v4',
+          ...buildV12BackendContext(),
           test_type: 'full_test',
           test_type_label: 'Full Test',
           paper_length: 'FULL_LENGTH',
           exam_scope: 'FULL_SYLLABUS',
           planning_mode: 'FULL_SYLLABUS_BLUEPRINT_OR_FORMULA',
-          board: FULL_PAPER_CONTEXT.board,
-          class_number: classNumber,
-          academic_subject_key: academicSubjectKey,
-          format_context_resolution: academicSubjectKey ? 'CLIENT_REGISTERED_KEY' : 'BACKEND_SUBJECT_CONTEXT_REQUIRED',
-          academic_session: FULL_PAPER_CONTEXT.academic_session,
           delivery_mode: FULL_PAPER_CONTEXT.delivery_mode,
           difficulty_preset: difficultyPreset(state.difficulty),
           paper_analytics_requested: true,
@@ -2963,11 +2902,13 @@
     document.getElementById('fullMode').addEventListener('click', () => setTestType('full_test'));
     document.getElementById('classSelect').addEventListener('change', (event) => {
       state.className = event.target.value;
-      state.subject = ''; state.book = ''; state.units = []; state.chapters = []; state.topics = []; state.questionTypes = []; state.adjustmentNote = '';
+      state.subject = ''; state.subjectVariant = ''; state.book = ''; state.units = []; state.chapters = []; state.topics = []; state.questionTypes = []; state.adjustmentNote = '';
       closeMenus(); clearError(); renderConfiguration();
     });
     document.getElementById('subjectSelect').addEventListener('change', (event) => {
-      state.subject = event.target.value;
+      const [subject, variant = ''] = String(event.target.value || '').split('::');
+      state.subject = subject;
+      state.subjectVariant = variant;
       state.book = ''; state.units = []; state.chapters = []; state.topics = []; state.questionTypes = []; state.adjustmentNote = '';
       closeMenus(); clearError(); renderConfiguration();
     });
@@ -3025,5 +2966,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a50f72346aaddc7f',t:'MTc5MzA4MDQ2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a52131c14b48c8d9',t:'MTc5MzI2NjU3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
