@@ -2042,13 +2042,16 @@
     function subjectOptionValue(subject, variant = '') {
       return variant ? `${subject}::${variant}` : subject;
     }
+    /* Class X Mathematics Standard/Basic are board-examination products, not
+       class-test products. Keep one shared Mathematics choice for Online and
+       Custom Offline work; show the two variants only for Full Paper. */
+    function class10MathUsesFullPaperVariant(className = state.className) {
+      return className === 'Class 10' && isFullTest();
+    }
     function subjectOptionsForClass(className) {
       const subjects = Object.keys(SYLLABUS[className] || {});
-      /* Class X Mathematics is deliberately two teacher-visible academic
-         products. The underlying syllabus taxonomy remains Mathematics; V12
-         receives the explicit variant and resolves identity authoritatively. */
       return subjects.flatMap((subject) => {
-        if (className === 'Class 10' && subject === 'Mathematics') {
+        if (class10MathUsesFullPaperVariant(className) && subject === 'Mathematics') {
           return [
             { value: subjectOptionValue('Mathematics', 'STANDARD'), label: 'Mathematics — Standard' },
             { value: subjectOptionValue('Mathematics', 'BASIC'), label: 'Mathematics — Basic' }
@@ -2058,11 +2061,11 @@
       });
     }
     function selectedSubjectVariant() {
-      return state.subjectVariant || null;
+      return class10MathUsesFullPaperVariant() ? (state.subjectVariant || null) : null;
     }
     function selectedSubjectLabel() {
-      if (state.subject === 'Mathematics' && state.subjectVariant === 'STANDARD') return 'Mathematics — Standard';
-      if (state.subject === 'Mathematics' && state.subjectVariant === 'BASIC') return 'Mathematics — Basic';
+      if (class10MathUsesFullPaperVariant() && state.subject === 'Mathematics' && state.subjectVariant === 'STANDARD') return 'Mathematics — Standard';
+      if (class10MathUsesFullPaperVariant() && state.subject === 'Mathematics' && state.subjectVariant === 'BASIC') return 'Mathematics — Basic';
       return state.subject;
     }
     function difficultyPreset(value) {
@@ -2465,7 +2468,15 @@
 
     function setTestType(nextType) {
       if (state.testType === nextType) return;
+      const wasFullPaper = isFullTest();
       state.testType = nextType;
+      /* A Class X Mathematics class test is generic Mathematics. Moving into
+         Full Paper deliberately requires a fresh Standard/Basic decision;
+         leaving Full Paper collapses the selection back to generic Mathematics. */
+      if (state.className === 'Class 10' && state.subject === 'Mathematics') {
+        state.subjectVariant = '';
+        if (!wasFullPaper && isFullTest()) state.subject = '';
+      }
       state.maximumMarks = '';
       // Start a fresh scope when changing delivery mode so selections stay clear
       // and the chosen marks rule can be applied predictably.
@@ -2966,5 +2977,5 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a52131c14b48c8d9',t:'MTc5MzI2NjU3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5283df88bca5790',t:'MTc5MzM0MDQ3MQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5283df88bca5790',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
