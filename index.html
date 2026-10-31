@@ -619,26 +619,107 @@
     .insight-warnings { margin:13px 0 0; padding:9px 10px; color:var(--amber-light); background:var(--amber-dim); border:1px solid rgba(245,166,35,.22); border-radius:8px; font-size:10.5px; line-height:1.5; }
     @media (max-width:680px) { .insights-grid { grid-template-columns:1fr; } .insights-heading { align-items:flex-start; flex-direction:column; } }
 
+
+    /* Paper Studio: a quiet, editorial workspace built for repeated use. */
+    :root { --bg:#101c1b; --bg2:#172725; --bg3:#203330; --panel:#172725; --text:#f4f1e8; --text2:#bdc8bf; --text3:#94a59a; --border:rgba(215,229,216,.12); --border-strong:rgba(215,229,216,.25); --amber:#dfbd80; --amber-light:#f0d2a0; --amber-dim:rgba(223,189,128,.12); --blue:#a6c5be; --blue-dim:rgba(145,190,180,.12); --violet-light:#d8cba8; --violet-dim:rgba(216,203,168,.12); }
+    body {background:#101c1b} body::before,body::after {display:none}
+    .nav {height:72px; padding:0 clamp(22px,5vw,76px); background:#101c1b; border-color:rgba(215,229,216,.13); box-shadow:none}
+    .brand {font-size:20px; letter-spacing:-1px}.brand-mark {width:34px;height:34px}.brand-mark img {filter:none}
+    .nav-meta {gap:24px;color:#a8b6aa; font:600 10px var(--font);letter-spacing:1.4px}.nav-badge {background:none;border:0;padding:0;color:#e9e9dc}.nav-session {border-left:1px solid var(--border-strong);padding-left:24px}
+    .hero {max-width:1350px;min-height:460px; padding:74px 48px 60px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;text-align:left;gap:70px}
+    .hero-copy {max-width:680px}.eyebrow {border:0;background:none;padding:0;gap:12px;margin-bottom:27px;color:#d9bb84;font:700 10px var(--font);letter-spacing:2px}.eyebrow-line {width:30px;height:1px;background:#d9bb84}
+    h1 {margin:0 0 24px;font:400 clamp(48px,5.4vw,76px)/1.04 Georgia,serif;letter-spacing:-2.8px}.hero h1 .highlight {color:#d5bc8e;text-shadow:none;font-style:italic}.hero p {margin:0;color:#b7c3b9;max-width:470px;font-size:15px;line-height:1.8}.hero-note {display:flex;gap:30px;margin-top:44px;color:#809389;font-size:9px;font-weight:700;letter-spacing:1.5px}
+    .hero-art {height:320px;position:relative;max-width:440px;width:100%;justify-self:end}.art-sheet {position:absolute;width:245px;height:305px;border:1px solid #a3a68f}.art-back {left:54px;top:8px;transform:rotate(-8deg);background:#9ca99b}.art-front {left:90px;top:0;transform:rotate(4deg);background:#e9e4d5;color:#233c36;padding:24px;box-shadow:0 24px 60px #050c0b77}.art-top,.art-bottom {display:flex;justify-content:space-between;font-size:8px;font-weight:700;letter-spacing:1px}.art-top span:first-child {font-size:15px;letter-spacing:-.5px}.art-rule {height:1px;background:#b7b9a9;margin:15px 0 36px}.art-small {font-size:8px;letter-spacing:1.4px}.art-title {font:29px/1.1 Georgia,serif;margin-top:17px}.art-title em {color:#7b8d77}.art-lines {margin-top:25px}.art-lines i {display:block;width:100%;height:1px;background:#bdc2b2;margin:8px 0}.art-lines i:last-child {width:65%}.art-bottom {position:absolute;bottom:20px;left:24px;right:24px}.art-caption {position:absolute;right:0;bottom:14px;color:#a6b5a7;font-size:9px;line-height:1.7;letter-spacing:1.2px}
+    .workspace {max-width:1200px;padding:0 28px 80px}.steps {background:transparent;box-shadow:none;border:0;border-bottom:1px solid var(--border);border-radius:0;margin-bottom:28px}.step,.step.active {background:none;border:0;padding:12px 0 20px}.step-number {background:none;border-color:#62776c;color:#a7b5a8}.step.active .step-number {background:#dfbd80;border-color:#dfbd80;color:#14221e}.step-copy b,.step.active .step-copy b {color:#dfe6db;font-size:12px}.step-copy span {color:#889c8f}
+    .card {background:#1a2b28;border:1px solid rgba(219,231,214,.13);border-radius:16px;box-shadow:0 20px 55px #050e0c24}.card-header {padding:30px 34px;border-color:var(--border)}.section-kicker {font-size:9px;font-weight:700;color:#d9bb84;letter-spacing:1.7px;margin-bottom:12px}.card-title {font:400 30px Georgia,serif;letter-spacing:-.5px}.card-subtitle {font-size:13px;color:#a7b8ac;margin-top:8px}.card-body {padding:30px 34px 34px}.label {color:#c2d0c5;letter-spacing:1px;font-size:10px}.hint {color:#a1b2a5;font-size:12px}.field-grid {gap:22px}.divider {background:var(--border);margin:27px 0}
+    .input,select.input,.multi-trigger {background-color:#13221f;border-color:#52675c;color:#f1f3eb;border-radius:7px;min-height:48px}.input:hover,.multi-trigger:hover:not(:disabled) {border-color:#b1c3b1}.select-menu {background:#20332e;border-color:#61786b}.select-option:hover {background:#30473f}.segmented {min-height:48px;background:#142420;border-color:#53675d;color:#c0d0c4}.segmented.online.selected,.segmented.offline.selected,.segmented.full.selected,.segmented.difficulty.selected {background:#e0c28d;color:#15261f;border-color:#e0c28d;box-shadow:none}.mode-badge,.mode-badge.offline,.mode-badge.full {background:#243b34;color:#d3e3d4;border-color:#4d6559}
+    .generate {background:#dfbd80;color:#18251f;border-radius:7px;box-shadow:none;font-weight:700}.generate:hover:not(:disabled) {background:#eed4a6;box-shadow:none;transform:none}.generate:disabled {opacity:.5}.error {color:#ffd0c7}.inline-status.warn {color:#f1d29a}.inline-status.success {color:#a8e8c4}
+    .how {max-width:1200px;padding-bottom:80px}.how-kicker,.how h2 {text-align:left}.how h2 {font:400 32px Georgia,serif}.how-grid {gap:0;border-top:1px solid var(--border)}.how-card {background:transparent;border:0;border-right:1px solid var(--border);border-radius:0;box-shadow:none;padding:25px 30px 0 0;margin-right:30px}.how-card:last-child {border:0}.how-number {color:#d7b981}.how-card h3 {color:#e9eee5}.how-card p {color:#9cafa1}.how-kicker {font-family:var(--font);letter-spacing:1.6px}.how h2 {color:#edf0e7} footer {border-color:var(--border);color:#94a99b}
+    .reopen-results {margin-top:18px;border:1px solid #8aa18d;background:#243a33;color:#f0f3e8;padding:14px 18px;border-radius:8px;font:600 13px var(--font);cursor:pointer}.reopen-results span {margin-left:25px}
+    dialog {width:min(960px,calc(100% - 32px));max-height:min(88vh,1000px);padding:0;color:var(--text);background:#172825;border:1px solid #546b5e;border-radius:16px;box-shadow:0 30px 100px #0009;overflow:auto} dialog::backdrop {background:rgba(4,12,10,.78);backdrop-filter:blur(5px)} .dialog-bar {position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:22px 28px;background:#172825;border-bottom:1px solid var(--border)}.dialog-bar h2 {font:400 27px Georgia,serif;margin:5px 0 0}.dialog-kicker {color:#d9bb84;font-size:9px;letter-spacing:1.5px;font-weight:700}#closeResults {width:40px;height:40px;border:1px solid #52695b;border-radius:50%;background:transparent;color:#f2f2e8;font-size:24px;cursor:pointer}.results {margin:0;border:0;border-radius:0;background:none;box-shadow:none}.results-header,.result-meta {padding-left:28px;padding-right:28px}.result-panel {padding:28px}.document-card,.insight-card,.mcq-card {background:#1e332d;border-color:#405b4c}.insight-donut::after {background:#1e332d}.doc-button {color:#f1d3a3}.insight-legend-row {color:#d4ded5}.result-reference {padding:0 28px 14px;color:#aabfb0;font-size:12px;line-height:1.7}.result-warnings {margin:0 28px 16px;padding:12px;background:#4a3c27;color:#f4dfb8;border-radius:7px;font-size:12px}.mcq-option.correct {color:#b1eed0}.mcq-correct-tag {color:#9be3bc}
+    .online-insights {padding:0 28px} .test-type[aria-label="Test type"] {background:#13221f;border:1px solid #40594d} .test-type[aria-label="Test type"] .segmented.selected {background:#e0c28d;color:#15261f}
+    :focus-visible {outline:2px solid #f2d394;outline-offset:3px} @media (prefers-reduced-motion:reduce) {*,*::before,*::after {scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+    @media(max-width:760px){.nav-session {display:none}.nav {height:64px}.hero {display:block;min-height:0;padding:55px 24px 48px}.hero-art {display:none}.hero-note {margin-top:30px}.workspace {padding:0 16px 60px}.step {gap:7px}.step-copy span {display:none}.step-copy b {font-size:11px}.card-header,.card-body {padding:23px 20px}.card-title {font-size:25px}.how {padding:0 20px 55px}.how-grid {display:block}.how-card {margin:0;padding:20px 0;border-right:0;border-bottom:1px solid var(--border)}.dialog-bar,.result-panel {padding:20px}.document-actions {grid-template-columns:1fr}.results-header,.result-meta {padding-left:20px;padding-right:20px}.result-reference {padding-left:20px;padding-right:20px}}
+
+
+    /* Creative studio: the working tool comes first. */
+    :root {--bg:#f2f1ee;--bg2:#f7f7f5;--bg3:#ffffff;--panel:#fff;--text:#1d2034;--text2:#555d72;--text3:#757c8c;--border:rgba(31,35,61,.12);--border-strong:rgba(31,35,61,.22);--amber:#544cdb;--amber-light:#524bc2;--amber-dim:rgba(84,76,219,.09);--green:#25865d;--green-dim:rgba(37,134,93,.1);--blue:#524bc2;--blue-dim:rgba(84,76,219,.1);--violet-light:#524bc2;--violet-dim:rgba(84,76,219,.1);--font:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body {background:#f2f1ee;color:var(--text);letter-spacing:0} body::before,body::after {display:none} .nav {position:relative;height:70px;padding:0 clamp(22px,4vw,64px);background:#f2f1ee;border-color:#20223b1a;box-shadow:none;backdrop-filter:none}.brand {font-size:21px;color:#24253e;letter-spacing:-1px}.brand-mark {width:36px;height:36px}.nav-meta {font-family:var(--font);font-size:9px;font-weight:700;letter-spacing:1.3px;color:#777d8c}.nav-badge {color:#4e4d70}.nav-session {border-color:#20223b25}
+    .app-heading {max-width:1480px;margin:0 auto;padding:42px 34px 23px;display:flex;justify-content:space-between;align-items:end;gap:20px}.heading-eyebrow {display:flex;align-items:center;gap:8px;color:#6e6f86;font-size:9px;font-weight:800;letter-spacing:1.5px;margin-bottom:14px}.heading-dot {width:7px;height:7px;border-radius:50%;background:#7772ef;box-shadow:0 0 0 4px #7772ef19}.app-heading h1 {font:600 clamp(31px,3.5vw,47px)/1.05 var(--font);letter-spacing:-2px;margin:0;color:#22233b}.app-heading h1 em {font-family:Georgia,serif;font-weight:400;color:#716ad3}.heading-aside {font-size:10px;letter-spacing:1.1px;font-weight:700;color:#777d8c}.heading-aside span {color:#7772ed;padding:0 9px;font-size:16px}
+    .workspace {max-width:1480px;margin:0 auto;padding:0 34px 70px;display:grid;grid-template-columns:minmax(0,1.07fr) minmax(350px,.93fr);align-items:start;gap:0 24px}.steps {grid-column:1/-1;display:flex;align-items:center;background:transparent;border:0;border-bottom:1px solid #22243d1c;border-radius:0;box-shadow:none;margin:0 0 24px;padding:0}.step,.step.active {flex:0 1 220px;min-width:0;background:transparent;border:0;padding:11px 0 17px;gap:9px}.step-number {width:25px;height:25px;border:1px solid #c3c3cb;color:#858698;background:none;font:600 10px var(--font)}.step.active .step-number {background:#625bec;color:white;border-color:#625bec}.step-copy b,.step.active .step-copy b {color:#38394e;font-size:11px}.step-copy span {display:none}
+    .workspace > .card {grid-column:1;grid-row:2;background:#fff;border:1px solid #dedee3;border-radius:18px;box-shadow:0 14px 40px #31304b09;overflow:visible}.card-header {padding:25px 28px 22px;border-color:#ececf0}.section-kicker {color:#746ee0;font:800 9px var(--font);letter-spacing:1.3px;margin:0 0 8px}.card-title {font:650 24px/1.2 var(--font);letter-spacing:-.8px;color:#22243c}.card-subtitle {font-size:12px;color:#858999;margin-top:6px}.card-body {padding:23px 28px 28px}.mode-badge,.mode-badge.offline,.mode-badge.full {font:700 9px var(--font);letter-spacing:.5px;background:#f0efff;color:#615bd2;border:1px solid #e1dffd;border-radius:20px}
+    .label {font-size:10px;letter-spacing:.75px;color:#5d6374;margin-bottom:8px}.label .required {color:#7169e6}.field-grid {gap:19px 16px}.hint {color:#747d8d;font-size:11px;line-height:1.55}.input,select.input,.multi-trigger {min-height:46px;background-color:#f8f8fa;color:#262940;border:1px solid #dedee7;border-radius:9px;font-size:13px}.input:hover:not(:disabled),select.input:hover:not(:disabled),.multi-trigger:hover:not(:disabled) {background:#f8f8fa;border-color:#aaa8d1}.input:focus,select.input:focus,.multi-trigger.open {background:#fff;border-color:#7770e9;box-shadow:0 0 0 3px #7069ef20}.input:disabled,select.input:disabled,.multi-trigger:disabled {background:#f7f7f8;opacity:.65}.input::placeholder,.placeholder {color:#979cac}.selection-pill {color:#554dd0;background:#eae9fd;border-color:#dedcfc}.multi-chevron {color:#777e91}.select-menu {background:white;border-color:#dadbe5;box-shadow:0 16px 40px #28274624}.select-option {color:#4c5063}.select-option:hover {background:#f4f3ff;color:#302d71}.select-option.selected {background:#eeedff;color:#514cc0}.select-option input[type=checkbox] {accent-color:#625bec}select.input option {background:#fff;color:#24263c}
+    .test-type[aria-label="Test type"] {background:#f3f3f6;border:1px solid #e8e8ef;border-radius:10px;padding:4px}.test-type[aria-label="Test type"] .segmented {font-size:12px;min-height:42px;color:#6d7284;border-radius:7px}.test-type[aria-label="Test type"] .segmented.selected {color:#4540ae;background:white;box-shadow:0 2px 7px #2f2e4f15}.segmented {color:#565c6d;background:#f8f8fa;border:1px solid #e0e1e9;border-radius:8px}.segmented:hover {color:#4944aa;border-color:#b8b4ed;background:#f8f8ff;transform:none}.segmented.difficulty.selected.easy,.segmented.difficulty.selected.moderate,.segmented.difficulty.selected.hard {color:#514ac5;background:#efeeff;border-color:#aaa4f4}.divider {height:1px;background:#ededf1;margin:23px 0}.full-test-note {background:#f2f1ff;border-color:#dedcfd}.full-test-note strong,.full-test-note .note-icon {color:#524ac2}.full-test-note p {color:#5f6477}.rule-helper {background:#f5f4ff;border-color:#dedafd}.rule-helper strong {color:#514ac5}.rule-helper.valid {background:#effaf3}.rule-helper.valid strong {color:#248153}.marks-order-note {color:#655cbd}.inline-status {color:#798092}.inline-status.warn {color:#97630c}.inline-status.success {color:#26845d}.error {background:#fff1ef;color:#a73f34;border-color:#f7d4cf}.generate {min-height:51px;color:white;background:#625bec;border-radius:9px;box-shadow:0 6px 18px #625bec30;font-size:13px}.generate:hover:not(:disabled) {background:#5149d5;box-shadow:0 8px 20px #625bec40;transform:none}.generate:disabled {opacity:.48;box-shadow:none}.loading-copy {color:#625bec}
+    .live-preview {grid-column:2;grid-row:2;position:sticky;top:20px;overflow:hidden;min-height:680px;border-radius:18px;color:#fff;background:#292473;box-shadow:0 16px 40px #302a851c;isolation:isolate}.live-preview::before {content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 55% 47%,#756fff 0%,#5047cb 35%,#28236f 78%)}.preview-top {display:flex;align-items:center;justify-content:space-between;padding:25px 27px 0}.preview-label,.preview-live,.preview-kicker {font-size:9px;letter-spacing:1.25px;font-weight:800}.preview-label {color:#e1dfff}.preview-live {display:flex;gap:7px;align-items:center;color:#dedcff}.preview-live i {width:6px;height:6px;border-radius:50%;background:#c3f4a7;box-shadow:0 0 0 3px #c3f4a722}.preview-copy {padding:49px 35px 0}.preview-kicker {color:#cbc7ff}.preview-copy h2 {font:600 clamp(27px,3vw,41px)/1.1 var(--font);letter-spacing:-1.7px;margin:13px 0 8px;color:#fff}.preview-copy h2 em {font:italic 400 1.05em Georgia,serif;color:#d7d1ff}.preview-copy p {font-size:12px;color:#d1cdfc;margin:0}
+    .scene {height:315px;position:relative;margin-top:0;overflow:hidden}.orbit {position:absolute;left:50%;top:50%;border:1px solid #ffffff2e;border-radius:50%;transform:translate(-50%,-50%)}.orbit-one {width:285px;height:285px}.orbit-two {width:390px;height:390px;border-color:#ffffff20}.orbit-three {width:500px;height:500px;border-color:#ffffff15}.orbit-dot {position:absolute;width:9px;height:9px;border-radius:50%;background:#d9d4ff;box-shadow:0 0 15px #ffffff90}.dot-one {left:24%;top:28%}.dot-two {right:20%;bottom:22%;width:6px;height:6px;background:#d9faad}.dot-three {right:30%;top:13%;width:4px;height:4px}.paper {position:absolute;left:50%;top:50%;width:176px;height:235px;border-radius:4px;box-shadow:0 20px 45px #18125750}.paper-back {background:#c0bcff;transform:translate(-50%,-50%) rotate(-17deg)}.paper-mid {background:#e0ddff;transform:translate(-50%,-50%) rotate(11deg)}.paper-front {background:#fffcf5;transform:translate(-50%,-50%) rotate(-3deg);color:#29284b;padding:19px 18px;animation:paperFloat 5s ease-in-out infinite}.paper-top,.paper-footer {display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:9px}.paper-top span:first-child {font-size:12px;letter-spacing:-.7px}.paper-top span:last-child {color:#7871ee;font-size:18px}.paper-rule {height:1px;background:#dddce6;margin:11px 0 25px}.paper-mini {font-size:7px;letter-spacing:1px;font-weight:800;color:#8a89a2}.paper-title {font:italic 21px/1.05 Georgia,serif;letter-spacing:-.5px;margin-top:11px;overflow-wrap:anywhere}.paper-lines {margin-top:16px}.paper-lines i {display:block;background:#e0dfea;height:2px;margin-top:6px}.paper-lines i:nth-child(2) {width:80%}.paper-lines i:last-child {width:58%}.paper-footer {position:absolute;left:18px;right:18px;bottom:16px;color:#797991;font-size:7px;letter-spacing:.6px}.paper-footer span:last-child {font-size:14px;color:#7770e5}.scene-stamp {position:absolute;right:8%;bottom:39px;width:70px;height:70px;border-radius:50%;border:1px solid #ffffff75;display:grid;place-content:center;text-align:center;color:#e3e0ff;font-size:8px;line-height:1.4;letter-spacing:1px;font-weight:800;transform:rotate(12deg)}.scene-stamp span {font-size:14px}
+    @keyframes paperFloat {0%,100% {transform:translate(-50%,-50%) rotate(-3deg)}50% {transform:translate(-50%,-54%) rotate(0deg)}} @keyframes twinkle {0%,100% {opacity:.5;transform:scale(.8)}50% {opacity:1;transform:scale(1.25)}} .orbit-dot {animation:twinkle 3s ease-in-out infinite}.dot-two {animation-delay:-1s}.dot-three {animation-delay:-2s}
+    .preview-bottom {border-top:1px solid #ffffff32;margin:0 27px;padding:18px 0 26px}.summary-heading {display:flex;justify-content:space-between;color:#d9d7ff;font-size:9px;font-weight:800;letter-spacing:1.1px}.summary-grid {display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;margin-top:17px}.summary-grid span {display:block;color:#c1bdf4;font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:5px}.summary-grid strong {display:block;color:white;font-size:12px;font-weight:600;overflow-wrap:anywhere}.reopen-results {grid-column:1;grid-row:3;justify-self:start;margin-top:18px;background:#ecebff;border-color:#c7c3f9;color:#514ac5}
+    footer {max-width:1480px;margin:auto;border-color:#2626401c;color:#858899;padding:22px 34px;font-size:10px}dialog {background:#fff;color:#22243a;border:1px solid #dedee8;box-shadow:0 30px 100px #1e1d4460}dialog::backdrop {background:#1d1a38b8}.dialog-bar {background:#fff;border-color:#ebebf1}.dialog-bar h2 {font:650 24px var(--font);letter-spacing:-.8px;color:#24243b}.dialog-kicker {color:#655fd6}#closeResults {color:#383851;border-color:#d9d9e4}.results {color:#25273d}.result-title,.document-card h3,.mcq-question,.insight-card h4,.insights-heading h3 {color:#25273d}.result-ok {color:#26845d}.meta-chip {color:#666d7c;background:#f6f6f9}.result-reference {color:#646c80}.result-panel p,.document-card p {color:#70768a}.document-card,.insight-card,.mcq-card {background:#f8f8fb;border-color:#e6e6ee}.insight-donut::after {background:#f8f8fb}.insight-legend-row {color:#555c70}.insight-value,.insight-subtitle,.insight-coverage,.insight-donut-label {color:#626a7d}.doc-button {color:#514ac5;background:#eeedff;border-color:#dddafa}.doc-button.secondary {color:#5a6173;background:#fff;border-color:#dadbe5}.mcq-option {color:#535c6d;background:#fff;border-color:#e4e5eb}.mcq-option.correct {color:#23764f;background:#edf9f1}.mcq-correct-tag {color:#267a53}.result-warnings {background:#fff7e7;color:#7b5612}.reopen-results:hover {background:#dedbff}.insight-warnings {color:#855c16}.paper-insights {border-color:#ececf2}
+    :focus-visible {outline:3px solid #807af0;outline-offset:3px} @media(prefers-reduced-motion:reduce){*,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+    @media(max-width:850px){.workspace {grid-template-columns:1fr;padding:0 18px 55px;gap:0}.workspace > .card {grid-column:1;grid-row:2}.live-preview {position:relative;top:auto;grid-column:1;grid-row:3;min-height:0;margin-top:18px}.reopen-results {grid-row:4}.preview-copy {padding-top:30px}.scene {height:275px}.app-heading {padding:35px 20px 18px}.heading-aside {display:none}.nav-session {display:none}.card-header,.card-body {padding-left:20px;padding-right:20px}}
+    @media(max-width:480px){.app-heading h1 {font-size:32px}.preview-copy h2 {font-size:30px}.preview-top {padding:22px 22px 0}.preview-copy {padding-left:24px}.preview-bottom {margin:0 22px}.step {flex:1}.step-copy b {font-size:10px}.step-number {width:23px;height:23px}.card-header {align-items:flex-start}.mode-badge {font-size:8px}.test-type[aria-label="Test type"] .segmented {flex:1 1 85px;padding:8px 4px;font-size:11px}}
+
+
+    /* The next layer: tactile choices, a responsive preview, and a softer reveal. */
+    .workspace {gap:0 22px}.workspace > .card {box-shadow:0 12px 40px rgba(44,42,78,.07)}
+    .test-type[aria-label="Test type"] {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:0;background:transparent;border:0;border-radius:0}
+    .test-type[aria-label="Test type"] .segmented {position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:14px;min-height:118px;padding:14px;background:#fafafd;border:1px solid #e6e6ee;border-radius:12px;text-align:left;transition:border-color 160ms ease,background 160ms ease,box-shadow 160ms ease,transform 160ms ease}
+    .test-type[aria-label="Test type"] .segmented:hover:not(:disabled) {background:#f7f6ff;border-color:#c6c1f3;transform:translateY(-2px)}
+    .test-type[aria-label="Test type"] .segmented.selected {background:#f4f3ff;border-color:#827bf0;box-shadow:0 0 0 1px #827bf0,0 7px 20px #625bec10}
+    .mode-icon {display:grid;place-items:center;width:33px;height:33px;color:#696c83;background:#efeff5;border-radius:10px}.mode-icon svg {width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.segmented.selected .mode-icon {color:#5b54d4;background:#e7e5ff}
+    .mode-text {display:block}.mode-text b {display:block;color:#313449;font-size:12px;line-height:1.2}.mode-text small {display:block;margin-top:4px;color:#858a9a;font-size:10px;font-weight:400;line-height:1.2}.mode-check {display:none;position:absolute;top:14px;right:13px;width:19px;height:19px;align-items:center;justify-content:center;border-radius:50%;background:#6962e8;color:white;font-size:11px}.segmented.selected .mode-check {display:flex}
+    .field-grid {gap:21px 16px}.input,.multi-trigger {transition:border-color 150ms,box-shadow 150ms,background 150ms}.generate:active:not(:disabled),.hero-cta:active,.doc-button:active {transform:scale(.99)}
+    .live-preview::before {transition:background 300ms ease}.live-preview[data-mode="offline"]::before {background:radial-gradient(circle at 55% 47%,#7773ed 0%,#5047b8 35%,#28236f 78%)}.live-preview[data-mode="full_test"]::before {background:radial-gradient(circle at 55% 47%,#8b79ec 0%,#5542aa 35%,#292065 78%)}
+    .paper-back,.paper-mid {transition:transform 300ms cubic-bezier(.2,.75,.25,1),background 300ms}.live-preview[data-mode="offline"] .paper-back {transform:translate(-50%,-50%) rotate(-11deg)}.live-preview[data-mode="offline"] .paper-mid {transform:translate(-50%,-50%) rotate(5deg)}.live-preview[data-mode="full_test"] .paper-back {transform:translate(-50%,-50%) rotate(-14deg) translate(-8px,3px)}.live-preview[data-mode="full_test"] .paper-mid {transform:translate(-50%,-50%) rotate(10deg) translate(8px,3px)}
+    .paper-options {display:flex;gap:4px;margin-top:10px}.paper-options i {width:8px;height:8px;border:1px solid #aaa7d8;border-radius:50%}.live-preview[data-mode="offline"] .paper-options,.live-preview[data-mode="full_test"] .paper-options {display:none}.live-preview[data-mode="offline"] .paper-lines i,.live-preview[data-mode="full_test"] .paper-lines i {height:1px;margin-top:10px;background:#c7c5d4}.paper-front.mode-change {animation:paperChange 360ms cubic-bezier(.2,.75,.25,1),paperFloat 5s ease-in-out 360ms infinite}
+    @keyframes paperChange {0% {transform:translate(-50%,-50%) rotate(-3deg) scale(.96)}65% {transform:translate(-50%,-54%) rotate(1deg) scale(1.02)}100% {transform:translate(-50%,-50%) rotate(-3deg) scale(1)}}
+    .generation-halo {position:absolute;inset:50% auto auto 50%;width:260px;height:260px;border-radius:50%;border:1px solid transparent;transform:translate(-50%,-50%);pointer-events:none}.is-generating .generation-halo {border-color:#dedbff44;border-top-color:#faf9ff;animation:orbitLoading 2s linear infinite}.is-generating .paper-front {animation:paperFloat 2s ease-in-out infinite}.is-generating .scene-stamp {opacity:.45}.build-status {display:none;align-items:center;gap:9px;margin:0 0 16px;color:#fff;font-size:12px;font-weight:650}.is-generating .build-status {display:flex}.build-spinner {width:14px;height:14px;border-radius:50%;border:2px solid #ffffff55;border-top-color:#fff;animation:spinner 800ms linear infinite}@keyframes spinner {to {transform:rotate(360deg)}} @keyframes orbitLoading {to {transform:translate(-50%,-50%) rotate(360deg)}}
+    dialog[open] {animation:modalReveal 240ms cubic-bezier(.2,.75,.25,1)}dialog::backdrop {background:rgba(24,22,48,.72)}@keyframes modalReveal {from {opacity:0;transform:translateY(12px) scale(.985)}to {opacity:1;transform:none}}
+    .dialog-bar {padding:23px 28px}.dialog-bar h2 {font-size:25px}.dialog-kicker {font-size:9px;letter-spacing:1.4px}.results-header {padding:22px 28px 12px;border-bottom:0}.result-title {font-size:17px;letter-spacing:-.4px}.result-ok {border:0;border-radius:20px;background:#e9f7ef;color:#248153;font:700 9px var(--font);letter-spacing:.6px}.result-meta {padding:2px 28px 13px;border:0}.meta-chip {border:0;background:#f1f1f8;color:#62677b;border-radius:20px;font:600 10px var(--font);padding:6px 10px}.result-reference {padding:0 28px 17px}.result-panel {padding:0 28px 28px}.document-actions {gap:12px}.document-card {border-radius:12px;padding:20px;background:#f8f8fc}.document-card h3 {font-size:14px}.doc-button {min-height:38px;border-radius:8px}.doc-button:not(.secondary) {background:#625bec;color:white;border-color:#625bec}.doc-button.secondary {color:#4d4e6d}.paper-insights {margin-top:26px;padding-top:24px}.insight-card {border-radius:12px}.insight-coverage {background:#efeeff;color:#655fd0;border:0}.insight-legend-row {font-size:11px}.insight-warnings {background:#fff7e8;color:#805e25}.online-insights {padding:0 28px}.online-insights .paper-insights {margin-top:0;padding-top:14px;border-top:0}
+    @media(max-width:850px) {.live-preview {display:grid;grid-template-columns:1fr 160px;min-height:0}.preview-top {grid-column:1/-1}.preview-copy {padding:26px 24px 8px}.preview-copy h2 {font-size:27px}.preview-kicker {font-size:8px}.scene {height:185px;grid-column:2;grid-row:2;align-self:center;margin:0}.scene .paper {scale:.55}.scene .orbit {scale:.7}.scene .scene-stamp {display:none}.preview-bottom {grid-column:1/-1}.summary-grid {grid-template-columns:repeat(4,minmax(0,1fr))}.preview-copy p {display:none}}
+    @media(max-width:520px){.test-type[aria-label="Test type"] {gap:6px}.test-type[aria-label="Test type"] .segmented {min-height:104px;padding:11px 9px;gap:12px}.mode-icon {width:29px;height:29px}.mode-icon svg {width:17px;height:17px}.mode-text b {font-size:11px}.mode-text small {font-size:9px}.mode-check {right:8px;top:9px;width:16px;height:16px;font-size:9px}.live-preview {grid-template-columns:1fr 125px}.scene {height:150px}.scene .paper {scale:.46}.scene .orbit {scale:.55}.preview-copy h2 {font-size:23px}.preview-bottom {margin:0 20px}.summary-grid {grid-template-columns:1fr 1fr;gap:12px}.result-panel {padding:0 20px 20px}.results-header {padding:20px 20px 12px}.result-meta {padding:0 20px 12px}.result-reference {padding:0 20px 15px}.dialog-bar {padding:19px 20px}.online-insights {padding:0 20px}}
+    @media(prefers-reduced-motion:reduce) {*,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+    /* Teacher-first guidance, larger touch targets, and an optional night palette. */
+    .theme-toggle {display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid #d8d8e3;border-radius:99px;background:#fff;color:#4c4c66;font:700 11px var(--font);cursor:pointer}.theme-toggle:hover {background:#f3f2ff;border-color:#bdb9ec}.theme-icon {font-size:17px;line-height:1}
+    .field-group-title {display:flex;align-items:center;gap:10px;margin:0 0 19px;color:#35384d;font-size:13px;font-weight:700}.field-group-title > span {display:grid;place-items:center;width:25px;height:25px;flex:none;border:1px solid #dddafb;background:#f2f1ff;color:#615bd2;border-radius:50%;font-size:11px}.field-group-title small {display:block;margin-top:3px;font-size:11px;font-weight:400;color:#7b8191}.settings-title {margin-bottom:17px}.label {font-size:11px;letter-spacing:.35px}.card-subtitle {font-size:13px}.hint {font-size:12px}.inline-status {font-size:12px}.select-option {min-height:44px;font-size:13px}.select-option input[type=checkbox] {width:18px;height:18px}.multi-trigger,select.input,.input {min-height:48px}
+    .latest-result {grid-column:1/-1;margin:0 27px 25px;padding:17px;background:#ffffff12;border:1px solid #ffffff33;border-radius:13px}.latest-kicker {display:flex;gap:8px;align-items:center;color:#d8d6ff;font-size:9px;letter-spacing:1px;font-weight:800}.latest-check {display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#d4f3d0;color:#235b43;font-size:11px}.latest-title {margin-top:10px;color:#fff;font-size:14px;font-weight:650;line-height:1.45;overflow-wrap:anywhere}.latest-result p {margin:5px 0 12px;color:#d0cdfb;font-size:11px;line-height:1.5}.latest-result button,.latest-result a {display:inline-flex;align-items:center;gap:20px;min-height:38px;padding:0 12px;border:1px solid #ffffff70;border-radius:8px;background:#fff;color:#413a9b;font:700 11px var(--font);text-decoration:none;cursor:pointer}.latest-result a {background:transparent;color:#fff;margin-left:6px}.latest-result button:hover {background:#eeedff}
+    body[data-theme="dark"] {--bg:#111421;--bg2:#1a2032;--bg3:#20263a;--panel:#191e2e;--text:#f2f1fa;--text2:#c2c5d6;--text3:#a5abc0;--border:rgba(220,223,255,.13);--border-strong:rgba(220,223,255,.24);--amber:#aaa4ff;--amber-light:#c4bfff;--amber-dim:rgba(146,137,255,.16);background:#111421;color:#f2f1fa}
+    body[data-theme="dark"] .nav {background:#111421;border-color:#ffffff1a}body[data-theme="dark"] .brand,body[data-theme="dark"] .app-heading h1 {color:#f4f2fc}body[data-theme="dark"] .nav-badge,body[data-theme="dark"] .heading-eyebrow,body[data-theme="dark"] .heading-aside {color:#b9bdd0}body[data-theme="dark"] .theme-toggle {background:#20263a;border-color:#3e455e;color:#e8e8fa}body[data-theme="dark"] .theme-toggle:hover {background:#303656}body[data-theme="dark"] .steps {border-color:#ffffff20}body[data-theme="dark"] .step-copy b,body[data-theme="dark"] .step.active .step-copy b {color:#dcdfee}body[data-theme="dark"] .step-number {color:#b8bed0;border-color:#666d82}body[data-theme="dark"] .step.active .step-number {color:white;border-color:#7b73ed}
+    body[data-theme="dark"] .workspace > .card {background:#1b2031;border-color:#353b50;box-shadow:0 20px 50px #0003}body[data-theme="dark"] .card-header {border-color:#ffffff17}body[data-theme="dark"] .card-title,body[data-theme="dark"] .field-group-title {color:#f0eff9}body[data-theme="dark"] .card-subtitle,body[data-theme="dark"] .field-group-title small,body[data-theme="dark"] .hint,body[data-theme="dark"] .inline-status {color:#b0b7ca}body[data-theme="dark"] .field-group-title > span {background:#39365e;border-color:#6961a9;color:#dedaff}body[data-theme="dark"] .label {color:#d1d5e6}body[data-theme="dark"] .section-kicker {color:#b5aeff}
+    body[data-theme="dark"] .test-type[aria-label="Test type"] .segmented {background:#23293b;border-color:#3c4358}body[data-theme="dark"] .test-type[aria-label="Test type"] .segmented.selected {background:#353255;border-color:#9a92ff;box-shadow:0 0 0 1px #9a92ff}body[data-theme="dark"] .mode-text b {color:#ededfa}body[data-theme="dark"] .mode-text small {color:#b1b8cc}body[data-theme="dark"] .mode-icon {background:#353b50;color:#d4d5ea}body[data-theme="dark"] .segmented.selected .mode-icon {background:#514a8b;color:#e4e0ff}body[data-theme="dark"] .mode-badge,body[data-theme="dark"] .mode-badge.offline,body[data-theme="dark"] .mode-badge.full {background:#353255;color:#d9d5ff;border-color:#5c568f}
+    body[data-theme="dark"] .input,body[data-theme="dark"] select.input,body[data-theme="dark"] .multi-trigger {background-color:#131827;color:#f4f4fb;border-color:#4b536c}body[data-theme="dark"] .input:hover:not(:disabled),body[data-theme="dark"] select.input:hover:not(:disabled),body[data-theme="dark"] .multi-trigger:hover:not(:disabled) {background:#1a2032;border-color:#a39af9}body[data-theme="dark"] .input:focus,body[data-theme="dark"] select.input:focus,body[data-theme="dark"] .multi-trigger.open {background:#171b2c;border-color:#a39af9}body[data-theme="dark"] select.input option {background:#20263a;color:#f4f4fb}body[data-theme="dark"] .select-menu {background:#252b40;border-color:#555c75}body[data-theme="dark"] .select-option {color:#e0e3f0}body[data-theme="dark"] .select-option:hover,body[data-theme="dark"] .select-option.selected {background:#39365e;color:#eeebff}body[data-theme="dark"] .selection-pill {background:#39365e;border-color:#7069b3;color:#e1ddff}body[data-theme="dark"] .placeholder,body[data-theme="dark"] .input::placeholder {color:#9da5ba}body[data-theme="dark"] .divider {background:#ffffff1a}
+    body[data-theme="dark"] .segmented {background:#23293b;color:#d7d9e8;border-color:#454c63}body[data-theme="dark"] .segmented.difficulty.selected.easy,body[data-theme="dark"] .segmented.difficulty.selected.moderate,body[data-theme="dark"] .segmented.difficulty.selected.hard {background:#403a6c;color:#ece9ff;border-color:#aaa1ff}body[data-theme="dark"] .full-test-note,body[data-theme="dark"] .rule-helper {background:#2d2c48;border-color:#5b5786}body[data-theme="dark"] .full-test-note p,body[data-theme="dark"] .rule-helper span {color:#c3c7da}body[data-theme="dark"] .full-test-note strong,body[data-theme="dark"] .rule-helper strong {color:#dfdafe}body[data-theme="dark"] .rule-helper.valid strong,body[data-theme="dark"] .inline-status.success {color:#a0dfbb}body[data-theme="dark"] .marks-order-note {color:#c9c1ff}body[data-theme="dark"] .inline-status.warn {color:#f3cf91}body[data-theme="dark"] .error {background:#4a262e;color:#ffcdc8;border-color:#88535b}body[data-theme="dark"] footer {border-color:#ffffff20;color:#a7aec3}
+    body[data-theme="dark"] dialog {background:#1b2031;color:#f2f1fa;border-color:#505870}body[data-theme="dark"] .dialog-bar {background:#1b2031;border-color:#ffffff1a}body[data-theme="dark"] .dialog-bar h2,body[data-theme="dark"] .result-title,body[data-theme="dark"] .document-card h3,body[data-theme="dark"] .mcq-question,body[data-theme="dark"] .insight-card h4,body[data-theme="dark"] .insights-heading h3 {color:#f0f0fa}body[data-theme="dark"] #closeResults {color:#f0f0fa;border-color:#697187}body[data-theme="dark"] .document-card,body[data-theme="dark"] .insight-card,body[data-theme="dark"] .mcq-card {background:#242a3d;border-color:#42495f}body[data-theme="dark"] .insight-donut::after {background:#242a3d}body[data-theme="dark"] .result-panel p,body[data-theme="dark"] .document-card p,body[data-theme="dark"] .result-reference,body[data-theme="dark"] .insight-legend-row,body[data-theme="dark"] .insight-value,body[data-theme="dark"] .insight-subtitle,body[data-theme="dark"] .insight-donut-label {color:#ced2e3}body[data-theme="dark"] .meta-chip {background:#30364a;color:#d6d8e9}body[data-theme="dark"] .doc-button.secondary {background:#30364a;border-color:#62697e;color:#f0effb}body[data-theme="dark"] .mcq-option {background:#1b2031;color:#e1e3f0;border-color:#41495f}body[data-theme="dark"] .mcq-option.correct {background:#254538;color:#b8f2cf}body[data-theme="dark"] .result-ok {background:#254538;color:#b8f2cf}body[data-theme="dark"] .paper-insights {border-color:#ffffff1a}body[data-theme="dark"] .reopen-results {background:#39355d;color:#f1efff;border-color:#7d75c7}
+    @media(max-width:850px){.latest-result {grid-column:1/-1;margin:0 20px 20px}}
+    @media(max-width:600px){.nav {height:61px;padding:0 17px}.brand {font-size:19px}.brand-mark {width:32px;height:32px}.nav-badge {display:none}.theme-toggle {min-height:42px;padding:8px 12px}.app-heading {padding:28px 17px 16px}.app-heading h1 {font-size:clamp(27px,7vw,34px);letter-spacing:-1.2px}.heading-eyebrow {margin-bottom:10px;font-size:9px}.workspace {padding:0 12px 50px}.steps {margin-bottom:16px}.step,.step.active {padding:8px 0 13px}.card-header {padding:22px 18px 19px}.card-title {font-size:22px}.card-body {padding:20px 18px 25px}.test-type[aria-label="Test type"] .segmented {min-height:110px}.mode-text small {font-size:10px}.field-grid {gap:18px}.input,select.input,.multi-trigger {font-size:16px;min-height:49px}.select-menu {position:relative;top:auto;margin-top:6px;max-height:240px;box-shadow:0 10px 24px #25254118}.select-option {font-size:14px;min-height:48px}.selection-pill {font-size:12px}.label {font-size:11px}.hint {font-size:12px}.generate {min-height:52px;font-size:14px}.inline-status {font-size:12px}.preview-top {padding:20px 20px 0}.preview-copy {padding:20px 20px 5px}.preview-copy h2 {font-size:22px}.scene {height:145px}.preview-bottom {padding:14px 0 19px}.latest-result {margin:0 20px 20px}.latest-result button,.latest-result a {min-height:44px}dialog {width:calc(100% - 16px);max-height:calc(100dvh - 16px);border-radius:14px}.dialog-bar {padding:16px 18px}.dialog-bar h2 {font-size:21px}#closeResults {min-width:44px;min-height:44px}.doc-button {min-height:44px}.insight-content {align-items:flex-start}.insight-legend {min-width:0}.insight-legend-row span:nth-child(2) {white-space:normal;overflow-wrap:anywhere} footer {padding:20px 17px;gap:10px}}
+    @media(max-width:360px){.test-type[aria-label="Test type"] .segmented {min-height:105px;padding:10px 7px}.mode-text small {font-size:9px}.scene {height:130px}.live-preview {grid-template-columns:1fr 100px}.preview-copy h2 {font-size:20px}.latest-result a {margin:8px 0 0}}
+
+
+    /* Interactive, backend-driven marks distributions. */
+    .paper-insights {margin-top:30px;padding-top:26px}.insights-heading {align-items:center;margin-bottom:18px}.insights-heading h3 {font-size:21px;letter-spacing:-.65px;font-weight:700}.insights-heading p {font-size:12px;line-height:1.5;color:#71788b}.insights-basis {font:700 9px var(--font);letter-spacing:.8px;padding:8px 10px;border-radius:99px;background:#f1f0ff;color:#6059c8}
+    .insights-grid {gap:12px}.insight-card {background:#fafafe;border:1px solid #e8e8f1;border-radius:16px;padding:20px;min-width:0;box-shadow:0 5px 20px #302a6910}.insight-card-header {align-items:flex-start;margin-bottom:19px;gap:10px}.insight-overline {display:block;margin-bottom:7px;color:#8b89ac;font-size:9px;font-weight:800;letter-spacing:1.2px}.insight-card h4 {font-size:15px;letter-spacing:-.25px;color:#292b43}.insight-card .insight-subtitle {font-size:11px;color:#7a8092;margin-top:4px}.insight-coverage {align-self:flex-start;padding:6px 9px;background:#eeedff;color:#635dce;border:0;font:700 9px var(--font);border-radius:99px}
+    .insight-content {display:flex;align-items:center;gap:16px}.chart-wrap {position:relative;flex:0 0 132px;width:132px;height:132px}.chart-svg {width:100%;height:100%;overflow:visible}.chart-track {stroke:#e9e9f2}.chart-segment {cursor:pointer;pointer-events:stroke;transition:opacity 160ms ease,stroke-width 160ms ease}.has-chart-focus .chart-segment:not(.chart-focused) {opacity:.27}.chart-segment.chart-focused {stroke-width:17}.chart-center {position:absolute;inset:29px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;pointer-events:none}.chart-center-value {font:700 23px/1 var(--font);letter-spacing:-.8px;color:#3b3864}.chart-center-label {display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:100%;margin-top:5px;font:700 8px/1.25 var(--font);letter-spacing:.55px;color:#7d8095;overflow-wrap:anywhere;text-transform:uppercase}
+    .insight-legend {display:grid;gap:3px;min-width:0;width:100%}.insight-legend-row {width:100%;display:grid;grid-template-columns:9px minmax(0,1fr) auto;gap:8px;align-items:center;min-height:34px;padding:6px 7px;text-align:left;color:#535a6e;background:transparent;border:1px solid transparent;border-radius:8px;font:500 11px/1.3 var(--font);cursor:pointer}.insight-legend-row:hover,.insight-legend-row.chart-focused {background:#efeeff;border-color:#e3e0fb;color:#383375}.insight-legend-row .legend-label {white-space:normal;overflow-wrap:anywhere;overflow:visible}.insight-legend-row .insight-value {color:#35394e;font:700 11px var(--font);font-variant-numeric:tabular-nums}.insight-dot {width:9px;height:9px}.chart-hint {display:flex;justify-content:space-between;gap:8px;margin-top:17px;padding-top:12px;border-top:1px solid #e9e9f2;color:#858a9b;font-size:10px}.chart-hint span {color:#8983e6}
+    body[data-theme="dark"] .insights-heading h3,body[data-theme="dark"] .insight-card h4 {color:#f2f1fa}body[data-theme="dark"] .insights-heading p,body[data-theme="dark"] .insight-card .insight-subtitle {color:#bdc3d4}body[data-theme="dark"] .insights-basis,body[data-theme="dark"] .insight-coverage {background:#39365e;color:#e2deff}body[data-theme="dark"] .insight-card {background:#242a3d;border-color:#42495f;box-shadow:none}body[data-theme="dark"] .chart-track {stroke:#40465b}body[data-theme="dark"] .chart-center-value {color:#f1efff}body[data-theme="dark"] .chart-center-label,body[data-theme="dark"] .insight-overline {color:#b5b8d1}body[data-theme="dark"] .insight-legend-row {color:#d4d9ea}body[data-theme="dark"] .insight-legend-row:hover,body[data-theme="dark"] .insight-legend-row.chart-focused {background:#39365e;border-color:#5b568e;color:#fff}body[data-theme="dark"] .insight-legend-row .insight-value {color:#f3f1fa}body[data-theme="dark"] .chart-hint {color:#aab1c5;border-color:#42495f}
+    @media(max-width:680px) {.insights-heading {align-items:flex-start}.insight-card {padding:18px}.chart-wrap {width:128px;height:128px;flex-basis:128px}.insight-legend-row {min-height:44px;font-size:12px}.insight-legend-row .insight-value {font-size:12px}.chart-hint {font-size:11px}}
+    @media(max-width:360px) {.insight-content {flex-direction:column;align-items:center}.insight-legend {width:100%}.insight-card-header {flex-wrap:wrap}}
+    @media(prefers-reduced-motion:reduce) {.chart-segment {transition:none}}
+
+
+    .example-insights-btn {grid-column:2;grid-row:3;justify-self:start;margin-top:16px;background:transparent;border:0;color:#5e58cc;padding:10px 2px;font:700 12px var(--font);cursor:pointer}.example-insights-btn span {padding-left:10px}.example-insights-btn:hover {color:#3630a7;text-decoration:underline}.example-content {padding:22px 28px 30px}.example-content > p {color:#6b7386;font-size:13px;margin:0}.example-content .paper-insights {margin:16px 0 0;padding:0;border:0}#closeExample {width:40px;height:40px;border:1px solid #d9d9e4;border-radius:50%;background:transparent;color:#383851;font-size:24px;cursor:pointer}body[data-theme="dark"] .example-insights-btn {color:#bbb5ff}body[data-theme="dark"] .example-content > p {color:#c4cadb}body[data-theme="dark"] #closeExample {color:#f0f0fa;border-color:#697187}@media(max-width:850px){.example-insights-btn {grid-column:1;grid-row:4;justify-self:start}.reopen-results {grid-row:5}}@media(max-width:600px){.example-content {padding:18px 20px 24px}#closeExample {min-width:44px;min-height:44px}.example-insights-btn {min-height:44px}}
+
   </style>
 </head>
 <body>
   <header class="nav">
     <div class="brand"><span class="brand-mark"><img id="brandLogo" src="assets/mytst-kangaroo-logo-192.png" alt="myTST kangaroo logo" /></span><span>myTST</span></div>
-    <div class="nav-meta"></span><span></span><span class="nav-badge">CBSE · CLASSES 10–12</span></div>
+    <div class="nav-meta"><span class="nav-badge">THE PAPER STUDIO</span><button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark appearance" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark</span></button></div>
   </header>
 
   <main>
-    <section class="hero" aria-labelledby="page-title">
-      <div class="eyebrow">✦ Teacher support tool</div>
-      <h1 id="page-title">Your tool to generate <span class="highlight">CBSE Question Papers</span> in minutes</h1>
-      <p>Configure syllabus-aligned online quizzes, print-ready offline papers, or a complete full-syllabus test for Class 10–12.</p>
-      <div class="stats" aria-label="Product capabilities">
-        <div class="stat"><strong>3 Modes</strong><span>Online, offline, full</span></div>
-        <div class="stat"><strong>10–12</strong><span>CBSE classes</span></div>
-        <div class="stat"><strong>48</strong><span>Official subject tracks</span></div>
-      </div>
-    </section>
-
+    <div class="app-heading"><div><div class="heading-eyebrow"><span class="heading-dot"></span> YOUR TEACHING WORKSPACE</div><h1>Let’s make a <em>great test.</em></h1></div><div class="heading-aside">CBSE <span>✳</span> 2026—27</div></div>
     <section class="workspace" aria-label="Question paper configuration">
       <div class="steps" aria-label="Generation progress">
         <div class="step active"><span class="step-number">1</span><div class="step-copy"><b>Configure</b><span>Class, marks and chapters</span></div></div>
@@ -648,23 +729,24 @@
 
       <section class="card" aria-labelledby="config-title">
         <div class="card-header">
-          <div><div id="config-title" class="card-title">Test Configuration</div><div class="card-subtitle">Choose curriculum, scope and delivery preferences</div></div>
+          <div><div class="section-kicker">LET’S GET STARTED</div><div id="config-title" class="card-title">Build your test</div><div class="card-subtitle">Choose a test type, then fill in the details below.</div></div>
           <span id="modeBadge" class="mode-badge">🌐 ONLINE TEST</span>
         </div>
 
         <div class="card-body">
           <form id="testForm" novalidate>
             <div class="field full">
-              <label class="label">Test Type <span class="required">*</span></label>
+              <label class="label">1 &nbsp; Choose a test type <span class="required">*</span></label>
               <div class="test-type" role="group" aria-label="Test type">
-                <button type="button" class="segmented online selected" id="onlineMode">🌐 Online Test</button>
-                <button type="button" class="segmented offline" id="offlineMode">📝 Offline Test</button>
-                <button type="button" class="segmented full" id="fullMode">✦ Full Test</button>
+                <button type="button" class="segmented online selected" id="onlineMode" aria-pressed="true"><span class="mode-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 8h10M7 11h6"/></svg></span><span class="mode-text"><b>Online</b><small>Share a quiz</small></span><span class="mode-check" aria-hidden="true">✓</span></button>
+                <button type="button" class="segmented offline" id="offlineMode" aria-pressed="false"><span class="mode-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 15h7M9 18h4"/></svg></span><span class="mode-text"><b>Offline</b><small>Print a paper</small></span><span class="mode-check" aria-hidden="true">✓</span></button>
+                <button type="button" class="segmented full" id="fullMode" aria-pressed="false"><span class="mode-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4h12v16H7zM4 7v14h12M10 9h6M10 12h6M10 15h4"/></svg></span><span class="mode-text"><b>Full test</b><small>Full syllabus</small></span><span class="mode-check" aria-hidden="true">✓</span></button>
               </div>
             </div>
 
             <div class="divider"></div>
 
+            <div class="field-group-title"><span>2</span><div>Tell us about your class <small>Start with class and subject</small></div></div>
             <div class="field-grid">
               <div class="field">
                 <label class="label" for="classSelect">Class <span class="required">*</span></label>
@@ -750,6 +832,7 @@
 
             <div class="divider"></div>
 
+            <div class="field-group-title settings-title"><span>3</span><div>Set the difficulty <small>Choose what works for your students</small></div></div>
             <div id="onlineFields" class="field-grid">
               <div class="field full">
                 <label class="label">Difficulty <span class="required">*</span></label>
@@ -789,17 +872,25 @@
             <div class="button-row">
               <button id="generateButton" class="generate" type="submit" disabled>⚡ Generate Test Paper</button>
               <div id="formStatus" class="inline-status" aria-live="polite"></div>
-              <div id="loadingCopy" class="loading-copy">▋ myTST IS WRITING YOUR QUESTIONS</div>
+              <div id="loadingCopy" class="loading-copy">Your request is being processed. Please keep this page open.</div>
               <div id="formError" class="error" role="alert"></div>
             </div>
           </form>
         </div>
       </section>
 
-      <section id="results" class="card results hidden" aria-live="polite"></section>
+      <aside class="live-preview" aria-label="Your test at a glance" data-mode="online">
+        <div class="preview-top"><span class="preview-label">✳ &nbsp; THE PAPER STUDIO</span><span class="preview-live"><i></i> LIVE PREVIEW</span></div>
+        <div class="preview-copy"><span class="preview-kicker">A LITTLE MAGIC, A LOT OF PURPOSE</span><h2>Good questions.<br><em>Great possibilities.</em></h2><p>Made for the way you teach.</p></div>
+        <div class="scene" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="orbit-dot dot-one"></div><div class="orbit-dot dot-two"></div><div class="orbit-dot dot-three"></div><div class="paper paper-back"></div><div class="paper paper-mid"></div><div class="paper paper-front"><div class="paper-top"><span>myTST</span><span>✳</span></div><div class="paper-rule"></div><div class="paper-mini">YOUR NEXT TEST</div><div class="paper-title" id="previewPaperSubject">A fresh<br>perspective.</div><div class="paper-lines"><i></i><i></i><i></i></div><div class="paper-options"><i></i><i></i><i></i></div><div class="paper-footer"><span id="previewPaperClass">CLASS &nbsp; —</span><span>↗</span></div></div><div class="scene-stamp" id="sceneStamp">MADE<br>TO THINK <span>✳</span></div><div class="generation-halo"></div></div>
+        <div class="preview-bottom"><div class="build-status" id="buildStatus"><span class="build-spinner" aria-hidden="true"></span><span>Creating your test…</span></div><div class="summary-heading"><span>YOUR TEST, SO FAR</span><span>↗</span></div><div class="summary-grid"><div><span>FORMAT</span><strong id="previewMode">Online test</strong></div><div><span>CLASS</span><strong id="previewClass">Not selected</strong></div><div><span>SUBJECT</span><strong id="previewSubject">Not selected</strong></div><div><span>DIFFICULTY</span><strong id="previewDifficulty">Not selected</strong></div></div></div>
+        <div class="latest-result hidden" id="latestResult"><div class="latest-kicker"><span class="latest-check">✓</span> LATEST GENERATED RESULT</div><div id="latestResultText" class="latest-title"></div><p id="latestResultNote"></p><button type="button" id="previewResultButton">Open result <span>↗</span></button><a id="previewDocument" class="hidden" target="_blank" rel="noopener noreferrer">View question paper ↗</a></div>
+      </aside>
+      <button type="button" id="showExampleInsights" class="example-insights-btn">Explore example insights <span>↗</span></button>
+      <button type="button" id="reopenResults" class="reopen-results hidden">View latest result <span>↗</span></button>
     </section>
 
-    <section class="how" aria-labelledby="how-title">
+    <section class="how hidden" aria-labelledby="how-title">
       <div class="how-kicker">HOW IT WORKS</div>
       <h2 id="how-title">Three steps to a complete question paper</h2>
       <div class="how-grid">
@@ -810,7 +901,9 @@
     </section>
   </main>
 
-  <footer><span>myTST — CBSE School Question Paper Generator</span><span>● SYSTEM ONLINE</span></footer>
+  <footer><span>myTST &nbsp; / &nbsp; Made for educators</span><span>CBSE &nbsp; · &nbsp; 2026–27</span></footer>
+  <dialog id="exampleDialog" aria-labelledby="exampleDialogTitle"><div class="dialog-bar"><div><span class="dialog-kicker">ILLUSTRATIVE DATA · NOT YOUR PAPER</span><h2 id="exampleDialogTitle">Example insights</h2></div><button type="button" id="closeExample" aria-label="Close example insights">×</button></div><div class="example-content"><p>Try selecting a category. These numbers are examples only.</p><div id="exampleCharts"></div></div></dialog>
+  <dialog id="resultDialog" aria-labelledby="resultDialogTitle"><div class="dialog-bar"><div><span class="dialog-kicker">YOUR ASSESSMENT</span><h2 id="resultDialogTitle">Your results</h2></div><button type="button" id="closeResults" aria-label="Close results">×</button></div><section id="results" class="results" aria-live="polite"></section></dialog>
 
   <script>
     /*
@@ -2029,7 +2122,7 @@
     /* Named backend presets. The existing selection control is retained,
        but its labels now match the policy contract exactly. */
     const DIFFICULTIES = [
-      ['Easy', '🟢', 'easy'], ['Balanced', '🟡', 'moderate'], ['Challenging', '🔴', 'hard']
+      ['Easy', '', 'easy'], ['Balanced', '', 'moderate'], ['Challenging', '', 'hard']
     ];
 
     function classNumberFromLabel(value) {
@@ -2368,6 +2461,9 @@
       modeBadge.className = `mode-badge ${mode.badgeClass}`.trim();
       modeBadge.textContent = mode.badge;
       document.getElementById('onlineMode').classList.toggle('selected', state.testType === 'online');
+      document.getElementById('onlineMode').setAttribute('aria-pressed', String(state.testType === 'online'));
+      document.getElementById('offlineMode').setAttribute('aria-pressed', String(offlineTest));
+      document.getElementById('fullMode').setAttribute('aria-pressed', String(fullTest));
       document.getElementById('offlineMode').classList.toggle('selected', offlineTest);
       document.getElementById('fullMode').classList.toggle('selected', fullTest);
 
@@ -2439,26 +2535,29 @@
 
       const missing = missingRequirements();
       generate.disabled = state.isGenerating || missing.length > 0;
+      document.querySelectorAll('#testForm button, #testForm input, #testForm select').forEach(control => { control.inert = state.isGenerating; });
       const idleLabels = {
-        online: '⚡ Generate Online Test',
-        offline: '📝 Create Offline Question Paper',
-        full_test: '✦ Create Full Test Paper'
+        online: 'Generate online test  ↗',
+        offline: 'Create question paper  ↗',
+        full_test: 'Create full test  ↗'
       };
-      generate.textContent = state.isGenerating ? '⏳ Generating questions…' : idleLabels[state.testType];
+      generate.textContent = state.isGenerating ? 'Creating your test…' : idleLabels[state.testType];
       document.getElementById('testForm').classList.toggle('loading', state.isGenerating);
       if (state.isGenerating) {
         formStatus.className = 'inline-status';
         formStatus.textContent = (offlineTest || fullTest) ? 'Creating your print-ready question paper and answer key…' : 'Creating your CBSE test…';
       } else if (offlineTest && state.maximumMarks && !chapterRuleIsMet()) {
         formStatus.className = 'inline-status warn';
-        formStatus.textContent = `Offline generation is hard-blocked until ${currentMarkRule().helper.toLowerCase()}.`;
+        formStatus.textContent = `Next: ${currentMarkRule().helper}`;
       } else if (!missing.length) {
         formStatus.className = 'inline-status success';
         formStatus.textContent = fullTest ? '✓ Full test configuration is ready.' : '✓ All required details are ready.';
       } else {
         formStatus.className = 'inline-status';
-        formStatus.textContent = `Complete: ${missing.join(' · ')}.`;
+        formStatus.textContent = `Next: ${missing[0]}.`;
+        formStatus.title = `Still needed: ${missing.join(', ')}.`;
       }
+      window.updateStudioPreview?.();
     }
 
     function closeMenus() {
@@ -2586,11 +2685,12 @@
         return json;
       } catch (_) { return { type: 'online', text: trimmed }; }
     }
-    function documentLinks(docId, filename) {
-      if (!docId) return '<span class="hint">Document link was not returned by the server.</span>';
-      const view = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/edit`;
-      const download = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/export?format=docx`;
-      return `<div class="doc-buttons"><a class="doc-button secondary" href="${view}" target="_blank" rel="noreferrer">◉ View document</a><a class="doc-button" href="${download}" download="${escapeHTML(filename)}">⇩ Download Word</a></div>`;
+    function safeWebUrl(value) { try { const u = new URL(String(value || '')); return ['https:', 'http:'].includes(u.protocol) ? u.href : ''; } catch (_) { return ''; } }
+    function documentLinks(docId, filename, serverUrl) {
+      const view = safeWebUrl(serverUrl) || (docId ? `https://docs.google.com/document/d/${encodeURIComponent(docId)}/edit` : '');
+      if (!view) return '<span class="hint">Document link was not returned by the server.</span>';
+      const download = docId ? `https://docs.google.com/document/d/${encodeURIComponent(docId)}/export?format=docx` : view;
+      return `<div class="doc-buttons"><a class="doc-button secondary" href="${escapeHTML(view)}" target="_blank" rel="noopener noreferrer">↗ View document</a><a class="doc-button" href="${escapeHTML(download)}" target="_blank" rel="noopener noreferrer" ${docId ? `download="${escapeHTML(filename)}"` : ''}>↓ ${docId ? 'Download Word' : 'Open document to download'}</a></div>`;
     }
     function renderCreateOnlineTestAction(item) {
       const hasTestId = !!item?.test_id;
@@ -2610,7 +2710,8 @@
       }
       const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
       const cards = questions.map((q) => {
-        const options = Array.isArray(q.options) ? q.options : [];
+        const options = Array.isArray(q.options) && q.options.length === 4 && q.options.every(o => typeof o === 'string' && o.trim()) ? q.options : [];
+        if (!options.length) return '<div class="mcq-card">A question was omitted because its options were incomplete.</div>'; 
         const correctIndex = Number.isInteger(q.correct_index) ? q.correct_index : null;
         const optionRows = options.map((option, index) => {
           const isCorrect = correctIndex !== null && index === correctIndex;
@@ -2623,7 +2724,7 @@
         }).join('');
         return `
           <div class="mcq-card">
-            <div class="mcq-question"><span class="mcq-number">Q${q.number ?? ''}.</span>${escapeHTML(q.question || '')}</div>
+            <div class="mcq-question"><span class="mcq-number">Q${escapeHTML(q.number ?? '')}.</span>${escapeHTML(q.question || '')}</div>
             <div class="mcq-options">${optionRows}</div>
           </div>`;
       }).join('');
@@ -2666,7 +2767,7 @@
         if (!response.ok) throw new Error(`The service returned ${response.status}.`);
         let parsed = null;
         try { parsed = raw.trim() ? JSON.parse(raw) : null; } catch (_) { parsed = null; }
-        const formLink = extractFormLink(parsed);
+        const formLink = safeWebUrl(extractFormLink(parsed));
 
         button.textContent = '✓ Online test created';
         if (statusEl) {
@@ -2725,41 +2826,66 @@
         cursor = next;
         return part;
       });
-      if (cursor < 100) parts.push(`rgba(255,255,255,.10) ${cursor.toFixed(3)}% 100%`);
-      return `conic-gradient(${parts.join(', ') || 'rgba(255,255,255,.10) 0 100%'})`;
+      if (cursor < 100) parts.push(`rgba(75,73,120,.12) ${cursor.toFixed(3)}% 100%`);
+      return `conic-gradient(${parts.join(', ') || 'rgba(75,73,120,.12) 0 100%'})`;
     }
     function renderAnalyticsCard(title, subtitle, analytics, key, colors) {
       const rows = analyticsDistribution(analytics, key);
       if (!rows.length) return '';
       const coverage = distributionCoverage(analytics, key);
-      const coverageText = coverage === null ? '—' : `${coverage.toFixed(0)}% tagged`;
-      const visible = rows.slice(0, 6);
-      const legend = visible.map((row, index) => {
-        const label = paperInsightLabel(row, key);
-        return `
-        <div class="insight-legend-row"><span class="insight-dot" style="background:${colors[index % colors.length]}"></span><span title="${escapeHTML(label)}">${escapeHTML(label)}</span><span class="insight-value">${safePercent(row.marks_percent).toFixed(1)}%</span></div>`;
+      const coverageText = coverage === null ? 'Coverage not provided' : `${coverage.toFixed(0)}% tagged`;
+      const circumference = 2 * Math.PI * 48;
+      let cursor = 0;
+      const arcs = rows.map((row, index) => {
+        const percent = Math.min(Math.max(0, 100 - cursor), safePercent(row.marks_percent));
+        const start = cursor; cursor += percent;
+        return `<circle class="chart-segment" data-index="${index}" cx="60" cy="60" r="48" fill="none" stroke="${colors[index % colors.length]}" stroke-width="14" stroke-dasharray="${(percent * circumference / 100).toFixed(3)} ${circumference.toFixed(3)}" stroke-dashoffset="${(-start * circumference / 100).toFixed(3)}" />`;
       }).join('');
-      const extra = rows.length > visible.length ? `<div class="insight-legend-row"><span></span><span>+${rows.length - visible.length} more</span><span></span></div>` : '';
+      const legend = rows.map((row, index) => {
+        const label = String(paperInsightLabel(row, key) || 'Unlabelled');
+        const percent = `${safePercent(row.marks_percent).toFixed(1)}%`;
+        return `<button type="button" class="insight-legend-row" data-index="${index}" data-label="${escapeHTML(label)}" data-percent="${percent}" aria-pressed="false"><span class="insight-dot" style="background:${colors[index % colors.length]}"></span><span class="legend-label">${escapeHTML(label)}</span><span class="insight-value">${percent}</span></button>`;
+      }).join('');
       return `
-        <article class="insight-card">
-          <div class="insight-card-header"><div><h4>${escapeHTML(title)}</h4><div class="insight-subtitle">${escapeHTML(subtitle)}</div></div><span class="insight-coverage">${coverageText}</span></div>
-          <div class="insight-content"><div class="insight-donut" style="background:${donutGradient(visible, colors)}"><span class="insight-donut-label">MARKS<br>%</span></div><div class="insight-legend">${legend}${extra}</div></div>
+        <article class="insight-card" data-active-index="">
+          <div class="insight-card-header"><div><span class="insight-overline">PAPER BREAKDOWN</span><h4>${escapeHTML(title)}</h4><div class="insight-subtitle">${escapeHTML(subtitle)}</div></div><span class="insight-coverage">${coverageText}</span></div>
+          <div class="insight-content"><div class="chart-wrap"><svg class="chart-svg" viewBox="0 0 120 120" aria-hidden="true"><circle class="chart-track" cx="60" cy="60" r="48" fill="none" stroke-width="14"/><g transform="rotate(-90 60 60)">${arcs}</g></svg><div class="chart-center" aria-hidden="true"><strong class="chart-center-value">✳</strong><span class="chart-center-label">MARKS<br>SHARE</span></div></div><div class="insight-legend" aria-label="${escapeHTML(title)} breakdown">${legend}</div></div>
+          <div class="chart-hint">Tap or select a category to explore <span aria-hidden="true">↗</span></div>
         </article>`;
     }
     function renderPaperInsights(response) {
       const item = responseItem(response);
       const analytics = item.paper_analytics || item.analytics || null;
       if (!analytics || analytics.schema_version !== 'mytst-paper-analytics-v1') return '';
-      const palette = ['#E7C98D','#86E8B0','#8FB7FF','#C4B5FD','#FB9AA0','#55D7C5','#F5A6D8'];
+      const palette = ['#6B60E8','#59B99A','#F0A762','#7F9EE7','#E3839F','#58B7C2','#A786CF'];
       const cards = [
         renderAnalyticsCard('Cognitive topology', 'Realized paper distribution', analytics, 'cognitive_typology', palette),
-        renderAnalyticsCard('Difficulty', `Requested: ${analytics.paper_context?.requested_difficulty_preset || '—'}`, analytics, 'difficulty', ['#86E8B0','#E7C98D','#FB9AA0','#8FB7FF']),
-        renderAnalyticsCard('Question types', 'Marks-weighted view', analytics, 'question_type', ['#8FB7FF','#C4B5FD','#55D7C5','#E7C98D','#FB9AA0']),
-        analytics.coverage?.chapter_weightage_applicable === false ? '' : renderAnalyticsCard('Chapter weightage', 'Final attributed marks', analytics, 'chapter_weightage', ['#E7C98D','#86E8B0','#8FB7FF','#C4B5FD','#55D7C5','#FB9AA0'])
+        renderAnalyticsCard('Difficulty', `Requested: ${analytics.paper_context?.requested_difficulty_preset || '—'}`, analytics, 'difficulty', ['#59B99A','#6B60E8','#E3839F','#7F9EE7']),
+        renderAnalyticsCard('Question types', 'Marks-weighted view', analytics, 'question_type', ['#6B60E8','#7F9EE7','#58B7C2','#F0A762','#E3839F']),
+        analytics.coverage?.chapter_weightage_applicable === false ? '' : renderAnalyticsCard('Chapter weightage', 'Final attributed marks', analytics, 'chapter_weightage', ['#6B60E8','#59B99A','#7F9EE7','#A786CF','#58B7C2','#E3839F'])
       ].filter(Boolean).join('');
       if (!cards) return '';
       const warnings = Array.isArray(analytics.coverage?.warnings) ? analytics.coverage.warnings : [];
-      return `<section class="paper-insights" aria-label="Paper insights"><div class="insights-heading"><div><h3>Paper Insights</h3><p>Calculated from the validated final paper plan.</p></div><span class="insights-basis">Teacher view · marks basis</span></div><div class="insights-grid">${cards}</div>${warnings.length ? `<div class="insight-warnings">${warnings.map(escapeHTML).join('<br>')}</div>` : ''}</section>`;
+      return `<section class="paper-insights" aria-label="Paper insights"><div class="insights-heading"><div><h3>Paper insights</h3><p>Explore how marks are distributed across your paper.</p></div><span class="insights-basis">Teacher view · marks basis</span></div><div class="insights-grid">${cards}</div>${warnings.length ? `<div class="insight-warnings">${warnings.map(escapeHTML).join('<br>')}</div>` : ''}</section>`;
+    }
+    function updateLatestResult(payload, item) {
+      const box = document.getElementById('latestResult');
+      const title = document.getElementById('latestResultText');
+      const note = document.getElementById('latestResultNote');
+      const doc = document.getElementById('previewDocument');
+      const paper = item.paper || {};
+      doc.classList.add('hidden'); doc.removeAttribute('href');
+      if (payload.test_type === 'online') {
+        const q = Array.isArray(item.questions) ? item.questions.find(q => typeof q?.question === 'string' && q.question.trim()) : null;
+        title.textContent = q ? q.question : 'Your online test is ready';
+        note.textContent = q ? 'First question · open the result to see the full teacher preview.' : 'Open the result to see your test details.';
+      } else {
+        title.textContent = 'Your question paper is ready';
+        note.textContent = 'Open the actual document, or see its insights and answer key.';
+        const link = safeWebUrl(paper.question_document_url) || (paper.question_document_id ? `https://docs.google.com/document/d/${encodeURIComponent(paper.question_document_id)}/edit` : '');
+        if (link) { doc.href = link; doc.classList.remove('hidden'); }
+      }
+      box.classList.remove('hidden');
     }
     function renderResult(payload, response) {
       const results = document.getElementById('results');
@@ -2783,28 +2909,38 @@
         panel = `
           <div class="result-panel">
             <div class="document-actions">
-              <article class="document-card"><h3>${paperName}</h3><p>${paperDescription}</p>${documentLinks(questionId, fullTest ? 'cbse-full-test-paper.docx' : 'cbse-question-paper.docx')}</article>
-              <article class="document-card"><h3>Answer Key</h3><p>Teacher copy with answers and marking support.</p>${documentLinks(answerId, 'cbse-answer-key.docx')}</article>
+              <article class="document-card"><h3>${paperName}</h3><p>${paperDescription}</p>${documentLinks(questionId, fullTest ? 'cbse-full-test-paper.docx' : 'cbse-question-paper.docx', item.paper?.question_document_url || item.question_document_url)}</article>
+              <article class="document-card"><h3>Answer Key</h3><p>Teacher copy with answers and marking support.</p>${documentLinks(answerId, 'cbse-answer-key.docx', item.paper?.answer_key_document_url || item.answer_key_document_url)}</article>
             </div>
             ${renderPaperInsights(response)}
           </div>`;
       } else {
         const item = responseItem(response);
         lastOnlineTest = { item, payload };
-        panel = renderOnlineQuestions(item);
+        panel = `<div class="online-insights">${renderPaperInsights(response)}</div>` + renderOnlineQuestions(item);
       }
       const resultMode = fullTest ? { label: '✦ FULL TEST', className: 'full' }
         : isOfflineTest() ? { label: '📝 OFFLINE PAPER', className: 'offline' }
         : { label: '🌐 ONLINE TEST', className: '' };
+      const item = responseItem(response);
+      const ref = item.paper?.paper_id || item.test_id || '';
+      const total = item.paper?.total_marks;
+      const details = [ref ? `Reference: ${ref}` : '', total != null ? `Total marks: ${total}` : '', item.total_questions_stored != null ? `Questions: ${item.total_questions_stored}` : ''].filter(Boolean);
+      const warnings = Array.isArray(item.warnings) ? item.warnings : [];
       results.innerHTML = `
-        <div class="results-header"><div class="result-title">Test Paper Generated <span class="result-ok">✓ SUCCESS</span></div><span class="mode-badge ${resultMode.className}">${resultMode.label}</span></div>
+        <div class="results-header"><div class="result-title">Your test is ready <span class="result-ok">✓ COMPLETE</span></div><span class="mode-badge ${resultMode.className}">${resultMode.label}</span></div>
         <div class="result-meta">${meta.map((item) => `<span class="meta-chip">${escapeHTML(item)}</span>`).join('')}</div>
+        ${details.length ? `<div class="result-reference">${details.map(escapeHTML).join(' &nbsp; · &nbsp; ')}</div>` : ''}
+        ${warnings.length ? `<div class="result-warnings">${warnings.map(w => escapeHTML(typeof w === 'string' ? w : JSON.stringify(w))).join('<br>')}</div>` : ''}
         ${panel}`;
-      results.classList.remove('hidden');
-      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('reopenResults').classList.remove('hidden');
+      updateLatestResult(payload, item);
+      const dialog = document.getElementById('resultDialog');
+      if (!dialog.open) dialog.showModal();
     }
     async function submitTest(event) {
       event.preventDefault();
+      if (state.isGenerating) return;
       const missing = missingRequirements();
       if (missing.length) {
         showError(`Please complete ${missing.join(', ')}.`);
@@ -2883,6 +3019,7 @@
           teacher_email: teacherEmail
         };
       }
+      payload.client_request_id = (globalThis.crypto?.randomUUID?.() || `mytst-${Date.now()}-${Math.random().toString(36).slice(2)}`);
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 20 * 60 * 1000);
@@ -2895,18 +3032,84 @@
         });
         clearTimeout(timeout);
         const raw = await response.text();
-        if (!response.ok || !raw.trim()) throw new Error(`The generation service returned ${response.status || 'an empty response'}.`);
         const parsed = parsePaper(raw);
-        if (parsed && parsed.success === false) throw new Error(parsed.message || 'Question paper generation failed.');
+        const item = responseItem(parsed);
+        if (!response.ok || item.success !== true) {
+          const issues = Array.isArray(item.errors) ? item.errors.map(e => typeof e === 'string' ? e : (e.message || JSON.stringify(e))).join('; ') : '';
+          throw new Error([item.message || `The generation service returned ${response.status || 'an empty response'}.`, item.code || item.error_code, issues, item.paper?.paper_id ? `Reference: ${item.paper.paper_id}` : ''].filter(Boolean).join(' — '));
+        }
+        if (payload.test_type !== 'online') {
+          const paper = item.paper;
+          if (!paper || typeof paper !== 'object') throw new Error('The service returned an incomplete paper result. Contact support before trying again.');
+          const question = safeWebUrl(paper.question_document_url) || paper.question_document_id;
+          const answer = safeWebUrl(paper.answer_key_document_url) || paper.answer_key_document_id;
+          if (!question || !answer) throw new Error(`The paper result is incomplete; the question paper or answer key link is missing. Contact support. ${paper.paper_id ? `Reference: ${paper.paper_id}` : ''}`);
+        }
         renderResult(payload, parsed);
       } catch (error) {
-        showError(error.name === 'AbortError' ? 'Generation timed out after 20 minutes. Please try again.' : `Generation failed: ${error.message}`);
+        showError(error.name === 'AbortError' || error instanceof TypeError ? `We did not receive a final response. Your paper may still be processing. Do not submit again yet; contact support with reference ${payload.client_request_id}.` : `Generation failed: ${error.message}`);
       } finally {
         state.isGenerating = false;
         renderConfiguration();
       }
     }
 
+    function setChartFocus(card, index) {
+      const button = index === '' ? null : card.querySelector(`.insight-legend-row[data-index="${index}"]`);
+      const centerValue = card.querySelector('.chart-center-value');
+      const centerLabel = card.querySelector('.chart-center-label');
+      centerValue.textContent = button ? button.dataset.percent : '✳';
+      centerLabel.textContent = button ? button.dataset.label : 'MARKS SHARE';
+      card.classList.toggle('has-chart-focus', !!button);
+      card.querySelectorAll('.chart-segment').forEach(segment => segment.classList.toggle('chart-focused', !!button && segment.dataset.index === String(index)));
+      card.querySelectorAll('.insight-legend-row').forEach(row => {
+        row.classList.toggle('chart-focused', !!button && row.dataset.index === String(index));
+        row.setAttribute('aria-pressed', String(row.dataset.index === card.dataset.activeIndex));
+      });
+    }
+    document.addEventListener('click', event => {
+      const target = event.target.closest('.insight-legend-row, .chart-segment');
+      if (!target) return;
+      const card = target.closest('.insight-card');
+      const index = target.dataset.index;
+      card.dataset.activeIndex = card.dataset.activeIndex === index ? '' : index;
+      setChartFocus(card, card.dataset.activeIndex);
+    });
+    document.addEventListener('pointerover', event => {
+      const target = event.target.closest('.insight-legend-row, .chart-segment');
+      if (target && event.pointerType !== 'touch') setChartFocus(target.closest('.insight-card'), target.dataset.index);
+    });
+    document.addEventListener('pointerout', event => {
+      const target = event.target.closest('.insight-legend-row, .chart-segment');
+      if (!target || event.pointerType === 'touch') return;
+      const card = target.closest('.insight-card');
+      const next = event.relatedTarget?.closest?.('.insight-legend-row, .chart-segment');
+      if (!next || next.closest('.insight-card') !== card) setChartFocus(card, card.dataset.activeIndex);
+    });
+    document.addEventListener('focusin', event => {
+      const target = event.target.closest('.insight-legend-row');
+      if (target) setChartFocus(target.closest('.insight-card'), target.dataset.index);
+    });
+    document.addEventListener('focusout', event => {
+      const target = event.target.closest('.insight-legend-row');
+      if (!target) return;
+      const card = target.closest('.insight-card');
+      if (!event.relatedTarget?.closest?.('.insight-legend-row')) setChartFocus(card, card.dataset.activeIndex);
+    });
+
+    document.getElementById('showExampleInsights').addEventListener('click', () => {
+      const example = {paper_analytics:{schema_version:'mytst-paper-analytics-v1', paper_context:{requested_difficulty_preset:'Balanced'}, distributions:{
+        cognitive_typology:[{code:'REM',marks_percent:25},{code:'UND',marks_percent:40},{code:'APPL',marks_percent:35}],
+        difficulty:[{code:'EASY',marks_percent:30},{code:'BALANCED',marks_percent:50},{code:'CHALLENGING',marks_percent:20}],
+        question_type:[{code:'MCQ',marks_percent:20},{code:'SA',marks_percent:45},{code:'LA',marks_percent:35}]
+      },coverage:{cognitive_typology_marks_percent_classified:100,difficulty_marks_percent_classified:100,question_type_marks_percent_classified:100,chapter_weightage_applicable:false}}};
+      document.getElementById('exampleCharts').innerHTML = renderPaperInsights(example);
+      document.getElementById('exampleDialog').showModal();
+    });
+    document.getElementById('closeExample').addEventListener('click', () => document.getElementById('exampleDialog').close());
+    document.getElementById('previewResultButton').addEventListener('click', () => document.getElementById('resultDialog').showModal());
+    document.getElementById('closeResults').addEventListener('click', () => document.getElementById('resultDialog').close());
+    document.getElementById('reopenResults').addEventListener('click', () => document.getElementById('resultDialog').showModal());
     // Static control events
     document.getElementById('onlineMode').addEventListener('click', () => setTestType('online'));
     document.getElementById('offlineMode').addEventListener('click', () => setTestType('offline'));
@@ -2977,5 +3180,41 @@
 
     renderConfiguration();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4acba825bf41e0a',t:'MTc5MjA0NTMzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5283df88bca5790',t:'MTc5MzM0MDQ3MQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5283df88bca5790',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>
+  (function(){
+    const themeButton = document.getElementById('themeToggle');
+    function applyTheme(dark) {
+      document.body.dataset.theme = dark ? 'dark' : 'light';
+      themeButton.setAttribute('aria-pressed', String(dark));
+      themeButton.setAttribute('aria-label', dark ? 'Switch to light appearance' : 'Switch to dark appearance');
+      themeButton.querySelector('.theme-icon').textContent = dark ? '☼' : '☾';
+      themeButton.querySelector('.theme-label').textContent = dark ? 'Light' : 'Dark';
+    }
+    let savedTheme = null; try { savedTheme = localStorage.getItem('mytst-theme'); } catch (_) {}
+    applyTheme(savedTheme === 'dark');
+    themeButton.addEventListener('click', () => { const dark = document.body.dataset.theme !== 'dark'; applyTheme(dark); try { localStorage.setItem('mytst-theme', dark ? 'dark' : 'light'); } catch (_) {} });
+    function updatePreview() {
+      const preview = document.querySelector('.live-preview');
+      const previousMode = preview.dataset.mode;
+      preview.dataset.mode = state.testType;
+      preview.classList.toggle('is-generating', state.isGenerating);
+      document.getElementById('buildStatus').setAttribute('aria-hidden', String(!state.isGenerating));
+      if (previousMode !== state.testType) { const paper = document.querySelector('.paper-front'); paper.classList.remove('mode-change'); void paper.offsetWidth; paper.classList.add('mode-change'); }
+      const mode = state.testType === 'full_test' ? 'Full test' : state.testType === 'offline' ? 'Offline test' : 'Online test';
+      const subject = selectedSubjectLabel();
+      document.getElementById('previewMode').textContent = mode;
+      document.getElementById('previewClass').textContent = state.className || 'Not selected';
+      document.getElementById('previewSubject').textContent = subject || 'Not selected';
+      document.getElementById('previewDifficulty').textContent = state.difficulty || 'Not selected';
+      document.getElementById('previewPaperClass').textContent = state.className ? state.className.toUpperCase() : 'CLASS  —';
+      const title = document.getElementById('previewPaperSubject');
+      title.textContent = subject || 'A fresh perspective.';
+      title.style.fontSize = subject && subject.length > 22 ? '15px' : '21px';
+    }
+    window.updateStudioPreview = updatePreview;
+    ['click','change','input'].forEach(type => document.getElementById('testForm').addEventListener(type, () => queueMicrotask(updatePreview)));
+    updatePreview();
+  })();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a53206524e881e0a',t:'MTc5MzQ0MzA0OQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a53206524e881e0a',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
